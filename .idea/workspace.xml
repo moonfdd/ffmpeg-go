@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5c2890d4-1914-4350-9b85-9115ad68d096" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/ffcommon/types.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavcodec/ac3_parser.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavcodec/adts_parser.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavcodec/avcodec.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavcodec/avdct.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavcodec/avfft.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavcodec/bsf.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavcodec/codec.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavcodec/codec_desc.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavcodec/codec_id.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavcodec/codec_par.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavcodec/d3d11va.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavcodec/dirac.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavcodec/dv_profile.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavcodec/dxva2.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavcodec/jni.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavcodec/mediacodec.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavcodec/packet.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavcodec/qsv.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavcodec/vaapi.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavcodec/vdpau.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavcodec/version.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavcodec/videotoolbox.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavcodec/vorbis_parser.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavcodec/xvmc.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavdevice/avdevice.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavdevice/version.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavfilter/avfilter.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavfilter/buffersink.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavfilter/buffersrc.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavfilter/version.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavformat/avformat.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavformat/avformat.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavformat/avio.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavformat/avio.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavformat/version.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavformat/version.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/adler32.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/aes.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/aes_ctr.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/attributes.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/audio_fifo.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/avassert.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/avconfig.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/avstring.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/avutil.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/base64.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/blowfish.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/bprint.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/bswap.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/buffer.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/camellia.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/cast5.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/channel_layout.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/common.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/cpu.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/crc.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/des.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/dict.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/display.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/dovi_meta.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/downmix_info.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/encryption_info.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/error.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/eval.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/ffversion.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/fifo.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/file.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/film_grain_params.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/frame.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hash.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hdr_dynamic_metadata.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hmac.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_cuda.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_d3d11va.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_drm.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_dxva2.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_mediacodec.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_opencl.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_qsv.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_vaapi.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_vdpau.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_videotoolbox.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_vulkan.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/imgutils.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/intfloat.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/intreadwrite.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/lfg.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/log.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/lzo.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/macros.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/mastering_display_metadata.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/mathematics.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/md5.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/mem.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/motion_vector.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/murmur3.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/opt.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/parseutils.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/pixdesc.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/pixelutils.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/pixfmt.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/random_seed.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/rational.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/rc4.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/replaygain.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/ripemd.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/samplefmt.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/sha.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/sha512.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/spherical.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/stereo3d.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/tea.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/threadmessage.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/time.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/timecode.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/timestamp.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/tree.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/twofish.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/tx.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/version.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/video_enc_params.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/xtea.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libpostproc/postprocess.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libpostproc/postprocess.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libpostproc/version.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libpostproc/version.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libswresample/swresample.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libswresample/swresample.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libswresample/version.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libswresample/version.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libswscale/swscale.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libswscale/version.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libswscale/version.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" path="$PROJECT_DIR$/../../../../Program Files/Go" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="false" />
+  </component>
+  <component name="ProjectId" id="1z4kIMvuANI5dLRau9QdrFDgKrJ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="go.sdk.automatically.set" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../govcl" />
+    <property name="settings.editor.selected.configurable" value="go.vgo" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\mysetup\gopath\src\ffmpeg-go" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Go Build.go build ffmpeg-go/libswscale">
+    <configuration name="go build ffmpeg-go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="ffmpeg-go" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="ffmpeg-go" />
+      <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build ffmpeg-go/constant" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="ffmpeg-go" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="ffmpeg-go/constant" />
+      <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build ffmpeg-go/libswscale" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="ffmpeg-go" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="ffmpeg-go/libswscale" />
+      <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build ffmpeg-go/libswscale" />
+        <item itemvalue="Go Build.go build ffmpeg-go" />
+        <item itemvalue="Go Build.go build ffmpeg-go/constant" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>true</integration-enabled>
+    <environment>
+      <map>
+        <entry key="GOPROXY" value="https://goproxy.io" />
+      </map>
+    </environment>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="860" y="334" key="EditFileWatcherDialog" timestamp="1633416255267">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="860" y="334" key="EditFileWatcherDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1633416255267" />
+    <state x="946" y="271" key="FileChooserDialogImpl" timestamp="1633434059129">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="946" y="271" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1633434059129" />
+    <state width="1753" height="143" key="GridCell.Tab.0.bottom" timestamp="1633497388814">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1753" height="143" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1633497388814" />
+    <state width="1753" height="143" key="GridCell.Tab.0.center" timestamp="1633497388814">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1753" height="143" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1633497388814" />
+    <state width="1753" height="143" key="GridCell.Tab.0.left" timestamp="1633497388814">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1753" height="143" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1633497388814" />
+    <state width="1753" height="143" key="GridCell.Tab.0.right" timestamp="1633497388814">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1753" height="143" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1633497388814" />
+    <state x="706" y="202" key="SettingsEditor" timestamp="1633434917196">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="706" y="202" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1633434917196" />
+    <state x="614" y="222" width="596" height="594" key="find.popup" timestamp="1633503458449">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="614" y="222" width="596" height="594" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1633503458449" />
+  </component>
+</project>

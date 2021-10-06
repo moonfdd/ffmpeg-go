@@ -1,0 +1,23 @@
+package ffconstant
+
+const LIBAVDEVICE_VERSION_MAJOR = 58
+const LIBAVDEVICE_VERSION_MINOR = 13
+const LIBAVDEVICE_VERSION_MICRO = 100
+
+const LIBAVDEVICE_VERSION_INT = 1 // AV_VERSION_INT(LIBAVDEVICE_VERSION_MAJOR, \
+//LIBAVDEVICE_VERSION_MINOR, \
+//LIBAVDEVICE_VERSION_MICRO)
+const LIBAVDEVICE_VERSION = 1 // AV_VERSION(LIBAVDEVICE_VERSION_MAJOR, \
+//LIBAVDEVICE_VERSION_MINOR, \
+//LIBAVDEVICE_VERSION_MICRO)
+const LIBAVDEVICE_BUILD = LIBAVDEVICE_VERSION_INT
+
+const LIBAVDEVICE_IDENT = "" //  "Lavd" AV_STRINGIFY(LIBAVDEVICE_VERSION)
+
+/**
+ * FF_API_* defines may be placed below to indicate public API that will be
+ * dropped at a future version bump. The defines themselves are not part of
+ * the public API and may change, break or disappear at any time.
+ */
+
+const FF_API_DEVICE_CAPABILITIES = (LIBAVDEVICE_VERSION_MAJOR < 60)
