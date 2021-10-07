@@ -3,6 +3,7 @@ package libswresample
 import (
 	"ffmpeg-go/ffcommon"
 	"ffmpeg-go/ffconstant"
+	"ffmpeg-go/libavutil"
 )
 
 /**
@@ -22,7 +23,7 @@ type SwrContext struct {
  * @return the AVClass of SwrContext
  */
 //const AVClass *swr_get_class(void);
-func SwrGetClass() (res *AVClass) {
+func SwrGetClass() (res *libavutil.AVClass) {
 	return
 }
 
@@ -456,7 +457,7 @@ func SwresampleLicense() (res ffcommon.FConstCharP) {
  */
 //int swr_convert_frame(SwrContext *swr,
 //AVFrame *output, const AVFrame *input);
-func (swr *SwrContext) SwrConvertFrame(output *AVFrame, input *AVFrame) (res ffcommon.FInt) {
+func (swr *SwrContext) SwrConvertFrame(output *libavutil.AVFrame, input *libavutil.AVFrame) (res ffcommon.FInt) {
 	return
 }
 
@@ -475,6 +476,6 @@ func (swr *SwrContext) SwrConvertFrame(output *AVFrame, input *AVFrame) (res ffc
  * @return                0 on success, AVERROR on failure.
  */
 //int swr_config_frame(SwrContext *swr, const AVFrame *out, const AVFrame *in);
-func (swr *SwrContext) SwrConfigFrame(out *AVFrame, in *AVFrame) (res ffcommon.FInt) {
+func (swr *SwrContext) SwrConfigFrame(out *libavutil.AVFrame, in *libavutil.AVFrame) (res ffcommon.FInt) {
 	return
 }

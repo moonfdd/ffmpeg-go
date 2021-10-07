@@ -3,6 +3,7 @@ package libavformat
 import (
 	"ffmpeg-go/ffcommon"
 	"ffmpeg-go/ffconstant"
+	"ffmpeg-go/libavutil"
 )
 
 /**
@@ -629,7 +630,7 @@ func AvioCloseDynBuf(opaque *ffcommon.FVoidP, output ffcommon.FInt) (res ffcommo
  * @return A AVClass of input protocol name or NULL
  */
 //const AVClass *avio_protocol_get_class(const char *name);
-func AvioProtocolGetClass(name ffcommon.FConstCharP) (res *AVClass) {
+func AvioProtocolGetClass(name ffcommon.FConstCharP) (res *libavutil.AVClass) {
 	return
 }
 

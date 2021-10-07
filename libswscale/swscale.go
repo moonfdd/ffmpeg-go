@@ -3,6 +3,7 @@ package libswscale
 import (
 	"ffmpeg-go/ffcommon"
 	"ffmpeg-go/ffconstant"
+	"ffmpeg-go/libavutil"
 )
 
 /**
@@ -286,7 +287,7 @@ func (a *SwsVector) SwsCloneVec() (ans *SwsVector) {
 }
 
 //attribute_deprecated void sws_printVec2(SwsVector *a, AVClass *log_ctx, int log_level);
-func (a *SwsVector) SwsPrintVec2(log_ctx *AVClass, log_level ffcommon.FInt) {
+func (a *SwsVector) SwsPrintVec2(log_ctx *libavutil.AVClass, log_level ffcommon.FInt) {
 	return
 }
 
@@ -375,6 +376,6 @@ func SwsConvertPalette8ToPacked24(src *ffcommon.FUint8T, dst *ffcommon.FUint8T, 
  * @see av_opt_find().
  */
 //const AVClass *sws_get_class(void);
-func SwsGetClass() (res *AVClass) {
+func SwsGetClass() (res *libavutil.AVClass) {
 	return
 }

@@ -2,6 +2,8 @@ package main
 
 import "C"
 import (
+	"ffmpeg-go/ffcommon"
+	"ffmpeg-go/libavutil"
 	"fmt"
 	"syscall"
 	"time"
@@ -39,11 +41,123 @@ func AvutilVersion() uint {
 	fmt.Println(ret1, ret2, err)
 	return 0
 }
+
+//https://blog.csdn.net/u010824081/article/details/79427676
 func main() {
+	if true {
+		type add = func(a, b int) int
+		var a add
+		a = func(a, b int) int {
+			return a + b
+		}
+		ret := a(1, 2)
+		fmt.Println(ret)
+	}
+	if false {
+		ret, _ := libavutil.AvXteaAlloc()
+		fmt.Println("AvXteaAlloc = ", ret)
+		ret.AvXteaLeInit([16]byte{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16})
+		fmt.Println("AvXteaLeInit = ", ret)
+		ret.AvXteaLeCrypt(nil, nil, 0, nil, 0)
+		fmt.Println("AvXteaLeCrypt = ", ret)
+	}
 
-	ret := AvutilVersion()
+	if false {
+		b := new(byte)
+		*b = 12
+		p := unsafe.Pointer(b)
+		u := uintptr(p)
+		p2 := unsafe.Pointer(u)
+		c := (*byte)(p2)
+		*c = 33
 
-	fmt.Println("ret = ", ret)
+		p = unsafe.Pointer(b)
+		u = uintptr(p)
+		p2 = unsafe.Pointer(u)
+		c = (*byte)(p2)
+		*c = 44
+		fmt.Println("*b = ", *b)
+	}
+	if false {
+		aes, _ := libavutil.AvAesAlloc()
+		fmt.Println("aes111222= ", aes)
+		b := byte(33)
+		var buf = new(byte)
+		*buf = b
+		c := new(byte)
+		*c = 11
+		err := aes.AvAesCrypt(buf, c, ffcommon.FInt(1), nil, ffcommon.FInt(1))
+		fmt.Println("AvAesInit ret = ", err)
+		return
+	}
+	if false {
+		aes, _ := libavutil.AvAesAlloc()
+		b := byte(33)
+		var buf = new(byte)
+		*buf = b
+		ret, _ := aes.AvAesInit(buf, ffcommon.FInt(192), ffcommon.FInt(1))
+		fmt.Println("AvAesInit ret = ", ret)
+		return
+	}
+
+	if false {
+		b := byte(33)
+		var buf = new(byte)
+		*buf = b
+		ret, _ := libavutil.AvAesAlloc()
+		fmt.Println("AvAesAlloc ret = ", ret)
+		return
+	}
+
+	if false {
+		b := byte(33)
+		var buf = new(byte)
+		*buf = b
+		ret, _ := libavutil.AvAdler32Update(uint32(5), buf, 1)
+		fmt.Println("AvAdler32Update ret = ", ret)
+	}
+
+	//if true {
+	//	ret := libavutil.AvutilLicense()
+	//	fmt.Println("AvutilLicense ret = ", ret)
+	//}
+	//if true {
+	//	ret := libavutil.AvutilConfiguration()
+	//	fmt.Println("AvutilConfiguration ret = ", ret)
+	//}
+	//if true {
+	//	ret := libavutil.AvVersionInfo()
+	//	fmt.Println("AvVersionInfo ret = ", ret)
+	//}
+	//if true {
+	//	ret := libavutil.AvGetMediaTypeString(ffconstant.AVMEDIA_TYPE_VIDEO)
+	//	fmt.Println("AvGetMediaTypeString ret = ", ret)
+	//}
+	//
+	//if true {
+	//	ret := libavutil.AvGetPictureTypeChar(ffconstant.AV_PICTURE_TYPE_I)
+	//	fmt.Println("AvGetPictureTypeChar ret = ", ret)
+	//}
+	//
+	//if true {
+	//	ret := libavutil.AvIntListLengthForSize(5, uintptr(0), 0)
+	//	fmt.Println("AvIntListLengthForSize ret = ", ret)
+	//}
+	//if true {
+	//	ret := libavutil.AvFopenUtf8("F:/看视频进度.txt", "r+")
+	//	fmt.Println("AvFopenUtf8 ret = ", ret)
+	//}
+	//if true {
+	//	ret := libavutil.AvGetTimeBaseQ()
+	//	fmt.Println("AvGetTimeBaseQ retden = ", ret.Den)
+	//	fmt.Println("AvGetTimeBaseQ retnum = ", ret.Num)
+	//}
+
+	if false {
+
+		ret, _ := libavutil.AvFourccMakeString((*byte)(unsafe.Pointer(&([]byte{'a', 'b', 'c'}))), 3)
+		fmt.Println("AvFourccMakeString ret = ", ret)
+	}
 
 	if true {
 	}
