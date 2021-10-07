@@ -267,42 +267,6 @@ type AVRegionOfInterest struct {
 }
 
 /**
- * This structure describes decoded (raw) audio or video data.
- *
- * AVFrame must be allocated using av_frame_alloc(). Note that this only
- * allocates the AVFrame itself, the buffers for the data must be managed
- * through other means (see below).
- * AVFrame must be freed with av_frame_free().
- *
- * AVFrame is typically allocated once and then reused multiple times to hold
- * different data (e.g. a single AVFrame to hold frames received from a
- * decoder). In such a case, av_frame_unref() will free any references held by
- * the frame and reset it to its original clean state before it
- * is reused again.
- *
- * The data described by an AVFrame is usually reference counted through the
- * AVBuffer API. The underlying buffer references are stored in AVFrame.buf /
- * AVFrame.extended_buf. An AVFrame is considered to be reference counted if at
- * least one reference is set, i.e. if AVFrame.buf[0] != NULL. In such a case,
- * every single data plane must be contained in one of the buffers in
- * AVFrame.buf or AVFrame.extended_buf.
- * There may be a single buffer for all the data, or one separate buffer for
- * each plane, or anything in between.
- *
- * sizeof(AVFrame) is not a part of the public ABI, so new fields may be added
- * to the end with a minor bump.
- *
- * Fields can be accessed through AVOptions, the name string used, matches the
- * C structure field name for fields accessible through AVOptions. The AVClass
- * for AVFrame can be obtained from avcodec_get_frame_class()
- */
-type AVFrame struct {
-	instance uintptr
-	// 特殊情况下使用，主要应对Go的GC问题，与LCL没有太多关系。
-	ptr unsafe.Pointer
-}
-
-/**
  * @example ffhash.c
  * This example is a simple command line application that takes one or more
  * arguments. It demonstrates a typical use of the hashing API with allocation,
@@ -876,31 +840,6 @@ type AVSphericalMapping struct {
  * List of possible 3D Types
  */
 type AVStereo3DType struct {
-	instance uintptr
-	// 特殊情况下使用，主要应对Go的GC问题，与LCL没有太多关系。
-	ptr unsafe.Pointer
-}
-
-/**
- * Stereo 3D type: this structure describes how two videos are packed
- * within a single video surface, with additional information as needed.
- *
- * @note The struct must be allocated with av_stereo3d_alloc() and
- *       its size is not a part of the public ABI.
- */
-type AVStereo3D struct {
-	instance uintptr
-	// 特殊情况下使用，主要应对Go的GC问题，与LCL没有太多关系。
-	ptr unsafe.Pointer
-}
-
-type AVTEA struct {
-	instance uintptr
-	// 特殊情况下使用，主要应对Go的GC问题，与LCL没有太多关系。
-	ptr unsafe.Pointer
-}
-
-type AVThreadMessageQueue struct {
 	instance uintptr
 	// 特殊情况下使用，主要应对Go的GC问题，与LCL没有太多关系。
 	ptr unsafe.Pointer

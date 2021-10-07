@@ -2,6 +2,7 @@ package libavutil
 
 import (
 	"ffmpeg-go/ffcommon"
+	"syscall"
 	"unsafe"
 )
 
@@ -153,6 +154,23 @@ func (tc *AVTimecode) av_timecode_make_string(buf ffcommon.FBuf, framenum ffcomm
 // * @return           the buf parameter
 // */
 //char *av_timecode_make_smpte_tc_string2(char *buf, AVRational rate, uint32_t tcsmpte, int prevent_df, int skip_field);
+//未测试
+func AvTimecodeMakeSmpteTcString2(buf ffcommon.FBuf, rate AVRational, tcsmpte ffcommon.FUint32T, prevent_df ffcommon.FInt, skip_field ffcommon.FInt) (res ffcommon.FCharP, err error) {
+	var t uintptr
+	t, _, err = ffcommon.GetAvutilDll().NewProc("av_timecode_make_smpte_tc_string2").Call(
+		uintptr(unsafe.Pointer(buf)),
+		uintptr(unsafe.Pointer(&rate)),
+		uintptr(tcsmpte),
+		uintptr(prevent_df),
+		uintptr(skip_field),
+	)
+	if err != nil {
+		//return
+	}
+	res = ffcommon.GoAStr(t)
+	return
+}
+
 //
 ///**
 // * Get the timecode string from the SMPTE timecode format.
@@ -164,6 +182,21 @@ func (tc *AVTimecode) av_timecode_make_string(buf ffcommon.FBuf, framenum ffcomm
 // * @return           the buf parameter
 // */
 //char *av_timecode_make_smpte_tc_string(char *buf, uint32_t tcsmpte, int prevent_df);
+//未测试
+func AvTimecodeMakeSmpteTcString(buf ffcommon.FBuf, tcsmpte ffcommon.FUint32T, prevent_df ffcommon.FInt) (res ffcommon.FCharP, err error) {
+	var t uintptr
+	t, _, err = ffcommon.GetAvutilDll().NewProc("av_timecode_make_smpte_tc_string").Call(
+		uintptr(unsafe.Pointer(buf)),
+		uintptr(tcsmpte),
+		uintptr(prevent_df),
+	)
+	if err != nil {
+		//return
+	}
+	res = ffcommon.GoAStr(t)
+	return
+}
+
 //
 ///**
 // * Get the timecode string from the 25-bit timecode format (MPEG GOP format).
@@ -173,6 +206,20 @@ func (tc *AVTimecode) av_timecode_make_string(buf ffcommon.FBuf, framenum ffcomm
 // * @return        the buf parameter
 // */
 //char *av_timecode_make_mpeg_tc_string(char *buf, uint32_t tc25bit);
+//未测试
+func AvTimecodeMakeMpegTcString(buf ffcommon.FBuf, tc25bit ffcommon.FUint32T) (res ffcommon.FCharP, err error) {
+	var t uintptr
+	t, _, err = ffcommon.GetAvutilDll().NewProc("av_timecode_make_mpeg_tc_string").Call(
+		uintptr(unsafe.Pointer(buf)),
+		uintptr(tc25bit),
+	)
+	if err != nil {
+		//return
+	}
+	res = ffcommon.GoAStr(t)
+	return
+}
+
 //
 ///**
 // * Init a timecode struct with the passed parameters.
@@ -187,6 +234,23 @@ func (tc *AVTimecode) av_timecode_make_string(buf ffcommon.FBuf, framenum ffcomm
 // * @return            0 on success, AVERROR otherwise
 // */
 //int av_timecode_init(AVTimecode *tc, AVRational rate, int flags, int frame_start, void *log_ctx);
+//未测试
+func (tc *AVTimecode) AvTimecodeInit(rate AVRational, flags ffcommon.FInt, frame_start ffcommon.FInt, log_ctx ffcommon.FVoidP) (res ffcommon.FInt, err error) {
+	var t uintptr
+	t, _, err = ffcommon.GetAvutilDll().NewProc("av_timecode_init").Call(
+		uintptr(unsafe.Pointer(tc)),
+		uintptr(unsafe.Pointer(&rate)),
+		uintptr(flags),
+		uintptr(frame_start),
+		uintptr(log_ctx),
+	)
+	if err != nil {
+		//return
+	}
+	res = ffcommon.FInt(t)
+	return
+}
+
 //
 ///**
 // * Init a timecode struct from the passed timecode components.
@@ -204,6 +268,26 @@ func (tc *AVTimecode) av_timecode_make_string(buf ffcommon.FBuf, framenum ffcomm
 // * @return            0 on success, AVERROR otherwise
 // */
 //int av_timecode_init_from_components(AVTimecode *tc, AVRational rate, int flags, int hh, int mm, int ss, int ff, void *log_ctx);
+//未测试
+func (tc *AVTimecode) AvTimecodeInitFromComponents(rate AVRational, flags ffcommon.FInt, hh ffcommon.FInt, mm ffcommon.FInt, ss ffcommon.FInt, ff ffcommon.FInt, log_ctx ffcommon.FVoidP) (res ffcommon.FInt, err error) {
+	var t uintptr
+	t, _, err = ffcommon.GetAvutilDll().NewProc("av_timecode_init_from_components").Call(
+		uintptr(unsafe.Pointer(tc)),
+		uintptr(unsafe.Pointer(&rate)),
+		uintptr(flags),
+		uintptr(hh),
+		uintptr(mm),
+		uintptr(ss),
+		uintptr(ff),
+		uintptr(log_ctx),
+	)
+	if err != nil {
+		//return
+	}
+	res = ffcommon.FInt(t)
+	return
+}
+
 //
 ///**
 // * Parse timecode representation (hh:mm:ss[:;.]ff).
@@ -216,6 +300,27 @@ func (tc *AVTimecode) av_timecode_make_string(buf ffcommon.FBuf, framenum ffcomm
 // * @return        0 on success, AVERROR otherwise
 // */
 //int av_timecode_init_from_string(AVTimecode *tc, AVRational rate, const char *str, void *log_ctx);
+//未测试
+func (tc *AVTimecode) AvTimecodeInitFromString(rate AVRational, str ffcommon.FConstCharP, log_ctx ffcommon.FVoidP) (res ffcommon.FInt, err error) {
+	var t uintptr
+	var strptr *byte
+	strptr, err = syscall.BytePtrFromString(str)
+	if err != nil {
+		return
+	}
+	t, _, err = ffcommon.GetAvutilDll().NewProc("av_timecode_init_from_string").Call(
+		uintptr(unsafe.Pointer(tc)),
+		uintptr(unsafe.Pointer(&rate)),
+		uintptr(unsafe.Pointer(strptr)),
+		uintptr(log_ctx),
+	)
+	if err != nil {
+		//return
+	}
+	res = ffcommon.FInt(t)
+	return
+}
+
 //
 ///**
 // * Check if the timecode feature is available for the given frame rate
@@ -223,3 +328,15 @@ func (tc *AVTimecode) av_timecode_make_string(buf ffcommon.FBuf, framenum ffcomm
 // * @return 0 if supported, <0 otherwise
 // */
 //int av_timecode_check_frame_rate(AVRational rate);
+//未测试
+func AvTimecodeCheckFrameRate(rate AVRational) (res ffcommon.FInt, err error) {
+	var t uintptr
+	t, _, err = ffcommon.GetAvutilDll().NewProc("av_timecode_check_frame_rate").Call(
+		uintptr(unsafe.Pointer(&rate)),
+	)
+	if err != nil {
+		//return
+	}
+	res = ffcommon.FInt(t)
+	return
+}

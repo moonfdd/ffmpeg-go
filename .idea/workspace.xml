@@ -20,27 +20,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c2890d4-1914-4350-9b85-9115ad68d096" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/ffcommon/common.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ffcommon/loadavutildll.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavfilter/buffersrc.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/aaastruct.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/adler32.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/aes.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/avutil.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/timecode.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/timestamp.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/tree.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/twofish.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/tx.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/version.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/video_enc_params.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/xtea.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/dict.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/frame.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/stereo3d.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/tea.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/threadmessage.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/time.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ffcommon/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/ffcommon/types.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavformat/avio.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavformat/avio.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libswresample/swresample.go" beforeDir="false" afterPath="$PROJECT_DIR$/libswresample/swresample.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libswscale/swscale.go" beforeDir="false" afterPath="$PROJECT_DIR$/libswscale/swscale.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libavutil/aaastruct.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavutil/aaastruct.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libavutil/timecode.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavutil/timecode.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,22 +134,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="946" y="271" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1633434059129" />
-    <state width="1753" height="262" key="GridCell.Tab.0.bottom" timestamp="1633599779809">
+    <state width="1753" height="262" key="GridCell.Tab.0.bottom" timestamp="1633612113648">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1753" height="262" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1633599779809" />
-    <state width="1753" height="262" key="GridCell.Tab.0.center" timestamp="1633599779809">
+    <state width="1753" height="262" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1633612113648" />
+    <state width="1753" height="262" key="GridCell.Tab.0.center" timestamp="1633612113648">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1753" height="262" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1633599779809" />
-    <state width="1753" height="262" key="GridCell.Tab.0.left" timestamp="1633599779809">
+    <state width="1753" height="262" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1633612113648" />
+    <state width="1753" height="262" key="GridCell.Tab.0.left" timestamp="1633612113648">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1753" height="262" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1633599779809" />
-    <state width="1753" height="262" key="GridCell.Tab.0.right" timestamp="1633599779809">
+    <state width="1753" height="262" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1633612113648" />
+    <state width="1753" height="262" key="GridCell.Tab.0.right" timestamp="1633612113648">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1753" height="262" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1633599779809" />
+    <state width="1753" height="262" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1633612113648" />
     <state x="706" y="202" key="SettingsEditor" timestamp="1633434917196">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
