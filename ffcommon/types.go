@@ -2,7 +2,7 @@ package ffcommon
 
 type FInt = int32
 type FUint = uint32
-type FUnsigned = int32
+type FUnsigned = uint32
 type FUint32T = uint32
 type FInt32T = int32
 type FConstCharP = string

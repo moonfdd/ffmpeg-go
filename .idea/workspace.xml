@@ -20,15 +20,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c2890d4-1914-4350-9b85-9115ad68d096" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/libavutil/dict.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/frame.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/stereo3d.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/tea.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/threadmessage.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/time.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/pixelutils.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/pixfmt.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/random_seed.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/rational.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/rc4.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/replaygain.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/ripemd.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/samplefmt.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/sha.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/sha512.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/spherical.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ffcommon/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/ffcommon/types.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libavutil/aaastruct.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavutil/aaastruct.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavutil/timecode.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavutil/timecode.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libavutil/stereo3d.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavutil/stereo3d.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,30 +141,30 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="946" y="271" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1633434059129" />
-    <state width="1753" height="262" key="GridCell.Tab.0.bottom" timestamp="1633612113648">
+    <state width="1753" height="262" key="GridCell.Tab.0.bottom" timestamp="1633697084594">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1753" height="262" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1633612113648" />
-    <state width="1753" height="262" key="GridCell.Tab.0.center" timestamp="1633612113648">
+    <state width="1753" height="262" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1633697084594" />
+    <state width="1753" height="262" key="GridCell.Tab.0.center" timestamp="1633697084590">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1753" height="262" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1633612113648" />
-    <state width="1753" height="262" key="GridCell.Tab.0.left" timestamp="1633612113648">
+    <state width="1753" height="262" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1633697084590" />
+    <state width="1753" height="262" key="GridCell.Tab.0.left" timestamp="1633697084589">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1753" height="262" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1633612113648" />
-    <state width="1753" height="262" key="GridCell.Tab.0.right" timestamp="1633612113648">
+    <state width="1753" height="262" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1633697084589" />
+    <state width="1753" height="262" key="GridCell.Tab.0.right" timestamp="1633697084591">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1753" height="262" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1633612113648" />
+    <state width="1753" height="262" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1633697084591" />
     <state x="706" y="202" key="SettingsEditor" timestamp="1633434917196">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="706" y="202" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1633434917196" />
-    <state x="614" y="222" width="596" height="594" key="find.popup" timestamp="1633570078834">
+    <state x="614" y="222" width="596" height="594" key="find.popup" timestamp="1633696100113">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="614" y="222" width="596" height="594" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1633570078834" />
+    <state x="614" y="222" width="596" height="594" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1633696100113" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

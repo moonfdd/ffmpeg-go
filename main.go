@@ -45,6 +45,10 @@ func AvutilVersion() uint {
 //https://blog.csdn.net/u010824081/article/details/79427676
 func main() {
 	if true {
+		ret, _ := libavutil.AvSphericalFromName("abc哈哈")
+		fmt.Println("AvSphericalFromName = ", ret)
+	}
+	if false {
 		type add = func(a, b int) int
 		var a add
 		a = func(a, b int) int {

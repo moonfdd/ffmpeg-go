@@ -3,6 +3,7 @@ package libavutil
 import (
 	"ffmpeg-go/ffcommon"
 	"ffmpeg-go/ffconstant"
+	"syscall"
 	"unsafe"
 )
 
@@ -57,6 +58,19 @@ func AvStereo3dAlloc() (res *AVStereo3D, err error) {
 // * @return The AVStereo3D structure to be filled by caller.
 // */
 //AVStereo3D *av_stereo3d_create_side_data(AVFrame *frame);
+//未测试
+func (frame *AVFrame) AvStereo3dCreateSideData() (res *AVStereo3D, err error) {
+	var t uintptr
+	t, _, _ = ffcommon.GetAvutilDll().NewProc("av_stereo3d_create_side_data").Call(
+		uintptr(unsafe.Pointer(frame)),
+	)
+	if err != nil {
+		//return
+	}
+	res = (*AVStereo3D)(unsafe.Pointer(t))
+	return
+}
+
 //
 ///**
 // * Provide a human-readable name of a given stereo3d type.
@@ -66,6 +80,19 @@ func AvStereo3dAlloc() (res *AVStereo3D, err error) {
 // * @return The name of the stereo3d value, or "unknown".
 // */
 //const char *av_stereo3d_type_name(unsigned int type);
+//未测试
+func AvStereo3dTypeName(type0 ffcommon.FUint) (res ffcommon.FConstCharP, err error) {
+	var t uintptr
+	t, _, _ = ffcommon.GetAvutilDll().NewProc("av_stereo3d_type_name").Call(
+		uintptr(type0),
+	)
+	if err != nil {
+		//return
+	}
+	res = ffcommon.GoAStr(t)
+	return
+}
+
 //
 ///**
 // * Get the AVStereo3DType form a human-readable name.
@@ -75,3 +102,20 @@ func AvStereo3dAlloc() (res *AVStereo3D, err error) {
 // * @return The AVStereo3DType value, or -1 if not found.
 // */
 //int av_stereo3d_from_name(const char *name);
+//未测试
+func AvStereo3dFromName(name ffcommon.FConstCharP) (res ffcommon.FInt, err error) {
+	var t uintptr
+	var namep *byte
+	namep, err = syscall.BytePtrFromString(name)
+	if err != nil {
+		return
+	}
+	t, _, _ = ffcommon.GetAvutilDll().NewProc("av_stereo3d_from_name").Call(
+		uintptr(unsafe.Pointer(namep)),
+	)
+	if err != nil {
+		//return
+	}
+	res = ffcommon.FInt(t)
+	return
+}

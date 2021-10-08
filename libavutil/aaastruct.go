@@ -5,11 +5,6 @@ import (
 	"unsafe"
 )
 
-type AVRational struct {
-	Num ffcommon.FInt ///< Numerator
-	Den ffcommon.FInt ///< Denominator
-}
-
 type AVAESCTR struct {
 	instance uintptr
 	// 特殊情况下使用，主要应对Go的GC问题，与LCL没有太多关系。
@@ -778,59 +773,6 @@ type AVComponentDescriptor struct {
  *       are stored not what these values represent.
  */
 type AVPixFmtDescriptor struct {
-	instance uintptr
-	// 特殊情况下使用，主要应对Go的GC问题，与LCL没有太多关系。
-	ptr unsafe.Pointer
-}
-
-/**
- * @defgroup lavu_rc4 RC4
- * @ingroup lavu_crypto
- * @{
- */
-type AVRC4 struct {
-	instance uintptr
-	// 特殊情况下使用，主要应对Go的GC问题，与LCL没有太多关系。
-	ptr unsafe.Pointer
-}
-
-/**
- * ReplayGain information (see
- * http://wiki.hydrogenaudio.org/index.php?title=ReplayGain_1.0_specification).
- * The size of this struct is a part of the public ABI.
- */
-type AVReplayGain struct {
-	instance uintptr
-	// 特殊情况下使用，主要应对Go的GC问题，与LCL没有太多关系。
-	ptr unsafe.Pointer
-}
-
-type AVRIPEMD struct {
-	instance uintptr
-	// 特殊情况下使用，主要应对Go的GC问题，与LCL没有太多关系。
-	ptr unsafe.Pointer
-}
-
-type AVSHA struct {
-	instance uintptr
-	// 特殊情况下使用，主要应对Go的GC问题，与LCL没有太多关系。
-	ptr unsafe.Pointer
-}
-
-type AVSHA512 struct {
-	instance uintptr
-	// 特殊情况下使用，主要应对Go的GC问题，与LCL没有太多关系。
-	ptr unsafe.Pointer
-}
-
-/**
- * This structure describes how to handle spherical videos, outlining
- * information about projection, initial layout, and any other view modifier.
- *
- * @note The struct must be allocated with av_spherical_alloc() and
- *       its size is not a part of the public ABI.
- */
-type AVSphericalMapping struct {
 	instance uintptr
 	// 特殊情况下使用，主要应对Go的GC问题，与LCL没有太多关系。
 	ptr unsafe.Pointer
