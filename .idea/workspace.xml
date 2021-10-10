@@ -20,21 +20,55 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c2890d4-1914-4350-9b85-9115ad68d096" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/libavutil/pixelutils.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/pixfmt.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/random_seed.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/rational.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/rc4.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/replaygain.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/ripemd.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/samplefmt.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/sha.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/sha512.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/spherical.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/crc.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/des.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/display.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/dovi_meta.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/downmix_info.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/encryption_info.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/error.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/eval.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/ffversion.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/fifo.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/file.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/film_grain_params.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hash.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hdr_dynamic_metadata.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hmac.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_cuda.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_d3d11va.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_drm.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_dxva2.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_mediacodec.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_opencl.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_qsv.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_vaapi.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_vdpau.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_videotoolbox.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_vulkan.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/imgutils.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/intfloat.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/intreadwrite.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/lfg.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/log.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/lzo.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/macros.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/mastering_display_metadata.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/mathematics.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/md5.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/mem.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/motion_vector.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/murmur3.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/opt.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/parseutils.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/pixdesc.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ffcommon/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/ffcommon/types.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ffconstant/libavutil_hdr_dynamic_metadata.go" beforeDir="false" afterPath="$PROJECT_DIR$/ffconstant/libavutil_hdr_dynamic_metadata.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libavutil/aaastruct.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavutil/aaastruct.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavutil/stereo3d.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavutil/stereo3d.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libavutil/dict.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavutil/dict.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libavutil/frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavutil/frame.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -141,30 +175,30 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="946" y="271" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1633434059129" />
-    <state width="1753" height="262" key="GridCell.Tab.0.bottom" timestamp="1633697084594">
+    <state width="1753" height="262" key="GridCell.Tab.0.bottom" timestamp="1633707008508">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1753" height="262" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1633697084594" />
-    <state width="1753" height="262" key="GridCell.Tab.0.center" timestamp="1633697084590">
+    <state width="1753" height="262" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1633707008508" />
+    <state width="1753" height="262" key="GridCell.Tab.0.center" timestamp="1633707008508">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1753" height="262" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1633697084590" />
-    <state width="1753" height="262" key="GridCell.Tab.0.left" timestamp="1633697084589">
+    <state width="1753" height="262" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1633707008508" />
+    <state width="1753" height="262" key="GridCell.Tab.0.left" timestamp="1633707008507">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1753" height="262" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1633697084589" />
-    <state width="1753" height="262" key="GridCell.Tab.0.right" timestamp="1633697084591">
+    <state width="1753" height="262" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1633707008507" />
+    <state width="1753" height="262" key="GridCell.Tab.0.right" timestamp="1633707008508">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1753" height="262" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1633697084591" />
+    <state width="1753" height="262" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1633707008508" />
     <state x="706" y="202" key="SettingsEditor" timestamp="1633434917196">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="706" y="202" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1633434917196" />
-    <state x="614" y="222" width="596" height="594" key="find.popup" timestamp="1633696100113">
+    <state x="614" y="222" width="596" height="594" key="find.popup" timestamp="1633849855045">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="614" y="222" width="596" height="594" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1633696100113" />
+    <state x="614" y="222" width="596" height="594" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1633849855045" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

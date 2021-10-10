@@ -44,7 +44,7 @@ func AvutilVersion() uint {
 
 //https://blog.csdn.net/u010824081/article/details/79427676
 func main() {
-	if true {
+	if false {
 		ret, _ := libavutil.AvSphericalFromName("abc哈哈")
 		fmt.Println("AvSphericalFromName = ", ret)
 	}
@@ -157,9 +157,9 @@ func main() {
 	//	fmt.Println("AvGetTimeBaseQ retnum = ", ret.Num)
 	//}
 
-	if false {
+	if true {
 
-		ret, _ := libavutil.AvFourccMakeString((*byte)(unsafe.Pointer(&([]byte{'a', 'b', 'c'}))), 3)
+		ret, _ := libavutil.AvFourccMakeString((*byte)(unsafe.Pointer(&([32]byte{'a', 'b', 'c'}))), 3)
 		fmt.Println("AvFourccMakeString ret = ", ret)
 	}
 
