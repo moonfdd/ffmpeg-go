@@ -22,12 +22,6 @@ type AVBlowfish struct {
 	ptr unsafe.Pointer
 }
 
-type AVBPrint struct {
-	instance uintptr
-	// 特殊情况下使用，主要应对Go的GC问题，与LCL没有太多关系。
-	ptr unsafe.Pointer
-}
-
 /**
  * @defgroup lavu_buffer AVBuffer
  * @ingroup lavu_data

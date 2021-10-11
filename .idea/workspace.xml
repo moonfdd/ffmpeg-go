@@ -20,56 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c2890d4-1914-4350-9b85-9115ad68d096" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/libavutil/crc.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/des.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/display.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/dovi_meta.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/downmix_info.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/encryption_info.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/error.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/eval.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/ffversion.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/fifo.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/file.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/film_grain_params.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/hash.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/hdr_dynamic_metadata.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/hmac.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_cuda.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_d3d11va.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_drm.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_dxva2.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_mediacodec.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_opencl.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_qsv.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_vaapi.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_vdpau.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_videotoolbox.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/hwcontext_vulkan.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/imgutils.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/intfloat.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/intreadwrite.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/lfg.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/log.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/lzo.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/macros.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/mastering_display_metadata.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/mathematics.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/md5.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/mem.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/motion_vector.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/murmur3.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/opt.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/parseutils.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/pixdesc.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/channel_layout.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/common.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ffcommon/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/ffcommon/types.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ffconstant/libavutil_hdr_dynamic_metadata.go" beforeDir="false" afterPath="$PROJECT_DIR$/ffconstant/libavutil_hdr_dynamic_metadata.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libavutil/aaastruct.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavutil/aaastruct.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavutil/dict.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavutil/dict.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavutil/frame.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavutil/frame.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libavutil/cpu.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavutil/cpu.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
