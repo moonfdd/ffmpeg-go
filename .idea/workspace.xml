@@ -20,11 +20,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c2890d4-1914-4350-9b85-9115ad68d096" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/libavutil/channel_layout.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/common.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/bprint.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/bswap.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/buffer.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/camellia.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libavutil/aaastruct.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavutil/aaastruct.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavutil/cpu.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavutil/cpu.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libavutil/cast5.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavutil/cast5.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

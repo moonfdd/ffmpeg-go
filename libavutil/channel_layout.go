@@ -107,9 +107,6 @@ func AvGetChannelLayoutString(buf ffcommon.FBuf, buf_size ffcommon.FInt, nb_chan
 	return
 }
 
-type AVBPrint struct {
-}
-
 /**
  * Append a description of a channel layout to a bprint buffer.
  */
