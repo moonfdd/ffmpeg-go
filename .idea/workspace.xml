@@ -20,13 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c2890d4-1914-4350-9b85-9115ad68d096" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/libavutil/bprint.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/bswap.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/buffer.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/camellia.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavutil/blowfish.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libavutil/aaastruct.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavutil/aaastruct.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavutil/cast5.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavutil/cast5.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libavutil/bprint.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavutil/bprint.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +63,7 @@
       <recent name="D:\mysetup\gopath\src\ffmpeg-go" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Build.go build ffmpeg-go">
+  <component name="RunManager" selected="Go Build.go build ffmpeg-go/libavutil">
     <configuration name="go build ffmpeg-go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="ffmpeg-go" />
       <working_directory value="$PROJECT_DIR$" />
@@ -83,6 +80,14 @@
       <directory value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
+    <configuration name="go build ffmpeg-go/libavutil" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="ffmpeg-go" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="ffmpeg-go/libavutil" />
+      <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
     <configuration name="go build ffmpeg-go/libswscale" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="ffmpeg-go" />
       <working_directory value="$PROJECT_DIR$" />
@@ -93,6 +98,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Build.go build ffmpeg-go/libavutil" />
         <item itemvalue="Go Build.go build ffmpeg-go" />
         <item itemvalue="Go Build.go build ffmpeg-go/libswscale" />
         <item itemvalue="Go Build.go build ffmpeg-go/constant" />
