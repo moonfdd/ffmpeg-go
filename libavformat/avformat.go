@@ -5,8 +5,8 @@ import (
 	"ffmpeg-go/ffconstant"
 )
 
-type AVFormatContext struct {
-}
+//type AVFormatContext struct {
+//}
 
 type AVDeviceInfoList struct {
 }

@@ -29,7 +29,10 @@ type FAVAdler = uint32
 type FFileP = uintptr
 
 type FPtrdiffT = int64
+type FShort = int16
 
 type FUint16T = uint16
 type FTimeT = int64
 type FVaList = *byte
+
+type FFTSample = float32
