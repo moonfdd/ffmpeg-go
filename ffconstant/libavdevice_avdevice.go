@@ -179,3 +179,4 @@ package ffconstant
 // */
 //AV_DEV_TO_APP_VOLUME_LEVEL_CHANGED = MKBETAG('C','V','O','L'),
 //};
+type AVAppToDevMessageType int32

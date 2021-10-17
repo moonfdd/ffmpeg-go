@@ -20,44 +20,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c2890d4-1914-4350-9b85-9115ad68d096" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/libavcodec/aaastruct.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavcodec/ac3_parser.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavcodec/adts_parser.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavcodec/avcodec.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavcodec/avdct.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavcodec/avfft.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavcodec/bsf.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavcodec/codec.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavcodec/codec_desc.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavcodec/codec_id.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavcodec/codec_par.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavcodec/d3d11va.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavcodec/dirac.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavcodec/dv_profile.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavcodec/dxva2.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavcodec/jni.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavcodec/mediacodec.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavcodec/packet.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavcodec/qsv.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavcodec/vaapi.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavcodec/vdpau.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavcodec/version.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavcodec/videotoolbox.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavcodec/vorbis_parser.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavcodec/xvmc.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavdevice/avdevice.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavdevice/version.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavformat/aaastruct.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/aes_ctr.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/attributes.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/audio_fifo.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libavutil/avconfig.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavdevice/aaastruct.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavfilter/aaastruct.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavfilter/avfilter.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libavfilter/buffersink.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ffcommon/loadavutildll.go" beforeDir="false" afterPath="$PROJECT_DIR$/ffcommon/loadavutildll.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ffcommon/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/ffcommon/types.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ffconstant/libavdevice_avdevice.go" beforeDir="false" afterPath="$PROJECT_DIR$/ffconstant/libavdevice_avdevice.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libavdevice/avdevice.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavdevice/avdevice.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libavfilter/buffersrc.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavfilter/buffersrc.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libavformat/aaastruct.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavformat/aaastruct.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libavformat/avformat.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavformat/avformat.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavutil/aaastruct.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavutil/aaastruct.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavutil/avstring.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavutil/avstring.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +69,7 @@
       <recent name="D:\mysetup\gopath\src\ffmpeg-go" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Build.go build ffmpeg-go/libavcodec">
+  <component name="RunManager" selected="Go Build.go build ffmpeg-go/libavformat">
     <configuration name="go build ffmpeg-go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="ffmpeg-go" />
       <working_directory value="$PROJECT_DIR$" />
@@ -106,19 +78,19 @@
       <directory value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
-    <configuration name="go build ffmpeg-go/constant" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="ffmpeg-go" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="PACKAGE" />
-      <package value="ffmpeg-go/constant" />
-      <directory value="$PROJECT_DIR$" />
-      <method v="2" />
-    </configuration>
     <configuration name="go build ffmpeg-go/libavcodec" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="ffmpeg-go" />
       <working_directory value="$PROJECT_DIR$" />
       <kind value="PACKAGE" />
       <package value="ffmpeg-go/libavcodec" />
+      <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build ffmpeg-go/libavformat" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="ffmpeg-go" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="ffmpeg-go/libavformat" />
       <directory value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
@@ -140,11 +112,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Build.go build ffmpeg-go/libavformat" />
         <item itemvalue="Go Build.go build ffmpeg-go/libavcodec" />
         <item itemvalue="Go Build.go build ffmpeg-go/libavutil" />
         <item itemvalue="Go Build.go build ffmpeg-go" />
         <item itemvalue="Go Build.go build ffmpeg-go/libswscale" />
-        <item itemvalue="Go Build.go build ffmpeg-go/constant" />
       </list>
     </recent_temporary>
   </component>
@@ -181,22 +153,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="946" y="271" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1633434059129" />
-    <state width="1877" height="277" key="GridCell.Tab.0.bottom" timestamp="1634391221482">
+    <state width="1877" height="277" key="GridCell.Tab.0.bottom" timestamp="1634394512669">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1634391221482" />
-    <state width="1877" height="277" key="GridCell.Tab.0.center" timestamp="1634391221481">
+    <state width="1877" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1634394512669" />
+    <state width="1877" height="277" key="GridCell.Tab.0.center" timestamp="1634394512668">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="277" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1634391221481" />
-    <state width="1877" height="277" key="GridCell.Tab.0.left" timestamp="1634391221481">
+    <state width="1877" height="277" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1634394512668" />
+    <state width="1877" height="277" key="GridCell.Tab.0.left" timestamp="1634394512668">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="277" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1634391221481" />
-    <state width="1877" height="277" key="GridCell.Tab.0.right" timestamp="1634391221482">
+    <state width="1877" height="277" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1634394512668" />
+    <state width="1877" height="277" key="GridCell.Tab.0.right" timestamp="1634394512668">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="277" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1634391221482" />
+    <state width="1877" height="277" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1634394512668" />
     <state x="706" y="202" key="SettingsEditor" timestamp="1633434917196">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

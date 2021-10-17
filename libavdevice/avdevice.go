@@ -2,6 +2,9 @@ package libavdevice
 
 import (
 	"ffmpeg-go/ffcommon"
+	"ffmpeg-go/ffconstant"
+	"ffmpeg-go/libavutil"
+	"syscall"
 	"unsafe"
 )
 
@@ -14,6 +17,7 @@ func AvdeviceVersion() (res ffcommon.FUint, err error) {
 	res = ffcommon.FUint(t)
 	return
 }
+
 /**
  * Return the libavdevice build-time configuration.
  */
@@ -23,6 +27,7 @@ func AvdeviceConfiguration() (res ffcommon.FConstCharP, err error) {
 	res = ffcommon.GoAStr(t)
 	return
 }
+
 /**
  * Return the libavdevice license.
  */
@@ -32,17 +37,19 @@ func AvdeviceLicense() (res ffcommon.FConstCharP, err error) {
 	res = ffcommon.GoAStr(t)
 	return
 }
+
 /**
  * Initialize libavdevice and register all the input and output devices.
  */
 //void avdevice_register_all(void);
-func AvdeviceRegisterAll() ( err error) {
+func AvdeviceRegisterAll() (err error) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("avdevice_register_all").Call()
-	if t==0{
+	if t == 0 {
 
 	}
 	return
 }
+
 /**
  * Audio input devices iterator.
  *
@@ -52,13 +59,14 @@ func AvdeviceRegisterAll() ( err error) {
  */
 //AVInputFormat *av_input_audio_device_next(AVInputFormat  *d);
 //未测试
-func (d *AVInputFormat)AvInputAudioDeviceNext() (res *AVInputFormat, err error) {
+func (d *AVInputFormat) AvInputAudioDeviceNext() (res *AVInputFormat, err error) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_input_audio_device_next").Call(
 		uintptr(unsafe.Pointer(d)),
-		)
+	)
 	res = (*AVInputFormat)(unsafe.Pointer(t))
 	return
 }
+
 /**
  * Video input devices iterator.
  *
@@ -68,13 +76,14 @@ func (d *AVInputFormat)AvInputAudioDeviceNext() (res *AVInputFormat, err error) 
  */
 //AVInputFormat *av_input_video_device_next(AVInputFormat  *d);
 //未测试
-func (d *AVInputFormat)AvInputVideoDeviceNext() (res *AVInputFormat, err error) {
+func (d *AVInputFormat) AvInputVideoDeviceNext() (res *AVInputFormat, err error) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_input_video_device_next").Call(
 		uintptr(unsafe.Pointer(d)),
 	)
 	res = (*AVInputFormat)(unsafe.Pointer(t))
 	return
 }
+
 /**
  * Audio output devices iterator.
  *
@@ -84,13 +93,14 @@ func (d *AVInputFormat)AvInputVideoDeviceNext() (res *AVInputFormat, err error) 
  */
 //AVOutputFormat *av_output_audio_device_next(AVOutputFormat *d);
 //未测试
-func (d *AVOutputFormat)AvOutputAudioDeviceNext() (res *AVOutputFormat, err error) {
+func (d *AVOutputFormat) AvOutputAudioDeviceNext() (res *AVOutputFormat, err error) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_output_audio_device_next").Call(
 		uintptr(unsafe.Pointer(d)),
 	)
 	res = (*AVOutputFormat)(unsafe.Pointer(t))
 	return
 }
+
 /**
  * Video output devices iterator.
  *
@@ -100,7 +110,7 @@ func (d *AVOutputFormat)AvOutputAudioDeviceNext() (res *AVOutputFormat, err erro
  */
 //AVOutputFormat *av_output_video_device_next(AVOutputFormat *d);
 //未测试
-func (d *AVOutputFormat)AvOutputVideoDeviceNext() (res *AVOutputFormat, err error) {
+func (d *AVOutputFormat) AvOutputVideoDeviceNext() (res *AVOutputFormat, err error) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_output_video_device_next").Call(
 		uintptr(unsafe.Pointer(d)),
 	)
@@ -108,11 +118,11 @@ func (d *AVOutputFormat)AvOutputVideoDeviceNext() (res *AVOutputFormat, err erro
 	return
 }
 
-type  AVDeviceRect struct {
-//int x;      /**< x coordinate of top left corner */
-//int y;      /**< y coordinate of top left corner */
-//int width;  /**< width */
-//int height; /**< height */
+type AVDeviceRect struct {
+	//int x;      /**< x coordinate of top left corner */
+	//int y;      /**< y coordinate of top left corner */
+	//int width;  /**< width */
+	//int height; /**< height */
 }
 
 /**
@@ -125,9 +135,25 @@ type  AVDeviceRect struct {
  * @return >= 0 on success, negative on error.
  *         AVERROR(ENOSYS) when device doesn't implement handler of the message.
  */
-int avdevice_app_to_dev_control_message(struct AVFormatContext *s,
-enum AVAppToDevMessageType type,
-void *data, size_t data_size);
+//int avdevice_app_to_dev_control_message(struct AVFormatContext *s,
+//enum AVAppToDevMessageType type,
+//void *data, size_t data_size);
+//未测试
+func (s *AVFormatContext) AvdeviceAppToDevControlMessage(type0 ffconstant.AVAppToDevMessageType,
+	data ffcommon.FVoidP, data_siz ffcommon.FSizeT) (res ffcommon.FInt, err error) {
+	var t uintptr
+	t, _, _ = ffcommon.GetAvutilDll().NewProc("avdevice_app_to_dev_control_message").Call(
+		uintptr(unsafe.Pointer(s)),
+		uintptr(type0),
+		uintptr(unsafe.Pointer(data)),
+		uintptr(data_siz),
+	)
+	if err != nil {
+		//return
+	}
+	res = ffcommon.FInt(t)
+	return
+}
 
 /**
  * Send control message from device to application.
@@ -139,11 +165,27 @@ void *data, size_t data_size);
  * @return >= 0 on success, negative on error.
  *         AVERROR(ENOSYS) when application doesn't implement handler of the message.
  */
-int avdevice_dev_to_app_control_message(struct AVFormatContext *s,
-enum AVDevToAppMessageType type,
-void *data, size_t data_size);
+//int avdevice_dev_to_app_control_message(struct AVFormatContext *s,
+//enum AVDevToAppMessageType type,
+//void *data, size_t data_size);
+//未测试
+func (s *AVFormatContext) AvdeviceDevToAppControlMessage(type0 ffconstant.AVAppToDevMessageType,
+	data ffcommon.FVoidP, data_siz ffcommon.FSizeT) (res ffcommon.FInt, err error) {
+	var t uintptr
+	t, _, _ = ffcommon.GetAvutilDll().NewProc("avdevice_dev_to_app_control_message").Call(
+		uintptr(unsafe.Pointer(s)),
+		uintptr(type0),
+		uintptr(unsafe.Pointer(data)),
+		uintptr(data_siz),
+	)
+	if err != nil {
+		//return
+	}
+	res = ffcommon.FInt(t)
+	return
+}
 
-#if FF_API_DEVICE_CAPABILITIES
+//#if FF_API_DEVICE_CAPABILITIES
 /**
  * Following API allows user to probe device capabilities (supported codecs,
  * pixel formats, sample formats, resolutions, channel counts, etc).
@@ -220,27 +262,27 @@ void *data, size_t data_size);
  * It is used by devices in conjunction with av_device_capabilities AVOption table
  * to implement capabilities probing API based on AVOption API. Should not be used directly.
  */
-type  AVDeviceCapabilitiesQuery  struct{
-//const AVClass *av_class;
-//AVFormatContext *device_context;
-//enum AVCodecID codec;
-//enum AVSampleFormat sample_format;
-//enum AVPixelFormat pixel_format;
-//int sample_rate;
-//int channels;
-//int64_t channel_layout;
-//int window_width;
-//int window_height;
-//int frame_width;
-//int frame_height;
-//AVRational fps;
+type AVDeviceCapabilitiesQuery struct {
+	//const AVClass *av_class;
+	//AVFormatContext *device_context;
+	//enum AVCodecID codec;
+	//enum AVSampleFormat sample_format;
+	//enum AVPixelFormat pixel_format;
+	//int sample_rate;
+	//int channels;
+	//int64_t channel_layout;
+	//int window_width;
+	//int window_height;
+	//int frame_width;
+	//int frame_height;
+	//AVRational fps;
 }
 
 /**
  * AVOption table used by devices to implement device capabilities API. Should not be used by a user.
  */
-attribute_deprecated
-extern const AVOption av_device_capabilities[];
+//attribute_deprecated
+//extern const AVOption av_device_capabilities[];
 
 /**
  * Initialize capabilities probing API based on AVOption API.
@@ -259,9 +301,24 @@ extern const AVOption av_device_capabilities[];
  *
  * @return >= 0 on success, negative otherwise.
  */
-attribute_deprecated
-int avdevice_capabilities_create(AVDeviceCapabilitiesQuery **caps, AVFormatContext *s,
-AVDictionary **device_options);
+//attribute_deprecated
+//int avdevice_capabilities_create(AVDeviceCapabilitiesQuery **caps, AVFormatContext *s,
+//AVDictionary **device_options);
+//未测试
+func AvdeviceCapabilitiesCreate(caps **AVDeviceCapabilitiesQuery, s *AVFormatContext,
+	device_options **libavutil.AVDictionary) (res ffcommon.FInt, err error) {
+	var t uintptr
+	t, _, _ = ffcommon.GetAvutilDll().NewProc("avdevice_capabilities_create").Call(
+		uintptr(unsafe.Pointer(&caps)),
+		uintptr(unsafe.Pointer(s)),
+		uintptr(unsafe.Pointer(&device_options)),
+	)
+	if err != nil {
+		//return
+	}
+	res = ffcommon.FInt(t)
+	return
+}
 
 /**
  * Free resources created by avdevice_capabilities_create()
@@ -269,25 +326,40 @@ AVDictionary **device_options);
  * @param caps Device capabilities data to be freed.
  * @param s    Context of the device.
  */
-attribute_deprecated
-void avdevice_capabilities_free(AVDeviceCapabilitiesQuery **caps, AVFormatContext *s);
-#endif
+//attribute_deprecated
+//void avdevice_capabilities_free(AVDeviceCapabilitiesQuery **caps, AVFormatContext *s);
+//#endif
+//未测试
+func AvdeviceCapabilitiesFree(caps **AVDeviceCapabilitiesQuery, s *AVFormatContext) (err error) {
+	var t uintptr
+	t, _, _ = ffcommon.GetAvutilDll().NewProc("avdevice_capabilities_free").Call(
+		uintptr(unsafe.Pointer(&caps)),
+		uintptr(unsafe.Pointer(s)),
+	)
+	if err != nil {
+		//return
+	}
+	if t == 0 {
+
+	}
+	return
+}
 
 /**
  * Structure describes basic parameters of the device.
  */
-type AVDeviceInfo struct{
-//char *device_name;                   /**< device name, format depends on device */
-//char *device_description;            /**< human friendly name */
+type AVDeviceInfo struct {
+	//char *device_name;                   /**< device name, format depends on device */
+	//char *device_description;            /**< human friendly name */
 }
 
 /**
  * List of devices.
  */
 type AVDeviceInfoList struct {
-//AVDeviceInfo **devices;              /**< list of autodetected devices */
-//int nb_devices;                      /**< number of autodetected devices */
-//int default_device;                  /**< index of default device or -1 if no default */
+	//AVDeviceInfo **devices;              /**< list of autodetected devices */
+	//int nb_devices;                      /**< number of autodetected devices */
+	//int default_device;                  /**< index of default device or -1 if no default */
 }
 
 /**
@@ -303,14 +375,41 @@ type AVDeviceInfoList struct {
  * @param[out] device_list list of autodetected devices.
  * @return count of autodetected devices, negative on error.
  */
-int avdevice_list_devices(struct AVFormatContext *s, AVDeviceInfoList **device_list);
+//int avdevice_list_devices(struct AVFormatContext *s, AVDeviceInfoList **device_list);
+//未测试
+func (s *AVFormatContext) AvdeviceListDevices(device_list **AVDeviceInfoList) (res ffcommon.FInt, err error) {
+	var t uintptr
+	t, _, _ = ffcommon.GetAvutilDll().NewProc("avdevice_list_devices").Call(
+		uintptr(unsafe.Pointer(s)),
+		uintptr(unsafe.Pointer(&device_list)),
+	)
+	if err != nil {
+		//return
+	}
+	res = ffcommon.FInt(t)
+	return
+}
 
 /**
  * Convenient function to free result of avdevice_list_devices().
  *
  * @param devices device list to be freed.
  */
-void avdevice_free_list_devices(AVDeviceInfoList **device_list);
+//void avdevice_free_list_devices(AVDeviceInfoList **device_list);
+//未测试
+func AvdeviceFreeListDevices(device_list **AVDeviceInfoList) (err error) {
+	var t uintptr
+	t, _, _ = ffcommon.GetAvutilDll().NewProc("avdevice_free_list_devices").Call(
+		uintptr(unsafe.Pointer(&device_list)),
+	)
+	if err != nil {
+		//return
+	}
+	if t == 0 {
+
+	}
+	return
+}
 
 /**
  * List devices.
@@ -329,8 +428,50 @@ void avdevice_free_list_devices(AVDeviceInfoList **device_list);
  * @return count of autodetected devices, negative on error.
  * @note device argument takes precedence over device_name when both are set.
  */
-int avdevice_list_input_sources(struct AVInputFormat *device, const char *device_name,
-AVDictionary *device_options, AVDeviceInfoList **device_list);
-int avdevice_list_output_sinks(struct AVOutputFormat *device, const char *device_name,
-AVDictionary *device_options, AVDeviceInfoList **device_list);
+//int avdevice_list_input_sources(struct AVInputFormat *device, const char *device_name,
+//AVDictionary *device_options, AVDeviceInfoList **device_list);
+//未测试
+func (device *AVInputFormat) avdevice_list_input_sources(device_name ffcommon.FConstCharP,
+	device_options *libavutil.AVDictionary, device_list **AVDeviceInfoList) (res ffcommon.FInt, err error) {
+	var t uintptr
+	var device_namep *byte
+	device_namep, err = syscall.BytePtrFromString(device_name)
+	if err != nil {
+		return
+	}
+	t, _, _ = ffcommon.GetAvutilDll().NewProc("avdevice_list_input_sources").Call(
+		uintptr(unsafe.Pointer(device)),
+		uintptr(unsafe.Pointer(device_namep)),
+		uintptr(unsafe.Pointer(device_options)),
+		uintptr(unsafe.Pointer(&device_list)),
+	)
+	if err != nil {
+		//return
+	}
+	res = ffcommon.FInt(t)
+	return
+}
 
+//int avdevice_list_output_sinks(struct AVOutputFormat *device, const char *device_name,
+//AVDictionary *device_options, AVDeviceInfoList **device_list);
+//未测试
+func (device *AVOutputFormat) AvdeviceListOutputSinks(device_name ffcommon.FConstCharP,
+	device_options *libavutil.AVDictionary, device_list **AVDeviceInfoList) (res ffcommon.FInt, err error) {
+	var t uintptr
+	var device_namep *byte
+	device_namep, err = syscall.BytePtrFromString(device_name)
+	if err != nil {
+		return
+	}
+	t, _, _ = ffcommon.GetAvutilDll().NewProc("avdevice_list_output_sinks").Call(
+		uintptr(unsafe.Pointer(device)),
+		uintptr(unsafe.Pointer(device_namep)),
+		uintptr(unsafe.Pointer(device_options)),
+		uintptr(unsafe.Pointer(&device_list)),
+	)
+	if err != nil {
+		//return
+	}
+	res = ffcommon.FInt(t)
+	return
+}

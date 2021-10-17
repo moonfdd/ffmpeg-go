@@ -3,6 +3,7 @@ package libavformat
 import (
 	"ffmpeg-go/ffcommon"
 	"ffmpeg-go/ffconstant"
+	"ffmpeg-go/libavutil"
 )
 
 //type AVFormatContext struct {
@@ -551,7 +552,7 @@ func (s *AVFormatContext) AvformatFreeContext() {
  * @see av_opt_find().
  */
 //const AVClass *avformat_get_class(void);
-func AvformatGetClass() (res *AVClass) {
+func AvformatGetClass() (res *libavutil.AVClass) {
 	return
 }
 
@@ -1163,7 +1164,7 @@ func (s *AVFormatContext) AvInterleavedWriteFrame(pkt *AVPacket) (res ffcommon.F
  */
 //int av_write_uncoded_frame(AVFormatContext *s, int stream_index,
 //AVFrame *frame);
-func (s *AVFormatContext) AvWriteUncodedFrame(stream_index ffcommon.FInt, frame *AVFrame) (res ffcommon.FInt) {
+func (s *AVFormatContext) AvWriteUncodedFrame(stream_index ffcommon.FInt, frame *libavutil.AVFrame) (res ffcommon.FInt) {
 	return
 }
 
@@ -1185,7 +1186,7 @@ func (s *AVFormatContext) AvWriteUncodedFrame(stream_index ffcommon.FInt, frame 
  */
 //int av_interleaved_write_uncoded_frame(AVFormatContext *s, int stream_index,
 //AVFrame *frame);
-func (s *AVFormatContext) AvInterleavedWriteUncodedFrame(stream_index ffcommon.FInt, frame *AVFrame) (res ffcommon.FInt) {
+func (s *AVFormatContext) AvInterleavedWriteUncodedFrame(stream_index ffcommon.FInt, frame *libavutil.AVFrame) (res ffcommon.FInt) {
 	return
 }
 
@@ -1418,7 +1419,7 @@ func (st *AVStream) AvIndexSearchTimestamp(timestamp ffcommon.FInt64T, flags ffc
  */
 //int av_add_index_entry(AVStream *st, int64_t pos, int64_t timestamp,
 //int size, int distance, int flags);
-func (st *AVStream) AvIndexSearchTimestamp(pos ffcommon.FInt64T, timestamp ffcommon.FInt64T, size ffcommon.FInt, distance ffcommon.FInt, flags ffcommon.FInt) (res ffcommon.FInt) {
+func (st *AVStream) av_add_index_entry(pos ffcommon.FInt64T, timestamp ffcommon.FInt64T, size ffcommon.FInt, distance ffcommon.FInt, flags ffcommon.FInt) (res ffcommon.FInt) {
 	return
 }
 
@@ -1631,7 +1632,7 @@ func avformat_get_mov_audio_tags() (res *AVCodecTag) {
  * @return the guessed (valid) sample_aspect_ratio, 0/1 if no idea
  */
 //AVRational av_guess_sample_aspect_ratio(AVFormatContext *format, AVStream *stream, AVFrame *frame);
-func (format *AVFormatContext) av_guess_sample_aspect_ratio(stream *AVStream, frame *AVFrame) (res AVRational) {
+func (format *AVFormatContext) av_guess_sample_aspect_ratio(stream *AVStream, frame *libavutil.AVFrame) (res AVRational) {
 	return
 }
 
@@ -1644,7 +1645,7 @@ func (format *AVFormatContext) av_guess_sample_aspect_ratio(stream *AVStream, fr
  * @return the guessed (valid) frame rate, 0/1 if no idea
  */
 //AVRational av_guess_frame_rate(AVFormatContext *ctx, AVStream *stream, AVFrame *frame);
-func (ctx *AVFormatContext) av_guess_frame_rate(stream *AVStream, frame *AVFrame) (res AVRational) {
+func (ctx *AVFormatContext) av_guess_frame_rate(stream *AVStream, frame *libavutil.AVFrame) (res AVRational) {
 	return
 }
 
@@ -1687,7 +1688,7 @@ func (s *AVFormatContext) avformat_queue_attached_pictures() (res ffcommon.FInt)
 //attribute_deprecated
 //int av_apply_bitstream_filters(AVCodecContext *codec, AVPacket *pkt,
 //AVBitStreamFilterContext *bsfc);
-func (codec *AVCodecContext) av_apply_bitstream_filters(pkt AVPacket,
+func (codec AVCodecContext) av_apply_bitstream_filters(pkt AVPacket,
 	bsfc *AVBitStreamFilterContext) (res ffcommon.FInt) {
 	return
 }
