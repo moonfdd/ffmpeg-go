@@ -1,11 +1,11 @@
 package libavformat
 
 import (
+	"unsafe"
+
 	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"github.com/moonfdd/ffmpeg-go/libavcodec"
-	"github.com/moonfdd/ffmpeg-go/libavdevice"
 	"github.com/moonfdd/ffmpeg-go/libavutil"
-	"unsafe"
 )
 
 /*
@@ -328,10 +328,10 @@ import (
 
 //struct AVFormatContext;
 //struct AVDeviceInfoList;
-type AVDeviceInfoList = libavdevice.AVDeviceInfoList
+// type AVDeviceInfoList = libavdevice.AVDeviceInfoList
 
 //struct AVDeviceCapabilitiesQuery;
-type AVDeviceCapabilitiesQuery = libavdevice.AVDeviceCapabilitiesQuery
+// type AVDeviceCapabilitiesQuery = libavdevice.AVDeviceCapabilitiesQuery
 type AVCodecID = libavcodec.AVCodecID
 type AVCodecContext = libavcodec.AVCodecContext
 type AVPacket = libavcodec.AVPacket
@@ -433,9 +433,6 @@ func (s *AVIOContext) AvGetPacket(pkt *AVPacket, size ffcommon.FInt) (res ffcomm
 		uintptr(unsafe.Pointer(pkt)),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -461,9 +458,6 @@ func (s *AVIOContext) AvAppendPacket(pkt *AVPacket, size ffcommon.FInt) (res ffc
 		uintptr(unsafe.Pointer(pkt)),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -848,7 +842,7 @@ type AVInputFormat struct {
 /**
  * @}
  */
-type AVStreamParseType = int32
+type AVStreamParseType int32
 
 const (
 	AVSTREAM_PARSE_NONE       = iota
@@ -1199,48 +1193,37 @@ func (s *AVStream) AvStreamGetRFrameRate() (res AVRational) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_stream_get_r_frame_rate").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
 	res = *(*AVRational)(unsafe.Pointer(t))
 	return
 }
 
 //attribute_deprecated
 //void       av_stream_set_r_frame_rate(AVStream *s, AVRational r);
-//todo
-func av_stream_set_r_frame_rate() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_stream_set_r_frame_rate").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (s *AVStream) AvStreamSetRFrameRate(r AVRational) {
+	ffcommon.GetAvformatDll().NewProc("av_stream_set_r_frame_rate").Call(
+		uintptr(unsafe.Pointer(s)),
+		uintptr(unsafe.Pointer(&r)),
+	)
 }
 
 //#if FF_API_LAVF_FFSERVER
 //attribute_deprecated
 //char* av_stream_get_recommended_encoder_configuration(const AVStream *s);
-//todo
-func av_stream_get_recommended_encoder_configuration() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_stream_get_recommended_encoder_configuration").Call()
-	if t == 0 {
-
-	}
+func (s *AVStream) AvStreamGetRecommendedEncoderConfiguration() (res ffcommon.FCharP) {
+	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_stream_get_recommended_encoder_configuration").Call(
+		uintptr(unsafe.Pointer(s)),
+	)
 	res = ffcommon.StringFromPtr(t)
 	return
 }
 
 //attribute_deprecated
 //void  av_stream_set_recommended_encoder_configuration(AVStream *s, char *configuration);
-//todo
-func av_stream_set_recommended_encoder_configuration() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_stream_set_recommended_encoder_configuration").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (s *AVStream) AvStreamSetRecommendedEncoderConfiguration(configuration ffcommon.FCharP) {
+	ffcommon.GetAvformatDll().NewProc("av_stream_set_recommended_encoder_configuration").Call(
+		uintptr(unsafe.Pointer(s)),
+		ffcommon.UintPtrFromString(configuration),
+	)
 }
 
 //#endif
@@ -1251,9 +1234,6 @@ func (s *AVStream) AvStreamGetParser() (res *AVCodecParserContext) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_stream_get_parser").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVCodecParserContext)(unsafe.Pointer(t))
 	return
 }
@@ -1268,9 +1248,6 @@ func (st *AVStream) AvStreamGetEndPts() (res ffcommon.FInt64T) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_stream_get_end_pts").Call(
 		uintptr(unsafe.Pointer(st)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt64T(t)
 	return
 }
@@ -1755,7 +1732,7 @@ type AVFormatContext struct {
 	 * - encoding: Set by user
 	 * - decoding: unused
 	 */
-	max_chunk_size ffcommon.FInt
+	MaxChunkSize ffcommon.FInt
 
 	/**
 	 * forces the use of wallclock timestamps as pts/dts of packets
@@ -1763,14 +1740,14 @@ type AVFormatContext struct {
 	 * - encoding: unused
 	 * - decoding: Set by user
 	 */
-	use_wallclock_as_timestamps ffcommon.FInt
+	UseWallclockAsTimestamps ffcommon.FInt
 
 	/**
 	 * avio flags, used to force AVIO_FLAG_DIRECT.
 	 * - encoding: unused
 	 * - decoding: Set by user
 	 */
-	avio_flags ffcommon.FInt
+	AvioFlags ffcommon.FInt
 
 	/**
 	 * The duration field can be estimated through various ways, and this field can be used
@@ -1778,35 +1755,35 @@ type AVFormatContext struct {
 	 * - encoding: unused
 	 * - decoding: Read by user
 	 */
-	duration_estimation_method AVDurationEstimationMethod
+	DurationEstimationMethod AVDurationEstimationMethod
 
 	/**
 	 * Skip initial bytes when opening stream
 	 * - encoding: unused
 	 * - decoding: Set by user
 	 */
-	skip_initial_bytes ffcommon.FInt64T
+	SkipInitialBytes ffcommon.FInt64T
 
 	/**
 	 * Correct single timestamp overflows
 	 * - encoding: unused
 	 * - decoding: Set by user
 	 */
-	correct_ts_overflow ffcommon.FUnsignedInt
+	CorrectTsOverflow ffcommon.FUnsignedInt
 
 	/**
 	 * Force seeking to any (also non key) frames.
 	 * - encoding: unused
 	 * - decoding: Set by user
 	 */
-	seek2any ffcommon.FInt
+	Seek2any ffcommon.FInt
 
 	/**
 	 * Flush the I/O context after each packet.
 	 * - encoding: Set by user
 	 * - decoding: unused
 	 */
-	flush_packets ffcommon.FInt
+	FlushPackets ffcommon.FInt
 
 	/**
 	 * format probing score.
@@ -1815,14 +1792,14 @@ type AVFormatContext struct {
 	 * - encoding: unused
 	 * - decoding: set by avformat, read by user
 	 */
-	probe_score ffcommon.FInt
+	ProbeScore ffcommon.FInt
 
 	/**
 	 * number of bytes to read maximally to identify format.
 	 * - encoding: unused
 	 * - decoding: set by user
 	 */
-	format_probesize ffcommon.FInt
+	FormatProbesize ffcommon.FInt
 
 	/**
 	 * ',' separated list of allowed decoders.
@@ -1830,7 +1807,7 @@ type AVFormatContext struct {
 	 * - encoding: unused
 	 * - decoding: set by user
 	 */
-	codec_whitelist ffcommon.FCharPStruct
+	CodecWhitelist ffcommon.FCharPStruct
 
 	/**
 	 * ',' separated list of allowed demuxers.
@@ -1838,13 +1815,13 @@ type AVFormatContext struct {
 	 * - encoding: unused
 	 * - decoding: set by user
 	 */
-	format_whitelist ffcommon.FCharPStruct
+	FormatWhitelist ffcommon.FCharPStruct
 
 	/**
 	 * An opaque field for libavformat internal usage.
 	 * Must not be accessed in any way by callers.
 	 */
-	internal *AVFormatInternal
+	Internal *AVFormatInternal
 
 	/**
 	 * IO repositioned flag.
@@ -1852,7 +1829,7 @@ type AVFormatContext struct {
 	 * is repositioned, for example when doing byte based seeking.
 	 * Demuxers can use the flag to detect such changes.
 	 */
-	io_repositioned ffcommon.FInt
+	IoRepositioned ffcommon.FInt
 
 	/**
 	 * Forced video codec.
@@ -1860,7 +1837,7 @@ type AVFormatContext struct {
 	 * the same codec_id.
 	 * Demuxing: Set by user
 	 */
-	video_codec *AVCodec
+	VideoCodec *AVCodec
 
 	/**
 	 * Forced audio codec.
@@ -1868,7 +1845,7 @@ type AVFormatContext struct {
 	 * the same codec_id.
 	 * Demuxing: Set by user
 	 */
-	audio_codec *AVCodec
+	AudioCodec *AVCodec
 
 	/**
 	 * Forced subtitle codec.
@@ -1876,7 +1853,7 @@ type AVFormatContext struct {
 	 * the same codec_id.
 	 * Demuxing: Set by user
 	 */
-	subtitle_codec *AVCodec
+	SubtitleCodec *AVCodec
 
 	/**
 	 * Forced data codec.
@@ -1884,31 +1861,31 @@ type AVFormatContext struct {
 	 * the same codec_id.
 	 * Demuxing: Set by user
 	 */
-	data_codec *AVCodec
+	DataCodec *AVCodec
 
 	/**
 	 * Number of bytes to be written as padding in a metadata header.
 	 * Demuxing: Unused.
 	 * Muxing: Set by user via av_format_set_metadata_header_padding.
 	 */
-	metadata_header_padding ffcommon.FInt
+	MetadataHeaderPadding ffcommon.FInt
 
 	/**
 	 * User data.
 	 * This is a place for some private data of the user.
 	 */
-	opaque ffcommon.FVoidP
+	Opaque ffcommon.FVoidP
 
 	/**
 	 * Callback used by devices to communicate with application.
 	 */
 	//av_format_control_message control_message_cb;
-	control_message_cb uintptr
+	ControlMessageCb uintptr
 	/**
 	 * Output timestamp offset, in microseconds.
 	 * Muxing: set by user
 	 */
-	output_ts_offset ffcommon.FInt64T
+	OutputTsOffset ffcommon.FInt64T
 
 	/**
 	 * dump format separator.
@@ -1916,13 +1893,13 @@ type AVFormatContext struct {
 	 * - muxing: Set by user.
 	 * - demuxing: Set by user.
 	 */
-	dump_separator *ffcommon.FUint8T
+	DumpSeparator *ffcommon.FUint8T
 
 	/**
 	 * Forced Data codec_id.
 	 * Demuxing: Set by user.
 	 */
-	data_codec_id AVCodecID
+	DataCodecId AVCodecID
 
 	//#if FF_API_OLD_OPEN_CALLBACKS
 	/**
@@ -1944,7 +1921,7 @@ type AVFormatContext struct {
 	 */
 	//attribute_deprecated
 	//int (*open_cb)(struct AVFormatContext *s, AVIOContext **p, const char *url, int flags, const AVIOInterruptCB *int_cb, AVDictionary **options);
-	open_cb uintptr
+	OpenCb uintptr
 	//#endif
 
 	/**
@@ -1953,7 +1930,7 @@ type AVFormatContext struct {
 	 * - decoding: set by user
 	 */
 	//char *protocol_whitelist;
-	protocol_whitelist ffcommon.FCharPStruct
+	ProtocolWhitelist ffcommon.FCharPStruct
 	/**
 	 * A callback for opening new IO streams.
 	 *
@@ -1976,39 +1953,46 @@ type AVFormatContext struct {
 	 */
 	//int (*io_open)(struct AVFormatContext *s, AVIOContext **pb, const char *url,
 	//int flags, AVDictionary **options);
-	io_open uintptr
+	IoOpen uintptr
 	/**
 	 * A callback for closing the streams opened with AVFormatContext.io_open().
 	 */
 	//void (*io_close)(struct AVFormatContext *s, AVIOContext *pb);
-	io_close uintptr
+	IoClose uintptr
 	/**
 	 * ',' separated list of disallowed protocols.
 	 * - encoding: unused
 	 * - decoding: set by user
 	 */
-	protocol_blacklist ffcommon.FCharPStruct
+	ProtocolBlacklist ffcommon.FCharPStruct
 
 	/**
 	 * The maximum number of streams.
 	 * - encoding: unused
 	 * - decoding: set by user
 	 */
-	max_streams ffcommon.FInt
+	MaxStreams ffcommon.FInt
 
 	/**
 	 * Skip duration calcuation in estimate_timings_from_pts.
 	 * - encoding: unused
 	 * - decoding: set by user
 	 */
-	skip_estimate_duration_from_pts ffcommon.FInt
+	SkipEstimateDurationFromPts ffcommon.FInt
 
 	/**
 	 * Maximum number of packets that can be probed
 	 * - encoding: unused
 	 * - decoding: set by user
 	 */
-	max_probe_packets ffcommon.FInt
+	MaxProbePackets ffcommon.FInt
+}
+
+func (s *AVFormatContext) GetStream(index ffcommon.FUnsignedInt) (res *AVStream) {
+	t := uintptr(unsafe.Pointer(s.Streams)) + 8*uintptr(index)
+	t = *(*uintptr)(unsafe.Pointer(t))
+	res = (*AVStream)(unsafe.Pointer(t))
+	return
 }
 
 //#if FF_API_FORMAT_GET_SET
@@ -2018,205 +2002,163 @@ type AVFormatContext struct {
  */
 //attribute_deprecated
 //int av_format_get_probe_score(const AVFormatContext *s);
-//todo
-func av_format_get_probe_score() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_get_probe_score").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (s *AVFormatContext) AvFormatGetProbeScore() (res ffcommon.FInt) {
+	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_get_probe_score").Call(
+		uintptr(unsafe.Pointer(s)),
+	)
+	res = ffcommon.FInt(t)
 	return
 }
 
 //attribute_deprecated
 //AVCodec * av_format_get_video_codec(const AVFormatContext *s);
-//todo
-func av_format_get_video_codec() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_get_video_codec").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (s *AVFormatContext) AvFormatGetVideoCodec() (res *AVCodec) {
+	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_get_video_codec").Call(
+		uintptr(unsafe.Pointer(s)),
+	)
+	res = (*AVCodec)(unsafe.Pointer(t))
 	return
 }
 
 //attribute_deprecated
 //void      av_format_set_video_codec(AVFormatContext *s, AVCodec *c);
-//todo
-func av_format_set_video_codec() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_set_video_codec").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (s *AVFormatContext) AvFormatSetVideoCodec(c *AVCodec) {
+	ffcommon.GetAvformatDll().NewProc("av_format_set_video_codec").Call(
+		uintptr(unsafe.Pointer(s)),
+		uintptr(unsafe.Pointer(c)),
+	)
 }
 
 //attribute_deprecated
 //AVCodec * av_format_get_audio_codec(const AVFormatContext *s);
-//todo
-func av_format_get_audio_codec() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_get_audio_codec").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (s *AVFormatContext) AvFormatGetAudioCodec() (res *AVCodec) {
+	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_get_audio_codec").Call(
+		uintptr(unsafe.Pointer(s)),
+	)
+	res = (*AVCodec)(unsafe.Pointer(t))
 	return
 }
 
 //attribute_deprecated
 //void      av_format_set_audio_codec(AVFormatContext *s, AVCodec *c);
-//todo
-func av_format_set_audio_codec() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_set_audio_codec").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (s *AVFormatContext) AvFormatSetAudioCodec(c *AVCodec) {
+	ffcommon.GetAvformatDll().NewProc("av_format_set_audio_codec").Call(
+		uintptr(unsafe.Pointer(s)),
+		uintptr(unsafe.Pointer(c)),
+	)
 }
 
 //attribute_deprecated
 //AVCodec * av_format_get_subtitle_codec(const AVFormatContext *s);
-//todo
-func av_format_get_subtitle_codec() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_get_subtitle_codec").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (s *AVFormatContext) AvFormatGetSubtitleCodec() (res *AVCodec) {
+	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_get_subtitle_codec").Call(
+		uintptr(unsafe.Pointer(s)),
+	)
+	res = (*AVCodec)(unsafe.Pointer(t))
 	return
 }
 
 //attribute_deprecated
 //void      av_format_set_subtitle_codec(AVFormatContext *s, AVCodec *c);
-//todo
-func av_format_set_subtitle_codec() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_set_subtitle_codec").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (s *AVFormatContext) AvFormatSetSubtitleCodec(c *AVCodec) {
+	ffcommon.GetAvformatDll().NewProc("av_format_set_subtitle_codec").Call(
+		uintptr(unsafe.Pointer(s)),
+		uintptr(unsafe.Pointer(c)),
+	)
 }
 
 //attribute_deprecated
 //AVCodec * av_format_get_data_codec(const AVFormatContext *s);
-//todo
-func av_format_get_data_codec() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_get_data_codec").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (s *AVFormatContext) AvFormatGetDataCodec() (res *AVCodec) {
+	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_get_data_codec").Call(
+		uintptr(unsafe.Pointer(s)),
+	)
+	res = (*AVCodec)(unsafe.Pointer(t))
 	return
 }
 
 //attribute_deprecated
 //void      av_format_set_data_codec(AVFormatContext *s, AVCodec *c);
-//todo
-func av_format_set_data_codec() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_set_data_codec").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (s *AVFormatContext) AvFormatSetDataCodec(c *AVCodec) {
+	ffcommon.GetAvformatDll().NewProc("av_format_set_data_codec").Call(
+		uintptr(unsafe.Pointer(s)),
+		uintptr(unsafe.Pointer(c)),
+	)
 }
 
 //attribute_deprecated
 //int       av_format_get_metadata_header_padding(const AVFormatContext *s);
-//todo
-func av_format_get_metadata_header_padding() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_get_metadata_header_padding").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (s *AVFormatContext) AvFormatGetMetadataHeaderPadding() (res ffcommon.FInt) {
+	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_get_metadata_header_padding").Call(
+		uintptr(unsafe.Pointer(s)),
+	)
+	res = ffcommon.FInt(t)
 	return
 }
 
 //attribute_deprecated
 //void      av_format_set_metadata_header_padding(AVFormatContext *s, int c);
-//todo
-func av_format_set_metadata_header_padding() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_set_metadata_header_padding").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (s *AVFormatContext) AvFormatSetMetadataHeaderPadding(c ffcommon.FInt) {
+	ffcommon.GetAvformatDll().NewProc("av_format_set_metadata_header_padding").Call(
+		uintptr(unsafe.Pointer(s)),
+		uintptr(c),
+	)
 }
 
 //attribute_deprecated
 //void *    av_format_get_opaque(const AVFormatContext *s);
-//todo
-func av_format_get_opaque() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_get_opaque").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (s *AVFormatContext) AvFormatGetOpaque() (res ffcommon.FVoidP) {
+	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_get_opaque").Call(
+		uintptr(unsafe.Pointer(s)),
+	)
+	res = t
 	return
 }
 
 //attribute_deprecated
 //void      av_format_set_opaque(AVFormatContext *s, void *opaque);
-//todo
-func av_format_set_opaque() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_set_opaque").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (s *AVFormatContext) AvFormatSetOpaque(opaque ffcommon.FVoidP) {
+	ffcommon.GetAvformatDll().NewProc("av_format_set_opaque").Call(
+		uintptr(unsafe.Pointer(s)),
+		opaque,
+	)
 }
 
 //attribute_deprecated
 //av_format_control_message av_format_get_control_message_cb(const AVFormatContext *s);
-//todo
-func av_format_get_control_message_cb() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_get_control_message_cb").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (s *AVFormatContext) AvFormatGetControlMessageCb() (res uintptr) {
+	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_get_control_message_cb").Call(
+		uintptr(unsafe.Pointer(s)),
+	)
+	res = t
 	return
 }
 
 //attribute_deprecated
 //void      av_format_set_control_message_cb(AVFormatContext *s, av_format_control_message callback);
-//todo
-func av_format_set_control_message_cb() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_set_control_message_cb").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (s *AVFormatContext) AvFormatSetControlMessageCb(callback uintptr) {
+	ffcommon.GetAvformatDll().NewProc("av_format_set_control_message_cb").Call(
+		uintptr(unsafe.Pointer(s)),
+		callback,
+	)
 }
 
 //#if FF_API_OLD_OPEN_CALLBACKS
 //attribute_deprecated AVOpenCallback av_format_get_open_cb(const AVFormatContext *s);
-//todo
-func av_format_get_open_cb() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_get_open_cb").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (s *AVFormatContext) AvFormatGetOpenCb() (res uintptr) {
+	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_get_open_cb").Call(
+		uintptr(unsafe.Pointer(s)),
+	)
+	res = t
 	return
 }
 
 //attribute_deprecated void av_format_set_open_cb(AVFormatContext *s, AVOpenCallback callback);
-//todo
-func av_format_set_open_cb() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_set_open_cb").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (s *AVFormatContext) AvFormatSetOpenCb(callback AVOpenCallback) {
+	ffcommon.GetAvformatDll().NewProc("av_format_set_open_cb").Call(
+		uintptr(unsafe.Pointer(s)),
+		ffcommon.NewCallback(callback),
+	)
 }
 
 //#endif
@@ -2228,13 +2170,9 @@ func av_format_set_open_cb() (res ffcommon.FCharP) {
  */
 //void av_format_inject_global_side_data(AVFormatContext *s);
 func (s *AVFormatContext) AvFormatInjectGlobalSideData() {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_inject_global_side_data").Call(
+	ffcommon.GetAvformatDll().NewProc("av_format_inject_global_side_data").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -2247,9 +2185,6 @@ func (ctx *AVFormatContext) AvFmtCtxGetDurationEstimationMethod() (res AVDuratio
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_fmt_ctx_get_duration_estimation_method").Call(
 		uintptr(unsafe.Pointer(ctx)),
 	)
-	if t == 0 {
-
-	}
 	res = AVDurationEstimationMethod(t)
 	return
 }
@@ -2269,9 +2204,6 @@ func (ctx *AVFormatContext) AvFmtCtxGetDurationEstimationMethod() (res AVDuratio
 //unsigned avformat_version(void);
 func AvformatVersion() (res ffcommon.FUnsigned) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avformat_version").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.FUnsigned(t)
 	return
 }
@@ -2282,9 +2214,6 @@ func AvformatVersion() (res ffcommon.FUnsigned) {
 //const char *avformat_configuration(void);
 func AvformatConfiguration() (res ffcommon.FConstCharP) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avformat_configuration").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -2295,9 +2224,6 @@ func AvformatConfiguration() (res ffcommon.FConstCharP) {
 //const char *avformat_license(void);
 func AvformatLicense() (res ffcommon.FConstCharP) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avformat_license").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -2313,38 +2239,24 @@ func AvformatLicense() (res ffcommon.FConstCharP) {
  */
 //attribute_deprecated
 //void av_register_all(void);
-//todo
-func av_register_all() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_register_all").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func AvRegisterAll() {
+	ffcommon.GetAvformatDll().NewProc("av_register_all").Call()
 }
 
 //attribute_deprecated
 //void av_register_input_format(AVInputFormat *format);
-//todo
-func av_register_input_format() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_register_input_format").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (format *AVInputFormat) AvRegisterInputFormat() {
+	ffcommon.GetAvformatDll().NewProc("av_register_input_format").Call(
+		uintptr(unsafe.Pointer(format)),
+	)
 }
 
 //attribute_deprecated
 //void av_register_output_format(AVOutputFormat *format);
-//todo
-func av_register_output_format() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_register_output_format").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (format *AVOutputFormat) AvRegisterOutputFormat() {
+	ffcommon.GetAvformatDll().NewProc("av_register_output_format").Call(
+		uintptr(unsafe.Pointer(format)),
+	)
 }
 
 //#endif
@@ -2366,9 +2278,6 @@ func av_register_output_format() (res ffcommon.FCharP) {
 //int avformat_network_init(void);
 func AvformatNetworkInit() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avformat_network_init").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -2380,9 +2289,6 @@ func AvformatNetworkInit() (res ffcommon.FInt) {
 //int avformat_network_deinit(void);
 func AvformatNetworkDeinit() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avformat_network_deinit").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -2395,13 +2301,9 @@ func AvformatNetworkDeinit() (res ffcommon.FInt) {
  */
 //attribute_deprecated
 //AVInputFormat  *av_iformat_next(const AVInputFormat  *f);
-//todo
-func av_iformat_next() (res ffcommon.FCharP) {
+func (f *AVInputFormat) AvIformatNext() (res *AVInputFormat) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_iformat_next").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+	res = (*AVInputFormat)(unsafe.Pointer(t))
 	return
 }
 
@@ -2412,13 +2314,9 @@ func av_iformat_next() (res ffcommon.FCharP) {
  */
 //attribute_deprecated
 //AVOutputFormat *av_oformat_next(const AVOutputFormat *f);
-//todo
-func av_oformat_next() (res ffcommon.FCharP) {
+func (f *AVOutputFormat) AvOformatNext() (res *AVOutputFormat) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_oformat_next").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+	res = (*AVOutputFormat)(unsafe.Pointer(t))
 	return
 }
 
@@ -2438,9 +2336,6 @@ func AvMuxerIterate(opaque *ffcommon.FVoidP) (res *AVOutputFormat) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_muxer_iterate").Call(
 		uintptr(unsafe.Pointer(opaque)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVOutputFormat)(unsafe.Pointer(t))
 	return
 }
@@ -2459,9 +2354,6 @@ func AvDemuxerIterate(opaque *ffcommon.FVoidP) (res *AVInputFormat) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_demuxer_iterate").Call(
 		uintptr(unsafe.Pointer(opaque)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVInputFormat)(unsafe.Pointer(t))
 	return
 }
@@ -2474,9 +2366,6 @@ func AvDemuxerIterate(opaque *ffcommon.FVoidP) (res *AVInputFormat) {
 //AVFormatContext *avformat_alloc_context(void);
 func AvformatAllocContext() (res *AVFormatContext) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avformat_alloc_context").Call()
-	if t == 0 {
-
-	}
 	res = (*AVFormatContext)(unsafe.Pointer(t))
 	return
 }
@@ -2487,13 +2376,9 @@ func AvformatAllocContext() (res *AVFormatContext) {
  */
 //void avformat_free_context(AVFormatContext *s);
 func (s *AVFormatContext) AvformatFreeContext() {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("avformat_free_context").Call(
+	ffcommon.GetAvformatDll().NewProc("avformat_free_context").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -2505,9 +2390,6 @@ func (s *AVFormatContext) AvformatFreeContext() {
 //const AVClass *avformat_get_class(void);
 func AvformatGetClass() (res *AVClass) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avformat_get_class").Call()
-	if t == 0 {
-
-	}
 	res = (*AVClass)(unsafe.Pointer(t))
 	return
 }
@@ -2537,9 +2419,6 @@ func (s *AVFormatContext) AvformatNewStream(c *AVCodec) (res *AVStream) {
 		uintptr(unsafe.Pointer(s)),
 		uintptr(unsafe.Pointer(c)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVStream)(unsafe.Pointer(t))
 	return
 }
@@ -2567,9 +2446,6 @@ func (st *AVStream) AvStreamAddSideData(type0 AVPacketSideDataType, data *ffcomm
 		uintptr(unsafe.Pointer(data)),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -2594,9 +2470,6 @@ func (stream *AVStream) AvStreamNewSideData(type0 AVPacketSideDataType, size ffc
 		uintptr(type0),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = (*ffcommon.FUint8T)(unsafe.Pointer(t))
 	return
 }
@@ -2622,9 +2495,6 @@ func (stream *AVStream) AvStreamGetSideData(type0 AVPacketSideDataType, size ffc
 		uintptr(type0),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = (*ffcommon.FUint8T)(unsafe.Pointer(t))
 	return
 }
@@ -2635,9 +2505,6 @@ func (s *AVFormatContext) AvNewProgram(id ffcommon.FInt) (res *AVProgram) {
 		uintptr(unsafe.Pointer(s)),
 		uintptr(id),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVProgram)(unsafe.Pointer(t))
 	return
 }
@@ -2672,9 +2539,6 @@ func AvformatAllocOutputContext2(ctx **AVFormatContext, oformat *AVOutputFormat,
 		ffcommon.UintPtrFromString(format_name),
 		ffcommon.UintPtrFromString(filename),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -2692,9 +2556,6 @@ func AvFindInputFormat(short_name ffcommon.FConstCharP) (res *AVInputFormat) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_find_input_format").Call(
 		ffcommon.UintPtrFromString(short_name),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVInputFormat)(unsafe.Pointer(t))
 	return
 }
@@ -2711,9 +2572,6 @@ func AvProbeInputFormat(short_name ffcommon.FConstCharP) (res *AVInputFormat) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_probe_input_format").Call(
 		ffcommon.UintPtrFromString(short_name),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVInputFormat)(unsafe.Pointer(t))
 	return
 }
@@ -2737,9 +2595,6 @@ func (pd *AVProbeData) AvProbeInputFormat2(is_opened ffcommon.FInt, score_max *f
 		uintptr(is_opened),
 		uintptr(unsafe.Pointer(score_max)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVInputFormat)(unsafe.Pointer(t))
 	return
 }
@@ -2758,9 +2613,6 @@ func (pd *AVProbeData) AvProbeInputFormat3(is_opened ffcommon.FInt, score_ret *f
 		uintptr(is_opened),
 		uintptr(unsafe.Pointer(score_ret)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVInputFormat)(unsafe.Pointer(t))
 	return
 }
@@ -2795,9 +2647,6 @@ func (pb *AVIOContext) AvProbeInputBuffer2(fmt0 AVInputFormat,
 		uintptr(offset),
 		uintptr(max_probe_size),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -2819,9 +2668,6 @@ func (pb *AVIOContext) AvProbeInputBuffer(fmt0 AVInputFormat,
 		uintptr(offset),
 		uintptr(max_probe_size),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -2853,9 +2699,6 @@ func AvformatOpenInput(ps **AVFormatContext, url ffcommon.FConstCharP, fmt0 *AVI
 		uintptr(unsafe.Pointer(fmt0)),
 		uintptr(unsafe.Pointer(options)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -2869,9 +2712,6 @@ func AvformatOpenInput(ps **AVFormatContext, url ffcommon.FConstCharP, fmt0 *AVI
 //todo
 func av_demuxer_open() (res ffcommon.FCharP) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_demuxer_open").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -2905,9 +2745,6 @@ func (ic *AVFormatContext) AvformatFindStreamInfo(options **AVDictionary) (res f
 		uintptr(unsafe.Pointer(ic)),
 		uintptr(unsafe.Pointer(options)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -2929,24 +2766,17 @@ func (ic *AVFormatContext) AvFindProgramFromStream(last *AVProgram, s ffcommon.F
 		uintptr(unsafe.Pointer(last)),
 		uintptr(s),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVProgram)(unsafe.Pointer(t))
 	return
 }
 
 //void av_program_add_stream_index(AVFormatContext *ac, int progid, unsigned int idx);
 func (ac *AVFormatContext) AvProgramAddStreamIndex(progid ffcommon.FInt, idx ffcommon.FUnsignedInt) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_program_add_stream_index").Call(
+	ffcommon.GetAvformatDll().NewProc("av_program_add_stream_index").Call(
 		uintptr(unsafe.Pointer(ac)),
 		uintptr(progid),
 		uintptr(idx),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -2993,9 +2823,6 @@ func (ic *AVFormatContext) AvFindBestStream(type0 AVMediaType, wanted_stream_nb,
 		uintptr(unsafe.Pointer(decoder_ret)),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -3033,9 +2860,6 @@ func (s *AVFormatContext) AvReadFrame(pkt *AVPacket) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(s)),
 		uintptr(unsafe.Pointer(pkt)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -3062,9 +2886,6 @@ func (s *AVFormatContext) AvSeekFrame(stream_index ffcommon.FInt, timestamp ffco
 		uintptr(timestamp),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -3105,9 +2926,6 @@ func (s *AVFormatContext) AvformatSeekFile(stream_index ffcommon.FInt, min_ts, t
 		uintptr(max_ts),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -3133,9 +2951,6 @@ func (s *AVFormatContext) AvformatFlush() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avformat_flush").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -3149,9 +2964,6 @@ func (s *AVFormatContext) AvReadPlay() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_read_play").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -3166,9 +2978,6 @@ func (s *AVFormatContext) AvReadPause() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_read_pause").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -3179,13 +2988,9 @@ func (s *AVFormatContext) AvReadPause() (res ffcommon.FInt) {
  */
 //void avformat_close_input(AVFormatContext **s);
 func AvformatCloseInput(s **AVFormatContext) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("avformat_close_input").Call(
+	ffcommon.GetAvformatDll().NewProc("avformat_close_input").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -3229,9 +3034,6 @@ func (s *AVFormatContext) AvformatWriteHeader(options **AVDictionary) (res ffcom
 		uintptr(unsafe.Pointer(s)),
 		uintptr(unsafe.Pointer(options)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -3262,9 +3064,6 @@ func (s *AVFormatContext) AvformatInitOutput(options **AVDictionary) (res ffcomm
 		uintptr(unsafe.Pointer(s)),
 		uintptr(unsafe.Pointer(options)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -3312,9 +3111,6 @@ func (s *AVFormatContext) AvWriteFrame(pkt *AVPacket) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(s)),
 		uintptr(unsafe.Pointer(pkt)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -3368,9 +3164,6 @@ func (s *AVFormatContext) AvInterleavedWriteFrame(pkt *AVPacket) (res ffcommon.F
 		uintptr(unsafe.Pointer(s)),
 		uintptr(unsafe.Pointer(pkt)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -3393,9 +3186,6 @@ func (s *AVFormatContext) AvWriteUncodedFrame(stream_index ffcommon.FInt, frame 
 		uintptr(stream_index),
 		uintptr(unsafe.Pointer(frame)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -3424,9 +3214,6 @@ func (s *AVFormatContext) AvInterleavedWriteUncodedFrame(stream_index ffcommon.F
 		uintptr(stream_index),
 		uintptr(unsafe.Pointer(frame)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -3443,9 +3230,6 @@ func (s *AVFormatContext) AvWriteUncodedFrameQuery(stream_index ffcommon.FInt) (
 		uintptr(unsafe.Pointer(s)),
 		uintptr(stream_index),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -3464,9 +3248,6 @@ func (s *AVFormatContext) AvWriteTrailer() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_write_trailer").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -3492,9 +3273,6 @@ func AvGuessFormat(short_name, filename, mime_type ffcommon.FConstCharP) (res *A
 		ffcommon.UintPtrFromString(filename),
 		ffcommon.UintPtrFromString(mime_type),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVOutputFormat)(unsafe.Pointer(t))
 	return
 }
@@ -3513,9 +3291,6 @@ func (fmt0 *AVOutputFormat) AvGuessCodec(short_name, filename, mime_type ffcommo
 		ffcommon.UintPtrFromString(mime_type),
 		uintptr(type0),
 	)
-	if t == 0 {
-
-	}
 	res = AVCodecID(t)
 	return
 }
@@ -3544,9 +3319,6 @@ func (s *AVFormatContext) AvGetOutputTimestamp(stream ffcommon.FInt, dts, wall *
 		uintptr(unsafe.Pointer(dts)),
 		uintptr(unsafe.Pointer(wall)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -3575,15 +3347,11 @@ func (s *AVFormatContext) AvGetOutputTimestamp(stream ffcommon.FInt, dts, wall *
  */
 //void av_hex_dump(FILE *f, const uint8_t *buf, int size);
 func AvHexDump(f ffcommon.FFileP, buf *ffcommon.FUint8T, size ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_hex_dump").Call(
+	ffcommon.GetAvformatDll().NewProc("av_hex_dump").Call(
 		f,
 		uintptr(unsafe.Pointer(buf)),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -3600,16 +3368,12 @@ func AvHexDump(f ffcommon.FFileP, buf *ffcommon.FUint8T, size ffcommon.FInt) {
  */
 //void av_hex_dump_log(void *avcl, int level, const uint8_t *buf, int size);
 func AvHexDumpLog(avcl ffcommon.FVoidP, level ffcommon.FInt, buf *ffcommon.FUint8T, size ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_hex_dump_log").Call(
+	ffcommon.GetAvformatDll().NewProc("av_hex_dump_log").Call(
 		avcl,
 		uintptr(level),
 		uintptr(unsafe.Pointer(buf)),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -3622,16 +3386,12 @@ func AvHexDumpLog(avcl ffcommon.FVoidP, level ffcommon.FInt, buf *ffcommon.FUint
  */
 //void av_pkt_dump2(FILE *f, const AVPacket *pkt, int dump_payload, const AVStream *st);
 func AvPktDump2(f ffcommon.FFileP, pkt *AVPacket, dump_payload ffcommon.FInt, st *AVStream) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_pkt_dump2").Call(
+	ffcommon.GetAvformatDll().NewProc("av_pkt_dump2").Call(
 		f,
 		uintptr(unsafe.Pointer(pkt)),
 		uintptr(dump_payload),
 		uintptr(unsafe.Pointer(st)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -3648,17 +3408,13 @@ func AvPktDump2(f ffcommon.FFileP, pkt *AVPacket, dump_payload ffcommon.FInt, st
 //void av_pkt_dump_log2(void *avcl, int level, const AVPacket *pkt, int dump_payload,
 //const AVStream *st);
 func AvPktDumpLog2(avcl ffcommon.FVoidP, level ffcommon.FInt, pkt *AVPacket, dump_payload ffcommon.FInt, st *AVStream) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_pkt_dump_log2").Call(
+	ffcommon.GetAvformatDll().NewProc("av_pkt_dump_log2").Call(
 		avcl,
 		uintptr(level),
 		uintptr(unsafe.Pointer(pkt)),
 		uintptr(dump_payload),
 		uintptr(unsafe.Pointer(st)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -3675,9 +3431,6 @@ func AvCodecGetId(tags **AVCodecTag, tag ffcommon.FUnsignedInt) (res AVCodecID) 
 		uintptr(unsafe.Pointer(tags)),
 		uintptr(tag),
 	)
-	if t == 0 {
-
-	}
 	res = AVCodecID(t)
 	return
 }
@@ -3696,9 +3449,6 @@ func AvCodecGetTag(tags **AVCodecTag, id AVCodecID) (res ffcommon.FUnsignedInt) 
 		uintptr(unsafe.Pointer(tags)),
 		uintptr(id),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FUnsignedInt(t)
 	return
 }
@@ -3720,9 +3470,6 @@ func AvCodecGetTag2(tags **AVCodecTag, id AVCodecID, tag *ffcommon.FUnsignedInt)
 		uintptr(id),
 		uintptr(unsafe.Pointer(tag)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -3732,9 +3479,6 @@ func (s *AVFormatContext) AvFindDefaultStreamIndex() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_find_default_stream_index").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -3757,9 +3501,6 @@ func (s *AVStream) AvIndexSearchTimestamp(timestamp ffcommon.FInt64T, flags ffco
 		uintptr(timestamp),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -3781,9 +3522,6 @@ func (st *AVStream) AvAddIndexEntry(pos, timestamp ffcommon.FInt64T, size, dista
 		uintptr(distance),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -3819,7 +3557,7 @@ func AvUrlSplit(proto ffcommon.FCharP, proto_size ffcommon.FInt,
 	port_ptr *ffcommon.FInt,
 	path0 ffcommon.FCharP, path_size ffcommon.FInt,
 	url ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_url_split").Call(
+	ffcommon.GetAvformatDll().NewProc("av_url_split").Call(
 		ffcommon.UintPtrFromString(proto),
 		uintptr(proto_size),
 		ffcommon.UintPtrFromString(authorization),
@@ -3831,10 +3569,6 @@ func AvUrlSplit(proto ffcommon.FCharP, proto_size ffcommon.FInt,
 		uintptr(path_size),
 		ffcommon.UintPtrFromString(url),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -3852,16 +3586,12 @@ func AvUrlSplit(proto ffcommon.FCharP, proto_size ffcommon.FInt,
 //const char *url,
 //int is_output);
 func (ic *AVFormatContext) AvDumpFormat(index ffcommon.FInt, url ffcommon.FConstCharP, is_output ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_dump_format").Call(
+	ffcommon.GetAvformatDll().NewProc("av_dump_format").Call(
 		uintptr(unsafe.Pointer(ic)),
 		uintptr(index),
 		ffcommon.UintPtrFromString(url),
 		uintptr(is_output),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 const AV_FRAME_FILENAME_FLAGS_MULTIPLE = 1 ///< Allow multiple %d
@@ -3890,9 +3620,6 @@ func AvGetFrameFilename2(buf ffcommon.FCharP, buf_size ffcommon.FInt,
 		uintptr(number),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -3907,9 +3634,6 @@ func AvGetFrameFilename(buf ffcommon.FCharP, buf_size ffcommon.FInt,
 		ffcommon.UintPtrFromString(path0),
 		uintptr(number),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -3925,9 +3649,6 @@ func AvFlenameNumberTest(filename ffcommon.FCharP) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_filename_number_test").Call(
 		ffcommon.UintPtrFromString(filename),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -3957,9 +3678,6 @@ func AvSdpCreate(ac **AVFormatContext, n_files ffcommon.FInt, buf ffcommon.FChar
 		ffcommon.UintPtrFromString(buf),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -3977,9 +3695,6 @@ func AvMatchExt(filename, extensions ffcommon.FConstCharP) (res ffcommon.FInt) {
 		ffcommon.UintPtrFromString(filename),
 		ffcommon.UintPtrFromString(extensions),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -4002,9 +3717,6 @@ func (ofmt *AVOutputFormat) AvformatQueryCodec(codec_id AVCodecID, std_complianc
 		uintptr(codec_id),
 		uintptr(std_compliance),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -4027,9 +3739,6 @@ func (ofmt *AVOutputFormat) AvformatQueryCodec(codec_id AVCodecID, std_complianc
 //const struct AVCodecTag *avformat_get_riff_video_tags(void);
 func AvformatGetRiffVideoTags() (res *AVCodecTag) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avformat_get_riff_video_tags").Call()
-	if t == 0 {
-
-	}
 	res = (*AVCodecTag)(unsafe.Pointer(t))
 	return
 }
@@ -4040,9 +3749,6 @@ func AvformatGetRiffVideoTags() (res *AVCodecTag) {
 //const struct AVCodecTag *avformat_get_riff_audio_tags(void);
 func AvformatGetRiffAudioTags() (res *AVCodecTag) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avformat_get_riff_audio_tags").Call()
-	if t == 0 {
-
-	}
 	res = (*AVCodecTag)(unsafe.Pointer(t))
 	return
 }
@@ -4053,9 +3759,6 @@ func AvformatGetRiffAudioTags() (res *AVCodecTag) {
 //const struct AVCodecTag *avformat_get_mov_video_tags(void);
 func AvformatGetMovVideoTags() (res *AVCodecTag) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avformat_get_mov_video_tags").Call()
-	if t == 0 {
-
-	}
 	res = (*AVCodecTag)(unsafe.Pointer(t))
 	return
 }
@@ -4066,9 +3769,6 @@ func AvformatGetMovVideoTags() (res *AVCodecTag) {
 //const struct AVCodecTag *avformat_get_mov_audio_tags(void);
 func AvformatGetMovAudioTags() (res *AVCodecTag) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avformat_get_mov_audio_tags").Call()
-	if t == 0 {
-
-	}
 	res = (*AVCodecTag)(unsafe.Pointer(t))
 	return
 }
@@ -4101,9 +3801,6 @@ func (format *AVFormatContext) AvGuessSampleAspectRatio(stream *AVStream, frame 
 		uintptr(unsafe.Pointer(stream)),
 		uintptr(unsafe.Pointer(frame)),
 	)
-	if t == 0 {
-
-	}
 	res = *(*AVRational)(unsafe.Pointer(t))
 	return
 }
@@ -4123,9 +3820,6 @@ func (ctx *AVFormatContext) AvGuessFrameRate(stream *AVStream, frame *AVFrame) (
 		uintptr(unsafe.Pointer(stream)),
 		uintptr(unsafe.Pointer(frame)),
 	)
-	if t == 0 {
-
-	}
 	res = *(*AVRational)(unsafe.Pointer(t))
 	return
 }
@@ -4151,9 +3845,6 @@ func (s *AVFormatContext) AvformatMatchStreamSpecifier(st *AVStream, spec ffcomm
 		uintptr(unsafe.Pointer(st)),
 		ffcommon.UintPtrFromString(spec),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -4163,9 +3854,6 @@ func (s *AVFormatContext) AvformatQueueAttachedPictures() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avformat_queue_attached_pictures").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -4185,18 +3873,18 @@ func (s *AVFormatContext) AvformatQueueAttachedPictures() (res ffcommon.FInt) {
 //attribute_deprecated
 //int av_apply_bitstream_filters(AVCodecContext *codec, AVPacket *pkt,
 //AVBitStreamFilterContext *bsfc);
-//todo
-func av_apply_bitstream_filters() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_apply_bitstream_filters").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func AvApplyBitstreamFilters(codec *AVCodecContext, pkt *AVPacket, bsfc *libavcodec.AVBitStreamFilterContext) (res ffcommon.FInt) {
+	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_apply_bitstream_filters").Call(
+		uintptr(unsafe.Pointer(codec)),
+		uintptr(unsafe.Pointer(pkt)),
+		uintptr(unsafe.Pointer(bsfc)),
+	)
+	res = ffcommon.FInt(t)
 	return
 }
 
 //#endif
-type AVTimebaseSource = int32
+type AVTimebaseSource int32
 
 const (
 	AVFMT_TBCF_AUTO = iota - 1
@@ -4228,9 +3916,6 @@ func (ofmt *AVOutputFormat) AvformatTransferInternalStreamTimingInfo(ost, ist *A
 		uintptr(unsafe.Pointer(ist)),
 		uintptr(copy_tb),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -4245,9 +3930,6 @@ func (st *AVStream) AvStreamGetCodecTimebase() (res AVRational) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_stream_get_codec_timebase").Call(
 		uintptr(unsafe.Pointer(st)),
 	)
-	if t == 0 {
-
-	}
 	res = *(*AVRational)(unsafe.Pointer(t))
 	return
 }

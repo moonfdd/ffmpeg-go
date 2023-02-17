@@ -33,9 +33,6 @@ import "github.com/moonfdd/ffmpeg-go/ffcommon"
 //int64_t av_gettime(void);
 func AvGettime() (res ffcommon.FInt64T) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_gettime").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt64T(t)
 	return
 }
@@ -50,9 +47,6 @@ func AvGettime() (res ffcommon.FInt64T) {
 //int64_t av_gettime_relative(void);
 func AvGettimeRelative() (res ffcommon.FInt64T) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_gettime_relative").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt64T(t)
 	return
 }
@@ -64,9 +58,6 @@ func AvGettimeRelative() (res ffcommon.FInt64T) {
 //int av_gettime_relative_is_monotonic(void);
 func AvGettimeRelativeIsMonotonic() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_gettime_relative_is_monotonic").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -84,9 +75,6 @@ func AvUsleep(usec ffcommon.FUnsigned) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_usleep").Call(
 		uintptr(usec),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }

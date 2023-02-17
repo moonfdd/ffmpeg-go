@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -226,7 +227,7 @@ import (
  * that cannot be set otherwise, since e.g. the input file format is not known
  * before the file is actually opened.
  */
-type AVOptionType = int32
+type AVOptionType int32
 
 const (
 	AV_OPT_TYPE_FLAGS = iota
@@ -392,13 +393,14 @@ type AVOptionRanges struct {
  * @param av_log_obj log context to use for showing the options
  */
 //int av_opt_show2(void *obj, void *av_log_obj, int req_flags, int rej_flags);
-//todo
-func av_opt_show2() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_show2").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func AvOptShow2(obj, av_log_obj ffcommon.FVoidP, req_flags, rej_flags ffcommon.FInt) (res ffcommon.FInt) {
+	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_show2").Call(
+		obj,
+		av_log_obj,
+		uintptr(req_flags),
+		uintptr(rej_flags),
+	)
+	res = ffcommon.FInt(t)
 	return
 }
 
@@ -408,14 +410,10 @@ func av_opt_show2() (res ffcommon.FCharP) {
  * @param s an AVOption-enabled struct (its first member must be a pointer to AVClass)
  */
 //void av_opt_set_defaults(void *s);
-//todo
-func av_opt_set_defaults() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_set_defaults").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func AvOptSetDefaults(s ffcommon.FVoidP) {
+	ffcommon.GetAvutilDll().NewProc("av_opt_set_defaults").Call(
+		s,
+	)
 }
 
 /**
@@ -429,15 +427,11 @@ func av_opt_set_defaults() (res ffcommon.FCharP) {
  */
 //void av_opt_set_defaults2(void *s, int mask, int flags);
 func AvOptSetDefaults2(s ffcommon.FVoidP, mask, flags ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_set_defaults2").Call(
+	ffcommon.GetAvutilDll().NewProc("av_opt_set_defaults2").Call(
 		s,
 		uintptr(mask),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -467,9 +461,6 @@ func AvSetOptionsString(ctx ffcommon.FVoidP, opts,
 		ffcommon.UintPtrFromString(key_val_sep),
 		ffcommon.UintPtrFromString(pairs_sep),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -514,9 +505,6 @@ func AvOptSetFromString(ctx ffcommon.FVoidP, opts ffcommon.FConstCharP,
 		ffcommon.UintPtrFromString(key_val_sep),
 		ffcommon.UintPtrFromString(pairs_sep),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -526,13 +514,9 @@ func AvOptSetFromString(ctx ffcommon.FVoidP, opts ffcommon.FConstCharP,
  */
 //void av_opt_free(void *obj);
 func AvOptFree(obj ffcommon.FVoidP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_free").Call(
+	ffcommon.GetAvutilDll().NewProc("av_opt_free").Call(
 		obj,
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -550,9 +534,6 @@ func AvOptFlagIsSet(obj ffcommon.FVoidP, field_name, flag_name ffcommon.FConstCh
 		ffcommon.UintPtrFromString(field_name),
 		ffcommon.UintPtrFromString(flag_name),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -577,9 +558,6 @@ func AvOptSetDict(obj ffcommon.FVoidP, options **AVDictionary) (res ffcommon.FIn
 		obj,
 		uintptr(unsafe.Pointer(options)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -606,9 +584,6 @@ func AvOptSetDict2(obj ffcommon.FVoidP, options **AVDictionary, search_flags ffc
 		uintptr(unsafe.Pointer(options)),
 		uintptr(search_flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -648,9 +623,6 @@ func AvOptGetKeyValue(ropts *ffcommon.FBuf,
 		uintptr(unsafe.Pointer(rkey)),
 		uintptr(unsafe.Pointer(rval)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -687,9 +659,6 @@ func AvOptEvalFlags(obj ffcommon.FVoidP, o *AVOption, val ffcommon.FConstCharP, 
 		ffcommon.UintPtrFromString(val),
 		uintptr(unsafe.Pointer(flags_out)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -702,9 +671,6 @@ func AvOptEvalInt(obj ffcommon.FVoidP, o *AVOption, val ffcommon.FConstCharP, in
 		ffcommon.UintPtrFromString(val),
 		uintptr(unsafe.Pointer(int_out)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -717,9 +683,6 @@ func AvOptEvalInt64(obj ffcommon.FVoidP, o *AVOption, val ffcommon.FConstCharP, 
 		ffcommon.UintPtrFromString(val),
 		uintptr(unsafe.Pointer(int64_out)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -732,9 +695,6 @@ func AvOptEvalFloat(obj ffcommon.FVoidP, o *AVOption, val ffcommon.FConstCharP, 
 		ffcommon.UintPtrFromString(val),
 		uintptr(unsafe.Pointer(float_out)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -747,9 +707,6 @@ func AvOptEvalDouble(obj ffcommon.FVoidP, o *AVOption, val ffcommon.FConstCharP,
 		ffcommon.UintPtrFromString(val),
 		uintptr(unsafe.Pointer(double_out)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -762,9 +719,6 @@ func AvOptEvalQ(obj ffcommon.FVoidP, o *AVOption, val ffcommon.FConstCharP, q_ou
 		ffcommon.UintPtrFromString(val),
 		uintptr(unsafe.Pointer(q_out)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -829,9 +783,6 @@ func AvOptFind(obj ffcommon.FVoidP, name, unit ffcommon.FConstCharP,
 		uintptr(opt_flags),
 		uintptr(search_flags),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVOption)(unsafe.Pointer(t))
 	return
 }
@@ -869,9 +820,6 @@ func AvOptFind2(obj ffcommon.FVoidP, name, unit ffcommon.FConstCharP,
 		uintptr(search_flags),
 		uintptr(unsafe.Pointer(target_obj)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVOption)(unsafe.Pointer(t))
 	return
 }
@@ -891,9 +839,6 @@ func AvOptNext(obj ffcommon.FVoidP, prev *AVOption) (res *AVOption) {
 		obj,
 		uintptr(unsafe.Pointer(prev)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVOption)(unsafe.Pointer(t))
 	return
 }
@@ -910,9 +855,6 @@ func AvOptChildNext(obj ffcommon.FVoidP, prev *AVOption) (res ffcommon.FVoidP) {
 		obj,
 		uintptr(unsafe.Pointer(prev)),
 	)
-	if t == 0 {
-
-	}
 	res = t
 	return
 }
@@ -928,13 +870,12 @@ func AvOptChildNext(obj ffcommon.FVoidP, prev *AVOption) (res ffcommon.FVoidP) {
  */
 //attribute_deprecated
 //const AVClass *av_opt_child_class_next(const AVClass *parent, const AVClass *prev);
-//todo
-func av_opt_child_class_next() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_child_class_next").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (parent *AVClass) AvOptChildClassNext(prev *AVClass) (res *AVClass) {
+	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_child_class_next").Call(
+		uintptr(unsafe.Pointer(parent)),
+		uintptr(unsafe.Pointer(prev)),
+	)
+	res = (*AVClass)(unsafe.Pointer(t))
 	return
 }
 
@@ -952,9 +893,6 @@ func (parent *AVClass) AvOptChildClassIterate(iter *ffcommon.FVoidP) (res *AVCla
 		uintptr(unsafe.Pointer(parent)),
 		uintptr(unsafe.Pointer(iter)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVClass)(unsafe.Pointer(t))
 	return
 }
@@ -996,9 +934,6 @@ func AvOptSet(obj ffcommon.FVoidP, name, val ffcommon.FConstCharP, search_flags 
 		ffcommon.UintPtrFromString(val),
 		uintptr(search_flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1011,9 +946,6 @@ func AvOptSetInt(obj ffcommon.FVoidP, name ffcommon.FConstCharP, val ffcommon.FI
 		uintptr(val),
 		uintptr(search_flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1026,9 +958,6 @@ func AvOptSetDouble(obj ffcommon.FVoidP, name ffcommon.FConstCharP, val ffcommon
 		uintptr(unsafe.Pointer(&val)),
 		uintptr(search_flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1041,9 +970,6 @@ func AvOptSetQ(obj ffcommon.FVoidP, name ffcommon.FConstCharP, val AVRational, s
 		uintptr(unsafe.Pointer(&val)),
 		uintptr(search_flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1056,9 +982,6 @@ func AvOptSetBin(obj ffcommon.FVoidP, name ffcommon.FConstCharP, val *ffcommon.F
 		uintptr(unsafe.Pointer(val)),
 		uintptr(search_flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1072,9 +995,6 @@ func AvOptSetImageSize(obj ffcommon.FVoidP, name ffcommon.FConstCharP, w, h ffco
 		uintptr(h),
 		uintptr(search_flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1087,9 +1007,6 @@ func AvOptSetPixelFmt(obj ffcommon.FVoidP, name ffcommon.FConstCharP, fmt0 AVPix
 		uintptr(fmt0),
 		uintptr(search_flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1102,9 +1019,6 @@ func AvOptSetSampleFmt(obj ffcommon.FVoidP, name ffcommon.FConstCharP, fmt0 AVSa
 		uintptr(fmt0),
 		uintptr(search_flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1117,9 +1031,6 @@ func AvOptSetVideoRate(obj ffcommon.FVoidP, name ffcommon.FConstCharP, val AVRat
 		uintptr(unsafe.Pointer(&val)),
 		uintptr(search_flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1132,9 +1043,6 @@ func AvOptSetChannelLayout(obj ffcommon.FVoidP, name ffcommon.FConstCharP, ch_la
 		uintptr(ch_layout),
 		uintptr(search_flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1151,9 +1059,6 @@ func AvOptSetDictVal(obj ffcommon.FVoidP, name ffcommon.FConstCharP, val *AVDict
 		uintptr(unsafe.Pointer(val)),
 		uintptr(search_flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1206,9 +1111,6 @@ func AvOptGet(obj ffcommon.FVoidP, name ffcommon.FConstCharP, search_flags ffcom
 		uintptr(search_flags),
 		uintptr(unsafe.Pointer(out_val)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1221,9 +1123,6 @@ func AvOptGetInt(obj ffcommon.FVoidP, name ffcommon.FConstCharP, search_flags ff
 		uintptr(search_flags),
 		uintptr(unsafe.Pointer(out_val)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1236,9 +1135,6 @@ func av_opt_get_double(obj ffcommon.FVoidP, name ffcommon.FConstCharP, search_fl
 		uintptr(search_flags),
 		uintptr(unsafe.Pointer(out_val)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1251,9 +1147,6 @@ func AvOptGetQ(obj ffcommon.FVoidP, name ffcommon.FConstCharP, search_flags ffco
 		uintptr(search_flags),
 		uintptr(unsafe.Pointer(out_val)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1267,9 +1160,6 @@ func AvOptGetImageSize(obj ffcommon.FVoidP, name ffcommon.FConstCharP, search_fl
 		uintptr(unsafe.Pointer(w_out)),
 		uintptr(unsafe.Pointer(h_out)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1282,9 +1172,6 @@ func AvOptGetPixelFmt(obj ffcommon.FVoidP, name ffcommon.FConstCharP, search_fla
 		uintptr(search_flags),
 		uintptr(unsafe.Pointer(out_fmt)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1297,9 +1184,6 @@ func AvOptGetSampleFmt(obj ffcommon.FVoidP, name ffcommon.FConstCharP, search_fl
 		uintptr(search_flags),
 		uintptr(unsafe.Pointer(out_fmt)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1312,9 +1196,6 @@ func AvOptGetVideoRate(obj ffcommon.FVoidP, name ffcommon.FConstCharP, search_fl
 		uintptr(search_flags),
 		uintptr(unsafe.Pointer(out_fmt)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1327,9 +1208,6 @@ func AvOptGetChannelLayout(obj ffcommon.FVoidP, name ffcommon.FConstCharP, searc
 		uintptr(search_flags),
 		uintptr(unsafe.Pointer(ch_layout)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1346,9 +1224,6 @@ func AvOptGetDictVal(obj ffcommon.FVoidP, name ffcommon.FConstCharP, search_flag
 		uintptr(search_flags),
 		uintptr(unsafe.Pointer(out_val)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1371,9 +1246,6 @@ func (avclass *AVClass) AvOptPtr(obj ffcommon.FVoidP, name ffcommon.FConstCharP)
 		obj,
 		ffcommon.UintPtrFromString(name),
 	)
-	if t == 0 {
-
-	}
 	res = t
 	return
 }
@@ -1383,13 +1255,9 @@ func (avclass *AVClass) AvOptPtr(obj ffcommon.FVoidP, name ffcommon.FConstCharP)
  */
 //void av_opt_freep_ranges(AVOptionRanges **ranges);
 func AvOptFreepRanges(ranges **AVOptionRanges) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_freep_ranges").Call(
+	ffcommon.GetAvutilDll().NewProc("av_opt_freep_ranges").Call(
 		uintptr(unsafe.Pointer(ranges)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -1413,9 +1281,6 @@ func AvOptQueryRanges(a **AVOptionRanges, obj ffcommon.FVoidP, key ffcommon.FCon
 		ffcommon.UintPtrFromString(key),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt64T(t)
 	return
 }
@@ -1433,9 +1298,6 @@ func AvOptQueryRanges(a **AVOptionRanges, obj ffcommon.FVoidP, key ffcommon.FCon
 //int av_opt_copy(void *dest, const void *src);
 func AvOptCopy(dest ffcommon.FVoidP, src ffcommon.FConstVoidP) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_copy").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1462,9 +1324,6 @@ func AvOptQueryRangesDefault(a **AVOptionRanges, obj ffcommon.FVoidP, key ffcomm
 		ffcommon.UintPtrFromString(key),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1487,9 +1346,6 @@ func AvOptIsSetToDefault(obj ffcommon.FVoidP, o *AVOption) (res ffcommon.FInt) {
 		obj,
 		uintptr(unsafe.Pointer(o)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1511,9 +1367,6 @@ func AvOptIsSetToDefaultByName(obj ffcommon.FVoidP, name ffcommon.FConstCharP, s
 		ffcommon.UintPtrFromString(name),
 		uintptr(search_flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1551,9 +1404,6 @@ func AvOptSerialize(obj ffcommon.FVoidP, opt_flags, flags ffcommon.FInt, buffer 
 		uintptr(key_val_sep),
 		uintptr(pairs_sep),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }

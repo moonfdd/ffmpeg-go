@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -53,9 +54,6 @@ func AvBase64Decode(out *ffcommon.FUint8T, in ffcommon.FConstCharP, out_size ffc
 		ffcommon.UintPtrFromString(in),
 		uintptr(out_size),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -65,6 +63,10 @@ func AvBase64Decode(out *ffcommon.FUint8T, in ffcommon.FConstCharP, out_size ffc
  * with length x to a data buffer.
  */
 //#define AV_BASE64_DECODE_SIZE(x) ((x) * 3LL / 4)
+func AV_BASE64_DECODE_SIZE(x int64) (res int64) {
+	res = x * 3 / 4
+	return
+}
 
 /**
  * Encode data to base64 and null-terminate.
@@ -84,9 +86,6 @@ func AvBase64Encode(out ffcommon.FCharP, out_size ffcommon.FInt, in *ffcommon.FU
 		uintptr(unsafe.Pointer(in)),
 		uintptr(in_size),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -96,6 +95,10 @@ func AvBase64Encode(out ffcommon.FCharP, out_size ffcommon.FInt, in *ffcommon.FU
  * null-terminated string.
  */
 //#define AV_BASE64_SIZE(x)  (((x)+2) / 3 * 4 + 1)
+func AV_BASE64_SIZE(x int64) (res int64) {
+	res = (x+2)/3*4 + 1
+	return
+}
 
 /**
  * @}

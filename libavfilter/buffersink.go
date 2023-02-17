@@ -1,9 +1,10 @@
 package libavfilter
 
 import (
+	"unsafe"
+
 	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"github.com/moonfdd/ffmpeg-go/libavutil"
-	"unsafe"
 )
 
 /*
@@ -94,9 +95,6 @@ func (ctx *AVFilterContext) AvBuffersinkGetFrameFlags(frame *AVFrame, flags ffco
 		uintptr(unsafe.Pointer(frame)),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -134,9 +132,6 @@ type AVBufferSinkParams struct {
 //todo
 func av_buffersink_params_alloc() (res ffcommon.FCharP) {
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("av_buffersink_params_alloc").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -160,13 +155,9 @@ type AVABufferSinkParams struct {
  */
 //attribute_deprecated
 //AVABufferSinkParams *av_abuffersink_params_alloc(void);
-//todo
-func av_abuffersink_params_alloc() (res ffcommon.FCharP) {
+func AvAbuffersinkParamsAlloc() (res *AVABufferSinkParams) {
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("av_abuffersink_params_alloc").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+	res = (*AVABufferSinkParams)(unsafe.Pointer(t))
 	return
 }
 
@@ -181,14 +172,10 @@ func av_abuffersink_params_alloc() (res ffcommon.FCharP) {
  */
 //void av_buffersink_set_frame_size(AVFilterContext *ctx, unsigned frame_size);
 func (ctx *AVFilterContext) AvBuffersinkSetFrameSize(frame_size ffcommon.FUnsigned) {
-	t, _, _ := ffcommon.GetAvfilterDll().NewProc("av_buffersink_set_frame_size").Call(
+	ffcommon.GetAvfilterDll().NewProc("av_buffersink_set_frame_size").Call(
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(frame_size),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -202,9 +189,6 @@ func (ctx *AVFilterContext) AvBuffersinkGetType() (res AVMediaType) {
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("av_buffersink_get_type").Call(
 		uintptr(unsafe.Pointer(ctx)),
 	)
-	if t == 0 {
-
-	}
 	res = AVMediaType(t)
 	return
 }
@@ -214,9 +198,6 @@ func (ctx *AVFilterContext) AvBuffersinkGetTimeBase() (res AVRational) {
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("av_buffersink_get_time_base").Call(
 		uintptr(unsafe.Pointer(ctx)),
 	)
-	if t == 0 {
-
-	}
 	res = *(*AVRational)(unsafe.Pointer(t))
 	return
 }
@@ -226,9 +207,6 @@ func (ctx *AVFilterContext) AvBuffersinkGetFormat() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("av_buffersink_get_format").Call(
 		uintptr(unsafe.Pointer(ctx)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -238,9 +216,6 @@ func (ctx *AVFilterContext) AvBuffersinkGetFrameRate() (res AVRational) {
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("av_buffersink_get_frame_rate").Call(
 		uintptr(unsafe.Pointer(ctx)),
 	)
-	if t == 0 {
-
-	}
 	res = *(*AVRational)(unsafe.Pointer(t))
 	return
 }
@@ -250,9 +225,6 @@ func (ctx *AVFilterContext) AvBuffersinkGetW() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("av_buffersink_get_w").Call(
 		uintptr(unsafe.Pointer(ctx)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -262,9 +234,6 @@ func (ctx *AVFilterContext) AvBuffersinkGetH() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("av_buffersink_get_h").Call(
 		uintptr(unsafe.Pointer(ctx)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -274,9 +243,6 @@ func (ctx *AVFilterContext) AvBuffersinkGetSampleAspectRatio() (res AVRational) 
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("av_buffersink_get_sample_aspect_ratio").Call(
 		uintptr(unsafe.Pointer(ctx)),
 	)
-	if t == 0 {
-
-	}
 	res = *(*AVRational)(unsafe.Pointer(t))
 	return
 }
@@ -286,9 +252,6 @@ func (ctx *AVFilterContext) AvBuffersinkGetChannels() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("av_buffersink_get_channels").Call(
 		uintptr(unsafe.Pointer(ctx)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -298,9 +261,6 @@ func (ctx *AVFilterContext) AvBuffersinkGetChannelLayout() (res ffcommon.FUint64
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("av_buffersink_get_channel_layout").Call(
 		uintptr(unsafe.Pointer(ctx)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FUint64T(t)
 	return
 }
@@ -310,9 +270,6 @@ func (ctx *AVFilterContext) AvBuffersinkGetSampleRate() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("av_buffersink_get_sample_rate").Call(
 		uintptr(unsafe.Pointer(ctx)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -322,9 +279,6 @@ func (ctx *AVFilterContext) AvBuffersinkGetHwFramesCtx() (res *AVBufferRef) {
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("av_buffersink_get_hw_frames_ctx").Call(
 		uintptr(unsafe.Pointer(ctx)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVBufferRef)(unsafe.Pointer(t))
 	return
 }
@@ -351,9 +305,6 @@ func (ctx *AVFilterContext) AvBuffersinkGetFrame(frame *AVFrame) (res ffcommon.F
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(frame)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -382,9 +333,6 @@ func (ctx *AVFilterContext) AvBuffersinkGetSamples(frame *AVFrame, nb_samples ff
 		uintptr(unsafe.Pointer(frame)),
 		uintptr(nb_samples),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }

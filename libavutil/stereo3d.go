@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -55,7 +56,7 @@ import (
 /**
  * List of possible 3D Types
  */
-type AVStereo3DType = int32
+type AVStereo3DType int32
 
 const (
 	/**
@@ -153,7 +154,7 @@ const (
 /**
  * List of possible view types.
  */
-type AVStereo3DView = int32
+type AVStereo3DView int32
 
 const (
 	/**
@@ -211,9 +212,6 @@ type AVStereo3D struct {
 //AVStereo3D *av_stereo3d_alloc(void);
 func AvStereo3dAlloc() (res *AVStereo3D) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_stereo3d_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*AVStereo3D)(unsafe.Pointer(t))
 	return
 }
@@ -230,9 +228,6 @@ func (frame *AVFrame) AvStereo3dCreateSideData() (res *AVStereo3D) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_stereo3d_create_side_data").Call(
 		uintptr(unsafe.Pointer(frame)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVStereo3D)(unsafe.Pointer(t))
 	return
 }
@@ -249,9 +244,6 @@ func AvStereo3dTypeName(type0 ffcommon.FUnsignedInt) (res ffcommon.FConstCharP) 
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_stereo3d_type_name").Call(
 		uintptr(type0),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -268,9 +260,6 @@ func AvStereo3dFromName(name ffcommon.FConstCharP) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_stereo3d_from_name").Call(
 		ffcommon.UintPtrFromString(name),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }

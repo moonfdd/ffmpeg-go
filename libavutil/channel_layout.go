@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -159,9 +160,6 @@ func AvGetChannelLayout(name ffcommon.FConstCharP) (res ffcommon.FUint64T) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_get_channel_layout").Call(
 		ffcommon.UintPtrFromString(name),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FUint64T(t)
 	return
 }
@@ -185,9 +183,6 @@ func AvGetExtendedChannelLayout(name ffcommon.FConstCharP, channel_layout *ffcom
 		uintptr(unsafe.Pointer(channel_layout)),
 		uintptr(unsafe.Pointer(nb_channels)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -201,16 +196,12 @@ func AvGetExtendedChannelLayout(name ffcommon.FConstCharP, channel_layout *ffcom
  */
 //void av_get_channel_layout_string(char *buf, int buf_size, int nb_channels, uint64_t channel_layout);
 func AvGetChannelLayoutString(buf ffcommon.FCharP, buf_size, nb_channels ffcommon.FInt, channel_layout ffcommon.FUint64T) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_get_channel_layout_string").Call(
+	ffcommon.GetAvutilDll().NewProc("av_get_channel_layout_string").Call(
 		ffcommon.UintPtrFromString(buf),
 		uintptr(buf_size),
 		uintptr(nb_channels),
 		uintptr(channel_layout),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //struct AVBPrint;
@@ -220,15 +211,11 @@ func AvGetChannelLayoutString(buf ffcommon.FCharP, buf_size, nb_channels ffcommo
  */
 //void av_bprint_channel_layout(struct AVBPrint *bp, int nb_channels, uint64_t channel_layout);
 func (bp *AVBPrint) AvBprintChannelLayout(nb_channels ffcommon.FInt, channel_layout ffcommon.FUint64T) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_bprint_channel_layout").Call(
+	ffcommon.GetAvutilDll().NewProc("av_bprint_channel_layout").Call(
 		uintptr(unsafe.Pointer(bp)),
 		uintptr(nb_channels),
 		uintptr(channel_layout),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -239,9 +226,6 @@ func AvGetChannelLayoutNbChannels(channel_layout ffcommon.FUint64T) (res ffcommo
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_get_channel_layout_nb_channels").Call(
 		uintptr(channel_layout),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -254,9 +238,6 @@ func AvGetDefaultChannelLayout(nb_channels ffcommon.FInt) (res ffcommon.FInt64T)
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_get_default_channel_layout").Call(
 		uintptr(nb_channels),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt64T(t)
 	return
 }
@@ -277,9 +258,6 @@ func AvGetChannelLayoutChannelIndex(channel_layout, channel ffcommon.FUint64T) (
 		uintptr(channel_layout),
 		uintptr(channel),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -293,9 +271,6 @@ func AvChannelLayoutExtractChannel(channel_layout ffcommon.FUint64T, index ffcom
 		uintptr(channel_layout),
 		uintptr(index),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FUint64T(t)
 	return
 }
@@ -310,9 +285,6 @@ func AvGetChannelName(channel ffcommon.FUint64T) (res ffcommon.FConstCharP) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_get_channel_name").Call(
 		uintptr(channel),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -328,9 +300,6 @@ func AvGetChannelDescription(channel ffcommon.FUint64T) (res ffcommon.FConstChar
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_get_channel_description").Call(
 		uintptr(channel),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -352,9 +321,6 @@ func AvGetStandardChannelLayout(index ffcommon.FUnsigned, layout *ffcommon.FUint
 		uintptr(unsafe.Pointer(layout)),
 		uintptr(unsafe.Pointer(name)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }

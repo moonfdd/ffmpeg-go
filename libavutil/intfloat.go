@@ -1,7 +1,5 @@
 package libavutil
 
-import "github.com/moonfdd/ffmpeg-go/ffcommon"
-
 /*
  * Copyright (c) 2011 Mans Rullgard
  *
@@ -48,14 +46,14 @@ import "github.com/moonfdd/ffmpeg-go/ffcommon"
 //return v.f;
 //}
 //todo
-func av_int2float() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_int2float").Call()
-	if t == 0 {
+// func av_int2float() (res ffcommon.FCharP) {
+// 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_int2float").Call()
+// 	if t == 0 {
 
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
-}
+// 	}
+// 	res = ffcommon.StringFromPtr(t)
+// 	return
+// }
 
 /**
  * Reinterpret a float as a 32-bit integer.
@@ -67,14 +65,14 @@ func av_int2float() (res ffcommon.FCharP) {
 //return v.i;
 //}
 //todo
-func av_float2int() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_float2int").Call()
-	if t == 0 {
+// func av_float2int() (res ffcommon.FCharP) {
+// 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_float2int").Call()
+// 	if t == 0 {
 
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
-}
+// 	}
+// 	res = ffcommon.StringFromPtr(t)
+// 	return
+// }
 
 /**
  * Reinterpret a 64-bit integer as a double.
@@ -86,14 +84,14 @@ func av_float2int() (res ffcommon.FCharP) {
 //return v.f;
 //}
 //todo
-func av_int2double() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_int2double").Call()
-	if t == 0 {
+// func av_int2double() (res ffcommon.FCharP) {
+// 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_int2double").Call()
+// 	if t == 0 {
 
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
-}
+// 	}
+// 	res = ffcommon.StringFromPtr(t)
+// 	return
+// }
 
 /**
  * Reinterpret a double as a 64-bit integer.
@@ -105,13 +103,13 @@ func av_int2double() (res ffcommon.FCharP) {
 //return v.i;
 //}
 //todo
-func av_double2int() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_double2int").Call()
-	if t == 0 {
+// func av_double2int() (res ffcommon.FCharP) {
+// 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_double2int").Call()
+// 	if t == 0 {
 
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
-}
+// 	}
+// 	res = ffcommon.StringFromPtr(t)
+// 	return
+// }
 
 //#endif /* AVUTIL_INTFLOAT_H */

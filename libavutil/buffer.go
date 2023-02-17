@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -124,9 +125,6 @@ func AvBufferAlloc(size ffcommon.FIntOrSizeT) (res *AVBufferRef) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_buffer_alloc").Call(
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVBufferRef)(unsafe.Pointer(t))
 	return
 }
@@ -144,9 +142,6 @@ func AvBufferAllocz(size ffcommon.FIntOrSizeT) (res *AVBufferRef) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_buffer_allocz").Call(
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVBufferRef)(unsafe.Pointer(t))
 	return
 }
@@ -187,9 +182,6 @@ func AvBufferCreate(data *ffcommon.FUint8T, size ffcommon.FIntOrSizeT, free func
 		opaque,
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVBufferRef)(unsafe.Pointer(t))
 	return
 }
@@ -201,14 +193,10 @@ func AvBufferCreate(data *ffcommon.FUint8T, size ffcommon.FIntOrSizeT, free func
  */
 //void av_buffer_default_free(void *opaque, uint8_t *data);
 func AvBufferDefaultFree(opaque ffcommon.FVoidP, data *ffcommon.FUint8T) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_buffer_default_free").Call(
+	ffcommon.GetAvutilDll().NewProc("av_buffer_default_free").Call(
 		opaque,
 		uintptr(unsafe.Pointer(data)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -222,9 +210,6 @@ func (buf *AVBufferRef) AvBufferRef() (res *AVBufferRef) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_buffer_ref").Call(
 		uintptr(unsafe.Pointer(buf)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVBufferRef)(unsafe.Pointer(t))
 	return
 }
@@ -237,13 +222,9 @@ func (buf *AVBufferRef) AvBufferRef() (res *AVBufferRef) {
  */
 //void av_buffer_unref(AVBufferRef **buf);
 func AvBufferUnref(buf **AVBufferRef) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_buffer_unref").Call(
+	ffcommon.GetAvutilDll().NewProc("av_buffer_unref").Call(
 		uintptr(unsafe.Pointer(buf)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -257,9 +238,6 @@ func (buf *AVBufferRef) AvBufferIsWritable() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_buffer_is_writable").Call(
 		uintptr(unsafe.Pointer(buf)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -272,9 +250,6 @@ func (buf *AVBufferRef) AvBufferGetOpaque() (res ffcommon.FVoidP) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_buffer_get_opaque").Call(
 		uintptr(unsafe.Pointer(buf)),
 	)
-	if t == 0 {
-
-	}
 	res = t
 	return
 }
@@ -284,9 +259,6 @@ func (buf *AVBufferRef) AvBufferGetRefCount() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_buffer_get_ref_count").Call(
 		uintptr(unsafe.Pointer(buf)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -305,9 +277,6 @@ func AvBufferMakeWritable(buf **AVBufferRef) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_buffer_make_writable").Call(
 		uintptr(unsafe.Pointer(buf)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -337,9 +306,6 @@ func AvBufferRealloc(buf **AVBufferRef, size ffcommon.FIntOrSizeT) (res ffcommon
 		uintptr(unsafe.Pointer(buf)),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -364,9 +330,6 @@ func AvBufferReplace(dst **AVBufferRef, src **AVBufferRef) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(src)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -432,9 +395,6 @@ func AvBufferPoolInit(size ffcommon.FIntOrSizeT, alloc func(size ffcommon.FIntOr
 		uintptr(size),
 		ffcommon.NewCallback(alloc),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVBufferPool)(unsafe.Pointer(t))
 	return
 }
@@ -471,9 +431,6 @@ func AvBufferPoolInit2(size ffcommon.FIntOrSizeT, opaque ffcommon.FVoidP,
 		ffcommon.NewCallback(alloc),
 		ffcommon.NewCallback(pool_free),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVBufferPool)(unsafe.Pointer(t))
 	return
 }
@@ -488,13 +445,9 @@ func AvBufferPoolInit2(size ffcommon.FIntOrSizeT, opaque ffcommon.FVoidP,
  */
 //void av_buffer_pool_uninit(AVBufferPool **pool);
 func AvBufferPoolUninit(pool **AVBufferPool) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_buffer_pool_uninit").Call(
+	ffcommon.GetAvutilDll().NewProc("av_buffer_pool_uninit").Call(
 		uintptr(unsafe.Pointer(pool)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -508,9 +461,6 @@ func (pool *AVBufferPool) AvBufferPoolGet() (res *AVBufferPool) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_buffer_pool_get").Call(
 		uintptr(unsafe.Pointer(pool)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVBufferPool)(unsafe.Pointer(t))
 	return
 }
@@ -531,9 +481,6 @@ func (pool *AVBufferPool) AvBufferPoolBufferGetOpaque() (res ffcommon.FVoidP) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_buffer_pool_buffer_get_opaque").Call(
 		uintptr(unsafe.Pointer(pool)),
 	)
-	if t == 0 {
-
-	}
 	res = t
 	return
 }

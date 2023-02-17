@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -52,9 +53,6 @@ type AVTEA struct {
 //struct AVTEA *av_tea_alloc(void);
 func AvTeaAlloc() (res *AVTEA) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_tea_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*AVTEA)(unsafe.Pointer(t))
 	return
 }
@@ -68,15 +66,11 @@ func AvTeaAlloc() (res *AVTEA) {
  */
 //void av_tea_init(struct AVTEA *ctx, const uint8_t key[16], int rounds);
 func (ctx *AVTEA) AvTeaInit(key [16]ffcommon.FUint8T, rounds ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_tea_init").Call(
+	ffcommon.GetAvutilDll().NewProc("av_tea_init").Call(
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(&key)),
 		uintptr(rounds),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -93,7 +87,7 @@ func (ctx *AVTEA) AvTeaInit(key [16]ffcommon.FUint8T, rounds ffcommon.FInt) {
 //int count, uint8_t *iv, int decrypt);
 func (ctx *AVTEA) AvTeaCrypt(dst, src *ffcommon.FUint8T,
 	count ffcommon.FInt, iv *ffcommon.FUint8T, decrypt ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_tea_crypt").Call(
+	ffcommon.GetAvutilDll().NewProc("av_tea_crypt").Call(
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(src)),
@@ -101,10 +95,6 @@ func (ctx *AVTEA) AvTeaCrypt(dst, src *ffcommon.FUint8T,
 		uintptr(unsafe.Pointer(iv)),
 		uintptr(decrypt),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**

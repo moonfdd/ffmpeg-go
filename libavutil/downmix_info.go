@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -117,9 +118,6 @@ func (frame *AVFrame) AvDownmixInfoUpdateSideData() (res *AVDownmixInfo) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_downmix_info_update_side_data").Call(
 		uintptr(unsafe.Pointer(frame)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVDownmixInfo)(unsafe.Pointer(t))
 	return
 }

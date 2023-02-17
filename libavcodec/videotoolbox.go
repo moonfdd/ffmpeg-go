@@ -1,6 +1,10 @@
 package libavcodec
 
-import "github.com/moonfdd/ffmpeg-go/ffcommon"
+import (
+	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
+)
 
 /*
  * Videotoolbox hardware acceleration
@@ -54,31 +58,31 @@ type AVVideotoolboxContext struct {
 	 * Created and freed the caller.
 	 */
 	//VTDecompressionSessionRef session;
-	session uintptr
+	Session uintptr
 	/**
 	 * The output callback that must be passed to the session.
 	 * Set by av_videottoolbox_default_init()
 	 */
 	//VTDecompressionOutputCallback output_callback;
-	output_callback uintptr
+	OutputCallback uintptr
 	/**
 	 * CVPixelBuffer Format Type that Videotoolbox will use for decoded frames.
 	 * set by the caller. If this is set to 0, then no specific format is
 	 * requested from the decoder, and its native format is output.
 	 */
 	//OSType cv_pix_fmt_type;
-	cv_pix_fmt_type uintptr
+	CvPixFmtType uintptr
 	/**
 	 * CoreMedia Format Description that Videotoolbox will use to create the decompression session.
 	 * Set by the caller.
 	 */
 	//CMVideoFormatDescriptionRef cm_fmt_desc;
-	cm_fmt_desc uintptr
+	CmFmtDesc uintptr
 	/**
 	 * CoreMedia codec type that Videotoolbox will use to create the decompression session.
 	 * Set by the caller.
 	 */
-	cm_codec_type ffcommon.FInt
+	CmCodecType ffcommon.FInt
 }
 
 /**
@@ -95,13 +99,9 @@ type AVVideotoolboxContext struct {
  * @return the newly allocated context or NULL on failure
  */
 //AVVideotoolboxContext *av_videotoolbox_alloc_context(void);
-//todo
-func av_videotoolbox_alloc_context() (res ffcommon.FCharP) {
+func AvVideotoolboxAllocContext() (res *AVVideotoolboxContext) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_videotoolbox_alloc_context").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+	res = (*AVVideotoolboxContext)(unsafe.Pointer(t))
 	return
 }
 
@@ -114,13 +114,11 @@ func av_videotoolbox_alloc_context() (res ffcommon.FCharP) {
  * @return >= 0 on success, a negative AVERROR code on failure
  */
 //int av_videotoolbox_default_init(AVCodecContext *avctx);
-//todo
-func av_videotoolbox_default_init() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_videotoolbox_default_init").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (avctx *AVCodecContext) AvVideotoolboxDefaultInit() (res ffcommon.FInt) {
+	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_videotoolbox_default_init").Call(
+		uintptr(unsafe.Pointer(avctx)),
+	)
+	res = ffcommon.FInt(t)
 	return
 }
 
@@ -134,13 +132,12 @@ func av_videotoolbox_default_init() (res ffcommon.FCharP) {
  * @return >= 0 on success, a negative AVERROR code on failure
  */
 //int av_videotoolbox_default_init2(AVCodecContext *avctx, AVVideotoolboxContext *vtctx);
-//todo
-func av_videotoolbox_default_init2() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_videotoolbox_default_init2").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (avctx *AVCodecContext) AvVideotoolboxDefaultInit2(vtctx *AVVideotoolboxContext) (res ffcommon.FInt) {
+	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_videotoolbox_default_init2").Call(
+		uintptr(unsafe.Pointer(avctx)),
+		uintptr(unsafe.Pointer(vtctx)),
+	)
+	res = ffcommon.FInt(t)
 	return
 }
 
@@ -151,14 +148,10 @@ func av_videotoolbox_default_init2() (res ffcommon.FCharP) {
  * @param avctx the corresponding codec context
  */
 //void av_videotoolbox_default_free(AVCodecContext *avctx);
-//todo
-func av_videotoolbox_default_free() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_videotoolbox_default_free").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (avctx *AVCodecContext) AvVideotoolboxDefaultFree() {
+	ffcommon.GetAvcodecDll().NewProc("av_videotoolbox_default_free").Call(
+		uintptr(unsafe.Pointer(avctx)),
+	)
 }
 
 /**

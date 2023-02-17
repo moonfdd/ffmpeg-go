@@ -1,8 +1,9 @@
 package libavcodec
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -47,9 +48,6 @@ func AvAdtsHeaderParse(buf *ffcommon.FUint8T, samples *ffcommon.FUint32T,
 		uintptr(unsafe.Pointer(samples)),
 		uintptr(unsafe.Pointer(frames)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }

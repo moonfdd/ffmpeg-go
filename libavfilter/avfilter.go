@@ -1,9 +1,10 @@
 package libavfilter
 
 import (
+	"unsafe"
+
 	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"github.com/moonfdd/ffmpeg-go/libavutil"
-	"unsafe"
 )
 
 /*
@@ -63,9 +64,6 @@ import (
 //unsigned avfilter_version(void);
 func AvfilterVersion() (res ffcommon.FUnsigned) {
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("avfilter_version").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.FUnsigned(t)
 	return
 }
@@ -76,9 +74,6 @@ func AvfilterVersion() (res ffcommon.FUnsigned) {
 //const char *avfilter_configuration(void);
 func AvfilterConfiguration() (res ffcommon.FConstCharP) {
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("avfilter_configuration").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -89,9 +84,6 @@ func AvfilterConfiguration() (res ffcommon.FConstCharP) {
 //const char *avfilter_license(void);
 func AvfilterLicense() (res ffcommon.FConstCharP) {
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("avfilter_license").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -121,9 +113,6 @@ func (pads *AVFilterPad) AvfilterPadCount() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("avfilter_pad_count").Call(
 		uintptr(unsafe.Pointer(pads)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -143,9 +132,6 @@ func (pads *AVFilterPad) AvfilterPadGetName(pad_idx ffcommon.FInt) (res ffcommon
 		uintptr(unsafe.Pointer(pads)),
 		uintptr(pad_idx),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -165,9 +151,6 @@ func (pads *AVFilterPad) AvfilterPadGetType(pad_idx ffcommon.FInt) (res AVMediaT
 		uintptr(unsafe.Pointer(pads)),
 		uintptr(pad_idx),
 	)
-	if t == 0 {
-
-	}
 	res = AVMediaType(t)
 	return
 }
@@ -550,7 +533,7 @@ type AVFilterFormatsConfig struct {
  * In the future, access to the header may be reserved for filters
  * implementation.
  */
-type AVLINK = int32
+type AVLINK int32
 
 const (
 	AVLINK_UNINIT    = 0    ///< not started
@@ -764,9 +747,6 @@ func AvfilterLink(src *AVFilterContext, srcpad ffcommon.FUnsigned, dst *AVFilter
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(dstpad),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -776,13 +756,9 @@ func AvfilterLink(src *AVFilterContext, srcpad ffcommon.FUnsigned, dst *AVFilter
  */
 //void avfilter_link_free(AVFilterLink **link);
 func AvfilterLinkFree(link **AVFilterLink) {
-	t, _, _ := ffcommon.GetAvfilterDll().NewProc("avfilter_link_free").Call(
+	ffcommon.GetAvfilterDll().NewProc("avfilter_link_free").Call(
 		uintptr(unsafe.Pointer(link)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //#if FF_API_FILTER_GET_SET
@@ -792,13 +768,11 @@ func AvfilterLinkFree(link **AVFilterLink) {
  */
 //attribute_deprecated
 //int avfilter_link_get_channels(AVFilterLink *link);
-//todo
-func avfilter_link_get_channels() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvfilterDll().NewProc("avfilter_link_get_channels").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (link *AVFilterLink) AvfilterLinkGetChannels() (res ffcommon.FInt) {
+	t, _, _ := ffcommon.GetAvfilterDll().NewProc("avfilter_link_get_channels").Call(
+		uintptr(unsafe.Pointer(link)),
+	)
+	res = ffcommon.FInt(t)
 	return
 }
 
@@ -811,14 +785,11 @@ func avfilter_link_get_channels() (res ffcommon.FCharP) {
  */
 //attribute_deprecated
 //void avfilter_link_set_closed(AVFilterLink *link, int closed);
-//todo
-func avfilter_link_set_closed() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvfilterDll().NewProc("avfilter_link_set_closed").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (link *AVFilterLink) AvfilterLinkSetClosed(closed ffcommon.FInt) {
+	ffcommon.GetAvfilterDll().NewProc("avfilter_link_set_closed").Call(
+		uintptr(unsafe.Pointer(link)),
+		uintptr(closed),
+	)
 }
 
 //#endif
@@ -833,9 +804,6 @@ func (filter *AVFilterContext) AvfilterConfigLinks() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("avfilter_config_links").Call(
 		uintptr(unsafe.Pointer(filter)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -857,9 +825,6 @@ func (filter *AVFilterContext) AvfilterProcessCommand(cmd, arg, res0 ffcommon.FC
 		uintptr(res_len),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -878,9 +843,6 @@ func AvFilterIterate(opaque *ffcommon.FVoidP) (res *AVFilter) {
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("av_filter_iterate").Call(
 		uintptr(unsafe.Pointer(opaque)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVFilter)(unsafe.Pointer(t))
 	return
 }
@@ -889,14 +851,8 @@ func AvFilterIterate(opaque *ffcommon.FVoidP) (res *AVFilter) {
 /** Initialize the filter system. Register all builtin filters. */
 //attribute_deprecated
 //void avfilter_register_all(void);
-//todo
-func avfilter_register_all() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvfilterDll().NewProc("avfilter_register_all").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func AvfilterRegisterAll() {
+	ffcommon.GetAvfilterDll().NewProc("avfilter_register_all").Call()
 }
 
 /**
@@ -911,13 +867,11 @@ func avfilter_register_all() (res ffcommon.FCharP) {
  */
 //attribute_deprecated
 //int avfilter_register(AVFilter *filter);
-//todo
-func avfilter_register() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvfilterDll().NewProc("avfilter_register").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (filter *AVFilter) AvfilterRegister() (res ffcommon.FInt) {
+	t, _, _ := ffcommon.GetAvfilterDll().NewProc("avfilter_register").Call(
+		uintptr(unsafe.Pointer(filter)),
+	)
+	res = ffcommon.FInt(t)
 	return
 }
 
@@ -928,13 +882,11 @@ func avfilter_register() (res ffcommon.FCharP) {
  */
 //attribute_deprecated
 //const AVFilter *avfilter_next(const AVFilter *prev);
-//todo
-func avfilter_next() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvfilterDll().NewProc("avfilter_next").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (prev *AVFilter) AvfilterNext() (res *AVFilter) {
+	t, _, _ := ffcommon.GetAvfilterDll().NewProc("avfilter_next").Call(
+		uintptr(unsafe.Pointer(prev)),
+	)
+	res = (*AVFilter)(unsafe.Pointer(t))
 	return
 }
 
@@ -952,9 +904,6 @@ func AvfilterGetByName(name ffcommon.FConstCharP) (res *AVFilter) {
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("avfilter_get_by_name").Call(
 		ffcommon.UintPtrFromString(name),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVFilter)(unsafe.Pointer(t))
 	return
 }
@@ -975,10 +924,6 @@ func (ctx *AVFilterContext) AvfilterInitStr(args ffcommon.FConstCharP) (res ffco
 		uintptr(unsafe.Pointer(ctx)),
 		ffcommon.UintPtrFromString(args),
 	)
-
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1011,10 +956,6 @@ func (ctx *AVFilterContext) AvfilterInitDict(options **AVDictionary) (res ffcomm
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(options)),
 	)
-
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1027,13 +968,9 @@ func (ctx *AVFilterContext) AvfilterInitDict(options **AVDictionary) (res ffcomm
  */
 //void avfilter_free(AVFilterContext *filter);
 func (filter *AVFilterContext) AvfilterFree() {
-	t, _, _ := ffcommon.GetAvfilterDll().NewProc("avfilter_free").Call(
+	ffcommon.GetAvfilterDll().NewProc("avfilter_free").Call(
 		uintptr(unsafe.Pointer(filter)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -1055,9 +992,6 @@ func (link *AVFilterLink) AvfilterInsertFilter(filt *AVFilterContext,
 		uintptr(filt_srcpad_idx),
 		uintptr(filt_dstpad_idx),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1070,9 +1004,6 @@ func (link *AVFilterLink) AvfilterInsertFilter(filt *AVFilterContext,
 //const AVClass *avfilter_get_class(void);
 func AvfilterGetClass() (res *AVClass) {
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("avfilter_get_class").Call()
-	if t == 0 {
-
-	}
 	res = (*AVClass)(unsafe.Pointer(t))
 	return
 }
@@ -1193,9 +1124,6 @@ type AVFilterGraph struct {
 //AVFilterGraph *avfilter_graph_alloc(void);
 func AvfilterGraphAlloc() (res *AVFilterGraph) {
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("avfilter_graph_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*AVFilterGraph)(unsafe.Pointer(t))
 	return
 }
@@ -1224,9 +1152,6 @@ func (graph *AVFilterGraph) AvfilterGraphAllocFilter(filter *AVFilter,
 		uintptr(unsafe.Pointer(filter)),
 		ffcommon.UintPtrFromString(name),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVFilterContext)(unsafe.Pointer(t))
 	return
 }
@@ -1245,9 +1170,6 @@ func (graph *AVFilterGraph) AvfilterGraphGetFilter(name ffcommon.FConstCharP) (r
 		uintptr(unsafe.Pointer(graph)),
 		ffcommon.UintPtrFromString(name),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVFilterContext)(unsafe.Pointer(t))
 	return
 }
@@ -1279,9 +1201,6 @@ func AvfilterGraphCreateFilter(filt_ctx **AVFilterContext, filt *AVFilter,
 		opaque,
 		uintptr(unsafe.Pointer(graph_ctx)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1296,14 +1215,10 @@ func AvfilterGraphCreateFilter(filt_ctx **AVFilterContext, filt *AVFilter,
  */
 //void avfilter_graph_set_auto_convert(AVFilterGraph *graph, unsigned flags);
 func (graph *AVFilterGraph) AvfilterGraphSetAutoConvert(flags ffcommon.FUnsigned) {
-	t, _, _ := ffcommon.GetAvfilterDll().NewProc("avfilter_graph_set_auto_convert").Call(
+	ffcommon.GetAvfilterDll().NewProc("avfilter_graph_set_auto_convert").Call(
 		uintptr(unsafe.Pointer(graph)),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 const (
@@ -1324,9 +1239,6 @@ func (graphctx *AVFilterGraph) AvfilterGraphConfig(log_ctx ffcommon.FVoidP) (res
 		uintptr(unsafe.Pointer(graphctx)),
 		log_ctx,
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1337,13 +1249,9 @@ func (graphctx *AVFilterGraph) AvfilterGraphConfig(log_ctx ffcommon.FVoidP) (res
  */
 //void avfilter_graph_free(AVFilterGraph **graph);
 func AvfilterGraphFree(graphctx **AVFilterGraph) {
-	t, _, _ := ffcommon.GetAvfilterDll().NewProc("avfilter_graph_free").Call(
+	ffcommon.GetAvfilterDll().NewProc("avfilter_graph_free").Call(
 		uintptr(unsafe.Pointer(graphctx)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -1378,9 +1286,6 @@ type AVFilterInOut struct {
 //AVFilterInOut *avfilter_inout_alloc(void);
 func AvfilterInoutAlloc() (res *AVFilterInOut) {
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("avfilter_inout_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*AVFilterInOut)(unsafe.Pointer(t))
 	return
 }
@@ -1391,13 +1296,9 @@ func AvfilterInoutAlloc() (res *AVFilterInOut) {
  */
 //void avfilter_inout_free(AVFilterInOut **inout);
 func AvfilterInoutFree(inout **AVFilterInOut) {
-	t, _, _ := ffcommon.GetAvfilterDll().NewProc("avfilter_inout_free").Call(
+	ffcommon.GetAvfilterDll().NewProc("avfilter_inout_free").Call(
 		uintptr(unsafe.Pointer(inout)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -1431,9 +1332,6 @@ func (graph *AVFilterGraph) AvfilterGraphParse(filters ffcommon.FConstCharP,
 		uintptr(unsafe.Pointer(outputs)),
 		log_ctx,
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1468,9 +1366,6 @@ func (graph *AVFilterGraph) AvfilterGraphParsePtr(filters ffcommon.FConstCharP,
 		uintptr(unsafe.Pointer(outputs)),
 		log_ctx,
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1508,9 +1403,6 @@ func (graph *AVFilterGraph) AvfilterGraphParse2(filters ffcommon.FConstCharP,
 		uintptr(unsafe.Pointer(inputs)),
 		uintptr(unsafe.Pointer(outputs)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1541,9 +1433,6 @@ func (graph *AVFilterGraph) AvfilterGraphSendCommand(target, cmd, arg, res0 ffco
 		uintptr(res_len),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1573,9 +1462,6 @@ func (graph *AVFilterGraph) AvfilterGraphQueueCommand(target, cmd, arg ffcommon.
 		uintptr(flags),
 		uintptr(unsafe.Pointer(&ts)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1594,9 +1480,6 @@ func (graph *AVFilterGraph) AvfilterGraphDump(options ffcommon.FConstCharP) (res
 		uintptr(unsafe.Pointer(graph)),
 		ffcommon.UintPtrFromString(options),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -1624,9 +1507,6 @@ func (graph *AVFilterGraph) AvfilterGraphRequestOldest() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("avfilter_graph_request_oldest").Call(
 		uintptr(unsafe.Pointer(graph)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }

@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -83,7 +84,7 @@ const M_SQRT2 = 1.41421356237309504880 /* sqrt(2) */
 /**
  * Rounding methods.
  */
-type AVRounding = int32
+type AVRounding int32
 
 const (
 	AV_ROUND_ZERO     = 0 ///< Round toward zero.
@@ -130,9 +131,6 @@ func AvGcd(a, b ffcommon.FInt64T) (res ffcommon.FInt64T) {
 		uintptr(a),
 		uintptr(b),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt64T(t)
 	return
 }
@@ -154,9 +152,6 @@ func AvRescale(a, b, c ffcommon.FInt64T) (res ffcommon.FInt64T) {
 		uintptr(b),
 		uintptr(c),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt64T(t)
 	return
 }
@@ -177,9 +172,6 @@ func AvRescaleRnd(a, b, c ffcommon.FInt64T, rnd AVRounding) (res ffcommon.FInt64
 		uintptr(c),
 		uintptr(rnd),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt64T(t)
 	return
 }
@@ -200,9 +192,6 @@ func AvRescaleQ(a ffcommon.FInt64T, bq, cq AVRational) (res ffcommon.FInt64T) {
 		uintptr(unsafe.Pointer(&bq)),
 		uintptr(unsafe.Pointer(&cq)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt64T(t)
 	return
 }
@@ -223,9 +212,6 @@ func AvRescaleQRnd(a ffcommon.FInt64T, bq, cq AVRational, rnd AVRounding) (res f
 		uintptr(unsafe.Pointer(&cq)),
 		uintptr(rnd),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt64T(t)
 	return
 }
@@ -250,9 +236,6 @@ func AvCompareTs(ts_a ffcommon.FInt64T, tb_a AVRational, ts_b ffcommon.FInt64T, 
 		uintptr(ts_b),
 		uintptr(unsafe.Pointer(&tb_b)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -282,9 +265,6 @@ func AvCompareMod(a, b, mod ffcommon.FInt64T) (res ffcommon.FInt64T) {
 		uintptr(b),
 		uintptr(mod),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt64T(t)
 	return
 }
@@ -324,9 +304,6 @@ func AvRescaleDelta(in_tb AVRational, in_ts ffcommon.FInt64T, fs_tb AVRational, 
 		uintptr(unsafe.Pointer(last)),
 		uintptr(unsafe.Pointer(&out_tb)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt64T(t)
 	return
 }
@@ -350,9 +327,6 @@ func AvAddStable(ts_tb AVRational, ts ffcommon.FInt64T, inc_tb AVRational, inc f
 		uintptr(unsafe.Pointer(&inc_tb)),
 		uintptr(inc),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt64T(t)
 	return
 }

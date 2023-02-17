@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -62,7 +63,7 @@ import (
  * linesize is the buffer size, in bytes, for the 1 plane.
  *
  */
-type AVSampleFormat = int32
+type AVSampleFormat int32
 
 const (
 	AV_SAMPLE_FMT_NONE = iota - 1
@@ -92,9 +93,6 @@ func AvGetSampleFmtName(sample_fmt AVSampleFormat) (res ffcommon.FConstCharP) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_get_sample_fmt_name").Call(
 		uintptr(sample_fmt),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -108,9 +106,6 @@ func AvGetSampleFmt(name ffcommon.FConstCharP) (res AVSampleFormat) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_get_sample_fmt").Call(
 		ffcommon.UintPtrFromString(name),
 	)
-	if t == 0 {
-
-	}
 	res = AVSampleFormat(t)
 	return
 }
@@ -127,9 +122,6 @@ func AvGetAltSampleFmt(sample_fmt AVSampleFormat, planar ffcommon.FInt) (res AVS
 		uintptr(sample_fmt),
 		uintptr(planar),
 	)
-	if t == 0 {
-
-	}
 	res = AVSampleFormat(t)
 	return
 }
@@ -148,9 +140,6 @@ func AvGetPackedSampleFmt(sample_fmt AVSampleFormat) (res AVSampleFormat) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_get_packed_sample_fmt").Call(
 		uintptr(sample_fmt),
 	)
-	if t == 0 {
-
-	}
 	res = AVSampleFormat(t)
 	return
 }
@@ -169,9 +158,6 @@ func AvGetPlanarSampleFmt(sample_fmt AVSampleFormat) (res AVSampleFormat) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_get_planar_sample_fmt").Call(
 		uintptr(sample_fmt),
 	)
-	if t == 0 {
-
-	}
 	res = AVSampleFormat(t)
 	return
 }
@@ -195,9 +181,6 @@ func AvGetSampleFmtString(buf ffcommon.FCharP, buf_size ffcommon.FInt, sample_fm
 		uintptr(buf_size),
 		uintptr(sample_fmt),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -214,9 +197,6 @@ func AvGetBytesPerSample(sample_fmt AVSampleFormat) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_get_bytes_per_sample").Call(
 		uintptr(sample_fmt),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -232,9 +212,6 @@ func AvSampleFmtIsPlanar(sample_fmt AVSampleFormat) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_sample_fmt_is_planar").Call(
 		uintptr(sample_fmt),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -260,9 +237,6 @@ func AvSamplesGetBufferSize(linesize *ffcommon.FInt, nb_channels, nb_samples ffc
 		uintptr(sample_fmt),
 		uintptr(align),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -323,9 +297,6 @@ func AvSamplesFillArrays(audio_data **ffcommon.FUint8T, linesize *ffcommon.FInt,
 		uintptr(sample_fmt),
 		uintptr(align),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -361,9 +332,6 @@ func AvSamplesAlloc(audio_data **ffcommon.FUint8T, linesize *ffcommon.FInt, nb_c
 		uintptr(sample_fmt),
 		uintptr(align),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -389,9 +357,6 @@ func AvSamplesAllocArrayAndSamples(audio_data ***ffcommon.FUint8T, linesize *ffc
 		uintptr(sample_fmt),
 		uintptr(align),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -421,9 +386,6 @@ func AvSamplesCopy(dst **ffcommon.FUint8T, src **ffcommon.FUint8T, dst_offset, s
 		uintptr(nb_channels),
 		uintptr(sample_fmt),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -448,9 +410,6 @@ func AvSamplesSetSilence(audio_data **ffcommon.FUint8T, offset ffcommon.FInt,
 		uintptr(nb_channels),
 		uintptr(sample_fmt),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }

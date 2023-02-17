@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -60,9 +61,6 @@ func AvHmacAlloc(type0 AVHMACType) (res *AVHMAC) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_hmac_alloc").Call(
 		uintptr(type0),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVHMAC)(unsafe.Pointer(t))
 	return
 }
@@ -73,13 +71,9 @@ func AvHmacAlloc(type0 AVHMACType) (res *AVHMAC) {
  */
 //void av_hmac_free(AVHMAC *ctx);
 func (ctx *AVHMAC) AvHmacFree() {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_hmac_free").Call(
+	ffcommon.GetAvutilDll().NewProc("av_hmac_free").Call(
 		uintptr(unsafe.Pointer(ctx)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -90,15 +84,11 @@ func (ctx *AVHMAC) AvHmacFree() {
  */
 //void av_hmac_init(AVHMAC *ctx, const uint8_t *key, unsigned int keylen);
 func (ctx *AVHMAC) AvHmacInit(key *ffcommon.FUint8T, keylen ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_hmac_init").Call(
+	ffcommon.GetAvutilDll().NewProc("av_hmac_init").Call(
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(key)),
 		uintptr(keylen),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -109,15 +99,11 @@ func (ctx *AVHMAC) AvHmacInit(key *ffcommon.FUint8T, keylen ffcommon.FInt) {
  */
 //void av_hmac_update(AVHMAC *ctx, const uint8_t *data, unsigned int len);
 func (ctx *AVHMAC) AvHmacUpdate(data *ffcommon.FUint8T, keylen ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_hmac_update").Call(
+	ffcommon.GetAvutilDll().NewProc("av_hmac_update").Call(
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(data)),
 		uintptr(keylen),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -134,9 +120,6 @@ func (ctx *AVHMAC) AvHmacFinal(out *ffcommon.FUint8T, outlen ffcommon.FUnsignedI
 		uintptr(unsafe.Pointer(out)),
 		uintptr(outlen),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -167,9 +150,6 @@ func (ctx *AVHMAC) AvHmacCalc(data *ffcommon.FUint8T, len0 ffcommon.FUnsignedInt
 		uintptr(unsafe.Pointer(out)),
 		uintptr(outlen),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }

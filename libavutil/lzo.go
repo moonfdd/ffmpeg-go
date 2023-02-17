@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -69,16 +70,13 @@ const AV_LZO_OUTPUT_PADDING = 12
  * AV_LZO_INPUT_PADDING, out must provide AV_LZO_OUTPUT_PADDING additional bytes.
  */
 //int av_lzo1x_decode(void *out, int *outlen, const void *in, int *inlen);
-func AvLzo1xDecode(out ffcommon.FVoidP, outlen ffcommon.FInt, in ffcommon.FConstVoidP, inlen *ffcommon.FInt) (res ffcommon.FInt) {
+func AvLzo1xDecode(out ffcommon.FVoidP, outlen *ffcommon.FInt, in ffcommon.FConstVoidP, inlen *ffcommon.FInt) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_lzo1x_decode").Call(
 		out,
-		uintptr(outlen),
+		uintptr(unsafe.Pointer(outlen)),
 		in,
 		uintptr(unsafe.Pointer(inlen)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }

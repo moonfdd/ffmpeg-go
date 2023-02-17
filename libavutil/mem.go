@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -211,9 +212,6 @@ func AvMalloc(size ffcommon.FSizeT) (res ffcommon.FVoidP) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_malloc").Call(
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = t
 	return
 }
@@ -232,9 +230,6 @@ func AvMallocz(size ffcommon.FSizeT) (res ffcommon.FVoidP) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_mallocz").Call(
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = t
 	return
 }
@@ -256,9 +251,6 @@ func AvMallocArray(nmemb, size ffcommon.FSizeT) (res ffcommon.FVoidP) {
 		uintptr(nmemb),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = t
 	return
 }
@@ -282,9 +274,6 @@ func AvMalloczArray(nmemb, size ffcommon.FSizeT) (res ffcommon.FVoidP) {
 		uintptr(nmemb),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = t
 	return
 }
@@ -300,9 +289,6 @@ func AvCalloc(nmemb, size ffcommon.FSizeT) (res ffcommon.FVoidP) {
 		uintptr(nmemb),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = t
 	return
 }
@@ -333,9 +319,6 @@ func AvRealloc(ptr ffcommon.FVoidP, size ffcommon.FSizeT) (res ffcommon.FVoidP) 
 		ptr,
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = t
 	return
 }
@@ -366,9 +349,6 @@ func AvReallocp(ptr ffcommon.FVoidP, size ffcommon.FSizeT) (res ffcommon.FInt) {
 		ptr,
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -395,9 +375,6 @@ func AvReallocF(ptr ffcommon.FVoidP, nelem, elsize ffcommon.FSizeT) (res ffcommo
 		uintptr(nelem),
 		uintptr(elsize),
 	)
-	if t == 0 {
-
-	}
 	res = t
 	return
 }
@@ -427,9 +404,6 @@ func AvReallocArray(ptr ffcommon.FVoidP, nmemb, size ffcommon.FSizeT) (res ffcom
 		uintptr(nmemb),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = t
 	return
 }
@@ -458,9 +432,6 @@ func AvReallocpArray(ptr ffcommon.FVoidP, nmemb, size ffcommon.FSizeT) (res ffco
 		uintptr(nmemb),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -504,9 +475,6 @@ func AvFastRealloc(ptr ffcommon.FVoidP, size *ffcommon.FUnsignedInt, min_size ff
 		uintptr(unsafe.Pointer(size)),
 		uintptr(min_size),
 	)
-	if t == 0 {
-
-	}
 	res = t
 	return
 }
@@ -542,15 +510,11 @@ func AvFastRealloc(ptr ffcommon.FVoidP, size *ffcommon.FUnsignedInt, min_size ff
  */
 //void av_fast_malloc(void *ptr, unsigned int *size, size_t min_size);
 func AvFastMalloc(ptr ffcommon.FVoidP, size *ffcommon.FUnsignedInt, min_size ffcommon.FSizeT) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_fast_malloc").Call(
+	ffcommon.GetAvutilDll().NewProc("av_fast_malloc").Call(
 		ptr,
 		uintptr(unsafe.Pointer(size)),
 		uintptr(min_size),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -573,15 +537,11 @@ func AvFastMalloc(ptr ffcommon.FVoidP, size *ffcommon.FUnsignedInt, min_size ffc
  */
 //void av_fast_mallocz(void *ptr, unsigned int *size, size_t min_size);
 func AvFastMallocz(ptr ffcommon.FVoidP, size *ffcommon.FUnsignedInt, min_size ffcommon.FSizeT) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_fast_mallocz").Call(
+	ffcommon.GetAvutilDll().NewProc("av_fast_mallocz").Call(
 		ptr,
 		uintptr(unsafe.Pointer(size)),
 		uintptr(min_size),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -597,13 +557,9 @@ func AvFastMallocz(ptr ffcommon.FVoidP, size *ffcommon.FUnsignedInt, min_size ff
  */
 //void av_free(void *ptr);
 func AvFree(ptr ffcommon.FVoidP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_free").Call(
+	ffcommon.GetAvutilDll().NewProc("av_free").Call(
 		ptr,
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -629,13 +585,9 @@ func AvFree(ptr ffcommon.FVoidP) {
  */
 //void av_freep(void *ptr);
 func AvFreep(ptr ffcommon.FVoidP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_freep").Call(
+	ffcommon.GetAvutilDll().NewProc("av_freep").Call(
 		ptr,
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -651,9 +603,6 @@ func AvStrdup(s ffcommon.FConstCharP) (res ffcommon.FCharP) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_strdup").Call(
 		ffcommon.UintPtrFromString(s),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -673,9 +622,6 @@ func AvStrndup(s ffcommon.FConstCharP, len0 ffcommon.FSizeT) (res ffcommon.FChar
 		ffcommon.UintPtrFromString(s),
 		uintptr(len0),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -694,9 +640,6 @@ func AvMemdup(p ffcommon.FConstVoidP, size ffcommon.FSizeT) (res ffcommon.FVoidP
 		p,
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = t
 	return
 }
@@ -714,15 +657,11 @@ func AvMemdup(p ffcommon.FConstVoidP, size ffcommon.FSizeT) (res ffcommon.FVoidP
  */
 //void av_memcpy_backptr(uint8_t *dst, int back, int cnt);
 func AvMemcpyBackptr(dst *ffcommon.FUint8T, back, cnt ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_memcpy_backptr").Call(
+	ffcommon.GetAvutilDll().NewProc("av_memcpy_backptr").Call(
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(back),
 		uintptr(cnt),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -852,9 +791,6 @@ func AvDynarrayAddNofree(tab_ptr, nb_ptr, elem ffcommon.FVoidP) (res ffcommon.FI
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_dynarray_add_nofree").Call(
 		tab_ptr, nb_ptr, elem,
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -891,9 +827,6 @@ func AvDynarray2Add(tab_ptr *ffcommon.FVoidP, nb_ptr *ffcommon.FInt, elem_size f
 		uintptr(elem_size),
 		uintptr(unsafe.Pointer(elem_data)),
 	)
-	if t == 0 {
-
-	}
 	res = t
 	return
 }
@@ -955,9 +888,6 @@ func AvMaxAlloc(max ffcommon.FSizeT) (res ffcommon.FCharP) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_max_alloc").Call(
 		uintptr(max),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }

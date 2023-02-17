@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -55,7 +56,7 @@ import (
 /**
  * Projection of the video surface(s) on a sphere.
  */
-type AVSphericalProjection = int32
+type AVSphericalProjection int32
 
 const (
 	/**
@@ -203,9 +204,6 @@ func AvSphericalAlloc(size *ffcommon.FSizeT) (res *AVSphericalMapping) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_spherical_alloc").Call(
 		uintptr(unsafe.Pointer(size)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVSphericalMapping)(unsafe.Pointer(t))
 	return
 }
@@ -229,7 +227,7 @@ func AvSphericalAlloc(size *ffcommon.FSizeT) (res *AVSphericalMapping) {
 func (map0 AVSphericalMapping) AvSphericalTileBounds(width, height ffcommon.FSizeT,
 	left, top,
 	right, bottom *ffcommon.FSizeT) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_spherical_tile_bounds").Call(
+	ffcommon.GetAvutilDll().NewProc("av_spherical_tile_bounds").Call(
 		uintptr(width),
 		uintptr(height),
 		uintptr(unsafe.Pointer(left)),
@@ -237,10 +235,6 @@ func (map0 AVSphericalMapping) AvSphericalTileBounds(width, height ffcommon.FSiz
 		uintptr(unsafe.Pointer(right)),
 		uintptr(unsafe.Pointer(bottom)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -253,9 +247,6 @@ func (map0 AVSphericalMapping) AvSphericalTileBounds(width, height ffcommon.FSiz
 //const char *av_spherical_projection_name(enum AVSphericalProjection projection);
 func AvSphericalProjectionName(projection AVSphericalProjection) (res ffcommon.FConstCharP) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_spherical_projection_name").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -272,9 +263,6 @@ func AvSphericalFromName(name ffcommon.FConstCharP) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_spherical_from_name").Call(
 		ffcommon.UintPtrFromString(name),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }

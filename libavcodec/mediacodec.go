@@ -1,8 +1,9 @@
 package libavcodec
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -56,9 +57,6 @@ type AVMediaCodecContext struct {
 //AVMediaCodecContext *av_mediacodec_alloc_context(void);
 func AvMediacodecAllocContext() (res *AVMediaCodecContext) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_mediacodec_alloc_context").Call()
-	if t == 0 {
-
-	}
 	res = (*AVMediaCodecContext)(unsafe.Pointer(t))
 	return
 }
@@ -78,9 +76,6 @@ func (avctx *AVCodecContext) AvMediacodecDefaultInit(ctx *AVMediaCodecContext, s
 		uintptr(unsafe.Pointer(ctx)),
 		surface,
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -93,13 +88,9 @@ func (avctx *AVCodecContext) AvMediacodecDefaultInit(ctx *AVMediaCodecContext, s
  */
 //void av_mediacodec_default_free(AVCodecContext *avctx);
 func (avctx *AVCodecContext) AvMediacodecDefaultFree() {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_mediacodec_default_free").Call(
+	ffcommon.GetAvcodecDll().NewProc("av_mediacodec_default_free").Call(
 		uintptr(unsafe.Pointer(avctx)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -126,9 +117,6 @@ func (buffer *AVMediaCodecBuffer) AvMediacodecReleaseBuffer(render ffcommon.FInt
 		uintptr(unsafe.Pointer(buffer)),
 		uintptr(render),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -150,9 +138,6 @@ func (buffer *AVMediaCodecBuffer) AvMediacodecRenderBufferAtTime(time ffcommon.F
 		uintptr(unsafe.Pointer(buffer)),
 		uintptr(time),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }

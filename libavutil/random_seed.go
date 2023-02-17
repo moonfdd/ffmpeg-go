@@ -41,9 +41,6 @@ import "github.com/moonfdd/ffmpeg-go/ffcommon"
 //uint32_t av_get_random_seed(void);
 func AvGetRandomSeed() (res ffcommon.FUint32T) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_get_random_seed").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.FUint32T(t)
 	return
 }

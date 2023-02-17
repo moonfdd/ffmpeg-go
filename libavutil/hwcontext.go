@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -258,9 +259,6 @@ func AvHwdeviceFindTypeByName(name ffcommon.FConstCharP) (res AVHWDeviceType) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_hwdevice_find_type_by_name").Call(
 		ffcommon.UintPtrFromString(name),
 	)
-	if t == 0 {
-
-	}
 	res = AVHWDeviceType(t)
 	return
 }
@@ -276,9 +274,6 @@ func AvHwdeviceGetTypeName(type0 AVHWDeviceType) (res ffcommon.FCharP) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_hwdevice_get_type_name").Call(
 		uintptr(type0),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -296,9 +291,6 @@ func AvHwdeviceIterateTypes(prev AVHWDeviceType) (res AVHWDeviceType) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_hwdevice_iterate_types").Call(
 		uintptr(prev),
 	)
-	if t == 0 {
-
-	}
 	res = AVHWDeviceType(t)
 	return
 }
@@ -315,9 +307,6 @@ func AvHwdeviceCtxAlloc(type0 AVHWDeviceType) (res *AVBufferRef) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_hwdevice_ctx_alloc").Call(
 		uintptr(type0),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVBufferRef)(unsafe.Pointer(t))
 	return
 }
@@ -335,9 +324,6 @@ func (ref *AVBufferRef) AvHwdeviceCtxInit() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_hwdevice_ctx_init").Call(
 		uintptr(unsafe.Pointer(ref)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -375,9 +361,6 @@ func AvHwdeviceCtxCreate(device_ctx **AVBufferRef, type0 AVHWDeviceType,
 		uintptr(unsafe.Pointer(device_ctx)),
 		uintptr(type0),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -415,9 +398,6 @@ func AvHwdeviceCtxCreateDerived(ctx **AVBufferRef,
 		uintptr(unsafe.Pointer(src_ctx)),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -453,9 +433,6 @@ func AvHwdeviceCtxCreateDerivedOpts(dst_ctx **AVBufferRef,
 		uintptr(unsafe.Pointer(options)),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -474,9 +451,6 @@ func (device_ctx *AVBufferRef) AvHwframeCtxAlloc() (res *AVBufferRef) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_hwframe_ctx_alloc").Call(
 		uintptr(unsafe.Pointer(device_ctx)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVBufferRef)(unsafe.Pointer(t))
 	return
 }
@@ -494,9 +468,6 @@ func (ref *AVBufferRef) AvHwframeCtxInit() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_hwframe_ctx_init").Call(
 		uintptr(unsafe.Pointer(ref)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -517,9 +488,6 @@ func (hwframe_ctx *AVBufferRef) AvHwframeGetBuffer(frame *AVFrame, flags ffcommo
 		uintptr(unsafe.Pointer(frame)),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -560,14 +528,11 @@ func AvHwframeTransferData(dst, src *AVFrame, flags ffcommon.FInt) (res ffcommon
 		uintptr(unsafe.Pointer(src)),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
 
-type AVHWFrameTransferDirection = int32
+type AVHWFrameTransferDirection int32
 
 const (
 	/**
@@ -607,9 +572,6 @@ func (hwframe_ctx *AVBufferRef) AvHwframeTransferGetFormats(dir AVHWFrameTransfe
 		uintptr(unsafe.Pointer(formats)),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -626,28 +588,28 @@ type AVHWFramesConstraints struct {
 	 * A list of possible values for format in the hw_frames_ctx,
 	 * terminated by AV_PIX_FMT_NONE.  This member will always be filled.
 	 */
-	valid_hw_formats *AVPixelFormat
+	ValidHwFormats *AVPixelFormat
 
 	/**
 	 * A list of possible values for sw_format in the hw_frames_ctx,
 	 * terminated by AV_PIX_FMT_NONE.  Can be NULL if this information is
 	 * not known.
 	 */
-	valid_sw_formats *AVPixelFormat
+	ValidSwFormats *AVPixelFormat
 
 	/**
 	 * The minimum size of frames in this hw_frames_ctx.
 	 * (Zero if not known.)
 	 */
-	min_width  ffcommon.FInt
-	min_height ffcommon.FInt
+	MinWidth  ffcommon.FInt
+	MinHeight ffcommon.FInt
 
 	/**
 	 * The maximum size of frames in this hw_frames_ctx.
 	 * (INT_MAX if not known / no limit.)
 	 */
-	max_width  ffcommon.FInt
-	max_height ffcommon.FInt
+	MaxWidth  ffcommon.FInt
+	MaxHeight ffcommon.FInt
 }
 
 /**
@@ -665,9 +627,6 @@ func (device_ctx *AVBufferRef) AvHwdeviceHwconfigAlloc() (res ffcommon.FVoidP) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_hwdevice_hwconfig_alloc").Call(
 		uintptr(unsafe.Pointer(device_ctx)),
 	)
-	if t == 0 {
-
-	}
 	res = t
 	return
 }
@@ -691,9 +650,6 @@ func (ref *AVBufferRef) AvHwdeviceGetHwframeConstraints(hwconfig ffcommon.FConst
 		uintptr(unsafe.Pointer(ref)),
 		hwconfig,
 	)
-	if t == 0 {
-
-	}
 	res = (*AVHWFramesConstraints)(unsafe.Pointer(t))
 	return
 }
@@ -705,13 +661,9 @@ func (ref *AVBufferRef) AvHwdeviceGetHwframeConstraints(hwconfig ffcommon.FConst
  */
 //void av_hwframe_constraints_free(AVHWFramesConstraints **constraints);
 func AvHwframeConstraintsFree(constraints **AVHWFramesConstraints) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_hwframe_constraints_free").Call(
+	ffcommon.GetAvutilDll().NewProc("av_hwframe_constraints_free").Call(
 		uintptr(unsafe.Pointer(constraints)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -783,9 +735,6 @@ func AvHwframeMap(dst, src *AVFrame, flags ffcommon.FInt) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(src)),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -824,9 +773,6 @@ func AvHwframeCtxCreateDerived(derived_frame_ctx **AVBufferRef,
 		uintptr(unsafe.Pointer(source_frame_ctx)),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }

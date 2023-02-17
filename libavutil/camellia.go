@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -52,9 +53,6 @@ type AVCAMELLIA struct {
 //struct AVCAMELLIA *av_camellia_alloc(void);
 func AvCamelliaAlloc() (res *AVCAMELLIA) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_camellia_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*AVCAMELLIA)(unsafe.Pointer(t))
 	return
 }
@@ -73,9 +71,6 @@ func (ctx *AVCAMELLIA) AvCamelliaInit(key *ffcommon.FUint8T, key_bits ffcommon.F
 		uintptr(unsafe.Pointer(key)),
 		uintptr(key_bits),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -92,7 +87,7 @@ func (ctx *AVCAMELLIA) AvCamelliaInit(key *ffcommon.FUint8T, key_bits ffcommon.F
  */
 //void av_camellia_crypt(struct AVCAMELLIA *ctx, uint8_t *dst, const uint8_t *src, int count, uint8_t* iv, int decrypt);
 func (ctx *AVCAMELLIA) AvCamelliaCrypt(dst, src *ffcommon.FUint8T, count ffcommon.FInt, iv *ffcommon.FUint8T, decrypt ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_camellia_crypt").Call(
+	ffcommon.GetAvutilDll().NewProc("av_camellia_crypt").Call(
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(src)),
@@ -100,10 +95,6 @@ func (ctx *AVCAMELLIA) AvCamelliaCrypt(dst, src *ffcommon.FUint8T, count ffcommo
 		uintptr(unsafe.Pointer(iv)),
 		uintptr(decrypt),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**

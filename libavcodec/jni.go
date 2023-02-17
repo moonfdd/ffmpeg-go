@@ -42,9 +42,6 @@ func AvJniSetJavaVm(vm, log_ctx ffcommon.FVoidP) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_jni_set_java_vm").Call(
 		vm, log_ctx,
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -60,9 +57,6 @@ func AvJniGetJavaVm(log_ctx ffcommon.FVoidP) (res ffcommon.FVoidP) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_jni_get_java_vm").Call(
 		log_ctx,
 	)
-	if t == 0 {
-
-	}
 	res = t
 	return
 }

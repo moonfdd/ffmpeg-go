@@ -526,7 +526,7 @@ const (
  * YUV colorspace type.
  * These values match the ones defined by ISO/IEC 23001-8_2013 § 7.3.
  */
-type AVColorSpace = int32
+type AVColorSpace int32
 
 const (
 	AVCOL_SPC_RGB                = 0 ///< order of coefficients is actually GBR, also IEC 61966-2-1 (sRGB)
@@ -569,7 +569,7 @@ const (
  *   - For additional definitions such as rounding and clipping to valid n
  *     bit unsigned integer range, please refer to BT.2100 (Table 9).
  */
-type AVColorRange = int32
+type AVColorRange int32
 
 const (
 	AVCOL_RANGE_UNSPECIFIED = 0
@@ -627,7 +627,7 @@ const (
  *                |             |1 2           1-6 are possible chroma positions
  *2nd luma line > |X   X ...    |5 6 X ...     0 is undefined/unknown position
  */
-type AVChromaLocation = int32
+type AVChromaLocation int32
 
 const (
 	AVCHROMA_LOC_UNSPECIFIED = 0

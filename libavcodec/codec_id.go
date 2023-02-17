@@ -47,7 +47,7 @@ import "github.com/moonfdd/ffmpeg-go/ffcommon"
  * After adding new codec IDs, do not forget to add an entry to the codec
  * descriptor list and bump libavcodec minor version.
  */
-type AVCodecID = int32
+type AVCodecID int32
 
 const (
 	AV_CODEC_ID_NONE = iota
@@ -610,9 +610,6 @@ func AvcodecGetType(codec_id AVCodecID) (res AVMediaType) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("avcodec_get_type").Call(
 		uintptr(codec_id),
 	)
-	if t == 0 {
-
-	}
 	res = AVMediaType(t)
 	return
 }
@@ -626,9 +623,6 @@ func AvcodecGetName(id AVCodecID) (res ffcommon.FCharP) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("avcodec_get_name").Call(
 		uintptr(id),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }

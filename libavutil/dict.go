@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -118,9 +119,6 @@ func (m *AVDictionary) AvDictGet(key ffcommon.FConstCharP, prev *AVDictionaryEnt
 		uintptr(unsafe.Pointer(prev)),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVDictionaryEntry)(unsafe.Pointer(t))
 	return
 }
@@ -136,9 +134,6 @@ func (m *AVDictionary) AvDictCount() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_dict_count").Call(
 		uintptr(unsafe.Pointer(m)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -167,9 +162,6 @@ func AvDictSet(pm **AVDictionary, key, value ffcommon.FConstCharP, flags ffcommo
 		ffcommon.UintPtrFromString(value),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -188,9 +180,6 @@ func AvDictSetInt(pm **AVDictionary, key ffcommon.FConstCharP, value ffcommon.FI
 		uintptr(value),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -222,9 +211,6 @@ func AvDictParseString(pm **AVDictionary, str, key_val_sep, pairs_sep ffcommon.F
 		ffcommon.UintPtrFromString(pairs_sep),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -246,9 +232,6 @@ func AvDictCopy(dst, src **AVDictionary, flags ffcommon.FInt) (res ffcommon.FInt
 		uintptr(unsafe.Pointer(src)),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -259,13 +242,9 @@ func AvDictCopy(dst, src **AVDictionary, flags ffcommon.FInt) (res ffcommon.FInt
  */
 //void av_dict_free(AVDictionary **m);
 func AvDictFree(m **AVDictionary) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_dict_free").Call(
+	ffcommon.GetAvutilDll().NewProc("av_dict_free").Call(
 		uintptr(unsafe.Pointer(m)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -292,9 +271,6 @@ func (m *AVDictionary) AvDictGetString(buffer *ffcommon.FBuf, key_val_sep, pairs
 		ffcommon.UintPtrFromString(key_val_sep),
 		ffcommon.UintPtrFromString(pairs_sep),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }

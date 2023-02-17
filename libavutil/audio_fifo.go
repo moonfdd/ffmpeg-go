@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -64,13 +65,9 @@ type AVAudioFifo struct {
  */
 //void av_audio_fifo_free(AVAudioFifo *af);
 func (af *AVAudioFifo) AvAudioFifoFree() {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_audio_fifo_free").Call(
+	ffcommon.GetAvutilDll().NewProc("av_audio_fifo_free").Call(
 		uintptr(unsafe.Pointer(af)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -89,9 +86,6 @@ func AvAudioFifoAlloc(sample_fmt AVSampleFormat, channels, nb_samples ffcommon.F
 		uintptr(channels),
 		uintptr(nb_samples),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVAudioFifo)(unsafe.Pointer(t))
 	return
 }
@@ -110,9 +104,6 @@ func (af *AVAudioFifo) AvAudioFifoRealloc(nb_samples ffcommon.FInt) (res ffcommo
 		uintptr(unsafe.Pointer(af)),
 		uintptr(nb_samples),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -140,9 +131,6 @@ func (af *AVAudioFifo) AvAudioFifoWrite(data *ffcommon.FVoidP, nb_samples ffcomm
 		uintptr(unsafe.Pointer(data)),
 		uintptr(nb_samples),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -168,9 +156,6 @@ func (af *AVAudioFifo) AvAudioFifoPeek(data *ffcommon.FVoidP, nb_samples ffcommo
 		uintptr(unsafe.Pointer(data)),
 		uintptr(nb_samples),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -198,9 +183,6 @@ func (af *AVAudioFifo) AvAudioFifoPeekAt(data *ffcommon.FVoidP, nb_samples, offs
 		uintptr(nb_samples),
 		uintptr(offset),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -226,9 +208,6 @@ func (af *AVAudioFifo) AvAudioFifoRead(data *ffcommon.FVoidP, nb_samples ffcommo
 		uintptr(unsafe.Pointer(data)),
 		uintptr(nb_samples),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -248,9 +227,6 @@ func (af *AVAudioFifo) AvAudioFifoDrain(nb_samples ffcommon.FInt) (res ffcommon.
 		uintptr(unsafe.Pointer(af)),
 		uintptr(nb_samples),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -264,13 +240,9 @@ func (af *AVAudioFifo) AvAudioFifoDrain(nb_samples ffcommon.FInt) (res ffcommon.
  */
 //void av_audio_fifo_reset(AVAudioFifo *af);
 func (af *AVAudioFifo) AvAudioFifoReset() {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_audio_fifo_reset").Call(
+	ffcommon.GetAvutilDll().NewProc("av_audio_fifo_reset").Call(
 		uintptr(unsafe.Pointer(af)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -284,9 +256,6 @@ func (af *AVAudioFifo) AvAudioFifoSize() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_audio_fifo_size").Call(
 		uintptr(unsafe.Pointer(af)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -302,9 +271,6 @@ func (af *AVAudioFifo) AvAudioFifoSpace() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_audio_fifo_space").Call(
 		uintptr(unsafe.Pointer(af)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }

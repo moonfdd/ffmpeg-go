@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -49,9 +50,6 @@ type AVXTEA struct {
 //AVXTEA *av_xtea_alloc(void);
 func AvXteaAlloc() (res *AVXTEA) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_xtea_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*AVXTEA)(unsafe.Pointer(t))
 	return
 }
@@ -65,14 +63,10 @@ func AvXteaAlloc() (res *AVXTEA) {
  */
 //void av_xtea_init(struct AVXTEA *ctx, const uint8_t key[16]);
 func (ctx *AVTEA) AvXteaInit(key [16]ffcommon.FUint8T) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_xtea_init").Call(
+	ffcommon.GetAvutilDll().NewProc("av_xtea_init").Call(
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(&key)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -84,14 +78,10 @@ func (ctx *AVTEA) AvXteaInit(key [16]ffcommon.FUint8T) {
  */
 //void av_xtea_le_init(struct AVXTEA *ctx, const uint8_t key[16]);
 func (ctx *AVTEA) AvXteaLeInit(key [16]ffcommon.FUint8T) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_xtea_le_init").Call(
+	ffcommon.GetAvutilDll().NewProc("av_xtea_le_init").Call(
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(&key)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -109,7 +99,7 @@ func (ctx *AVTEA) AvXteaLeInit(key [16]ffcommon.FUint8T) {
 //int count, uint8_t *iv, int decrypt);
 func (ctx *AVXTEA) AvXteaCrypt(dst, src *ffcommon.FUint8T,
 	count ffcommon.FInt, iv *ffcommon.FUint8T, decrypt ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_xtea_crypt").Call(
+	ffcommon.GetAvutilDll().NewProc("av_xtea_crypt").Call(
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(src)),
@@ -117,10 +107,6 @@ func (ctx *AVXTEA) AvXteaCrypt(dst, src *ffcommon.FUint8T,
 		uintptr(unsafe.Pointer(iv)),
 		uintptr(decrypt),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -138,7 +124,7 @@ func (ctx *AVXTEA) AvXteaCrypt(dst, src *ffcommon.FUint8T,
 //int count, uint8_t *iv, int decrypt);
 func (ctx *AVXTEA) AvXteaLeCrypt(dst, src *ffcommon.FUint8T,
 	count ffcommon.FInt, iv *ffcommon.FUint8T, decrypt ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_xtea_le_crypt").Call(
+	ffcommon.GetAvutilDll().NewProc("av_xtea_le_crypt").Call(
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(src)),
@@ -146,10 +132,6 @@ func (ctx *AVXTEA) AvXteaLeCrypt(dst, src *ffcommon.FUint8T,
 		uintptr(unsafe.Pointer(iv)),
 		uintptr(decrypt),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**

@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -171,9 +172,6 @@ func AvFilmGrainParamsAlloc(size *ffcommon.FSizeT) (res *AVFilmGrainParams) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_film_grain_params_alloc").Call(
 		uintptr(unsafe.Pointer(size)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVFilmGrainParams)(unsafe.Pointer(t))
 	return
 }
@@ -190,9 +188,6 @@ func (frame *AVFrame) AvFilmGrainParamsCreateSideData() (res *AVFilmGrainParams)
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_film_grain_params_create_side_data").Call(
 		uintptr(unsafe.Pointer(frame)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVFilmGrainParams)(unsafe.Pointer(t))
 	return
 }

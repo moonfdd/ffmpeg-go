@@ -1,9 +1,10 @@
 package libswresample
 
 import (
+	"unsafe"
+
 	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"github.com/moonfdd/ffmpeg-go/libavutil"
-	"unsafe"
 )
 
 /*
@@ -146,7 +147,7 @@ const SWR_FLAG_RESAMPLE = 1 ///< Force resampling even if equal sample rate
 //long term TODO can we enable this dynamically?
 
 /** Dithering algorithms */
-type SwrDitherType = int32
+type SwrDitherType int32
 
 const (
 	SWR_DITHER_NONE = iota
@@ -167,7 +168,7 @@ const (
 )
 
 /** Resampling Engines */
-type SwrEngine = int32
+type SwrEngine int32
 
 const (
 	SWR_ENGINE_SWR  = iota /**< SW Resampler */
@@ -176,7 +177,7 @@ const (
 )
 
 /** Resampling Filter Types */
-type SwrFilterType = int32
+type SwrFilterType int32
 
 const (
 	SWR_FILTER_TYPE_CUBIC            = iota /**< Cubic */
@@ -198,6 +199,8 @@ const (
 type SwrContext struct {
 }
 
+type AVClass = libavutil.AVClass
+
 /**
  * Get the AVClass for SwrContext. It can be used in combination with
  * AV_OPT_SEARCH_FAKE_OBJ for examining options.
@@ -206,13 +209,9 @@ type SwrContext struct {
  * @return the AVClass of SwrContext
  */
 //const AVClass *swr_get_class(void);
-//todo
-func swr_get_class() (res ffcommon.FCharP) {
+func SwrGetClass() (res *AVClass) {
 	t, _, _ := ffcommon.GetAvswresampleDll().NewProc("swr_get_class").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+	res = (*AVClass)(unsafe.Pointer(t))
 	return
 }
 
@@ -233,9 +232,6 @@ func swr_get_class() (res ffcommon.FCharP) {
 //struct SwrContext *swr_alloc(void);
 func SwrAlloc() (res *SwrContext) {
 	t, _, _ := ffcommon.GetAvswresampleDll().NewProc("swr_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*SwrContext)(unsafe.Pointer(t))
 	return
 }
@@ -255,9 +251,6 @@ func (s *SwrContext) SwrInit() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvswresampleDll().NewProc("swr_init").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -274,9 +267,6 @@ func (s *SwrContext) SwrIsInitialized() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvswresampleDll().NewProc("swr_is_initialized").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -321,9 +311,6 @@ func (s *SwrContext) SwrAllocSetOpts(out_ch_layout ffcommon.FInt64T, out_sample_
 		uintptr(log_offset),
 		log_ctx,
 	)
-	if t == 0 {
-
-	}
 	res = (*SwrContext)(unsafe.Pointer(t))
 	return
 }
@@ -342,13 +329,9 @@ func (s *SwrContext) SwrAllocSetOpts(out_ch_layout ffcommon.FInt64T, out_sample_
  */
 //void swr_free(struct SwrContext **s);
 func SwrFree(s **SwrContext) {
-	t, _, _ := ffcommon.GetAvswresampleDll().NewProc("swr_free").Call(
+	ffcommon.GetAvswresampleDll().NewProc("swr_free").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -363,13 +346,9 @@ func SwrFree(s **SwrContext) {
  */
 //void swr_close(struct SwrContext *s);
 func (s *SwrContext) SwrClose() {
-	t, _, _ := ffcommon.GetAvswresampleDll().NewProc("swr_close").Call(
+	ffcommon.GetAvswresampleDll().NewProc("swr_close").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -408,9 +387,6 @@ func (s *SwrContext) SwrConvert(out **ffcommon.FUint8T, out_count ffcommon.FInt,
 		uintptr(unsafe.Pointer(in)),
 		uintptr(in_count),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -438,9 +414,6 @@ func (s *SwrContext) SwrNextPts(pts ffcommon.FInt64T) (res ffcommon.FInt64T) {
 		uintptr(unsafe.Pointer(s)),
 		uintptr(pts),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt64T(t)
 	return
 }
@@ -477,9 +450,6 @@ func (s *SwrContext) SwrSetCompensation(sample_delta, compensation_distance ffco
 		uintptr(sample_delta),
 		uintptr(compensation_distance),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -498,9 +468,6 @@ func (s *SwrContext) SwrSetChannelMapping(channel_map *ffcommon.FInt) (res ffcom
 		uintptr(unsafe.Pointer(s)),
 		uintptr(unsafe.Pointer(channel_map)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -555,9 +522,6 @@ func SwrBuildMatrix(in_layout, out_layout ffcommon.FUint64T,
 		uintptr(matrix_encoding),
 		log_ctx,
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -578,9 +542,6 @@ func (s *SwrContext) SwrSetMatrix(matrix *ffcommon.FDouble, stride ffcommon.FInt
 		uintptr(unsafe.Pointer(matrix)),
 		uintptr(stride),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -609,9 +570,6 @@ func (s *SwrContext) SwrDropOutput(count ffcommon.FInt) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(s)),
 		uintptr(count),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -633,9 +591,6 @@ func (s *SwrContext) SwrInjectSilence(count ffcommon.FInt) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(s)),
 		uintptr(count),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -670,9 +625,6 @@ func (s *SwrContext) SwrGetDelay(base ffcommon.FInt64T) (res ffcommon.FInt64T) {
 		uintptr(unsafe.Pointer(s)),
 		uintptr(base),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt64T(t)
 	return
 }
@@ -699,9 +651,6 @@ func (s *SwrContext) SwrGetOutSamples(in_samples ffcommon.FInt) (res ffcommon.FI
 		uintptr(unsafe.Pointer(s)),
 		uintptr(in_samples),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -724,9 +673,6 @@ func (s *SwrContext) SwrGetOutSamples(in_samples ffcommon.FInt) (res ffcommon.FI
 //unsigned swresample_version(void);
 func SwresampleVersion() (res ffcommon.FUnsigned) {
 	t, _, _ := ffcommon.GetAvswresampleDll().NewProc("swresample_version").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.FUnsigned(t)
 	return
 }
@@ -739,9 +685,6 @@ func SwresampleVersion() (res ffcommon.FUnsigned) {
 //const char *swresample_configuration(void);
 func SwresampleConfiguration() (res ffcommon.FConstCharP) {
 	t, _, _ := ffcommon.GetAvswresampleDll().NewProc("swresample_configuration").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -754,9 +697,6 @@ func SwresampleConfiguration() (res ffcommon.FConstCharP) {
 //const char *swresample_license(void);
 func SwresampleLicense() (res ffcommon.FConstCharP) {
 	t, _, _ := ffcommon.GetAvswresampleDll().NewProc("swresample_license").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -812,9 +752,6 @@ func (swr *SwrContext) SwrConvertFrame(output, input *AVFrame) (res ffcommon.FIn
 		uintptr(unsafe.Pointer(output)),
 		uintptr(unsafe.Pointer(input)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -840,9 +777,6 @@ func (swr *SwrContext) SwrConfigFrame(out, in *AVFrame) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(out)),
 		uintptr(unsafe.Pointer(in)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }

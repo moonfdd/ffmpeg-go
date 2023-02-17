@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -31,7 +32,7 @@ import (
 //
 //#include "../libavutil/avassert.h"
 //#include "../libavutil/frame.h"
-type AVVideoEncParamsType = int32
+type AVVideoEncParamsType int32
 
 const (
 	AV_VIDEO_ENC_PARAMS_NONE = iota - 1
@@ -158,14 +159,14 @@ type AVVideoBlockParams struct {
 //idx * par->block_size);
 //}
 //todo
-func av_video_enc_params_block() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_video_enc_params_block").Call()
-	if t == 0 {
+// func av_video_enc_params_block() (res ffcommon.FCharP) {
+// 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_video_enc_params_block").Call()
+// 	if t == 0 {
 
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
-}
+// 	}
+// 	res = ffcommon.StringFromPtr(t)
+// 	return
+// }
 
 /**
  * Allocates memory for AVVideoEncParams of the given type, plus an array of
@@ -184,9 +185,6 @@ func AvVideoEncParamsAlloc(type0 AVVideoEncParamsType, nb_blocks ffcommon.FUnsig
 		uintptr(unsafe.Pointer(out_size)),
 		uintptr(unsafe.Pointer(out_size)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVVideoEncParams)(unsafe.Pointer(t))
 	return
 }
@@ -206,9 +204,6 @@ func (frame *AVFrame) AvVideoEncParamsCreateSideData(type0 AVVideoEncParamsType,
 		uintptr(type0),
 		uintptr(nb_blocks),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVVideoEncParams)(unsafe.Pointer(t))
 	return
 }

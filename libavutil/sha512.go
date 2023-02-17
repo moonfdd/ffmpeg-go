@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -70,9 +71,6 @@ type AVSHA512 struct {
 //struct AVSHA512 *av_sha512_alloc(void);
 func AvSha512Alloc() (res *AVSHA512) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_sha512_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*AVSHA512)(unsafe.Pointer(t))
 	return
 }
@@ -91,9 +89,6 @@ func (context *AVSHA512) AvSha512Init(key *ffcommon.FUint8T, bits ffcommon.FInt)
 		uintptr(unsafe.Pointer(key)),
 		uintptr(bits),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -111,15 +106,11 @@ func (context *AVSHA512) AvSha512Init(key *ffcommon.FUint8T, bits ffcommon.FInt)
 //void av_sha512_update(struct AVSHA512* context, const uint8_t* data, size_t len);
 //#endif
 func (context *AVSHA) AvSha512Update(data *ffcommon.FUint8T, len0 ffcommon.FUnsignedIntOrSizeT) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_sha512_update").Call(
+	ffcommon.GetAvutilDll().NewProc("av_sha512_update").Call(
 		uintptr(unsafe.Pointer(context)),
 		uintptr(unsafe.Pointer(data)),
 		uintptr(len0),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -130,14 +121,10 @@ func (context *AVSHA) AvSha512Update(data *ffcommon.FUint8T, len0 ffcommon.FUnsi
  */
 //void av_sha512_final(struct AVSHA512* context, uint8_t *digest);
 func (context *AVSHA512) AvSha512Final(digest *ffcommon.FUint8T) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_sha512_final").Call(
+	ffcommon.GetAvutilDll().NewProc("av_sha512_final").Call(
 		uintptr(unsafe.Pointer(context)),
 		uintptr(unsafe.Pointer(digest)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**

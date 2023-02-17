@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -56,12 +57,12 @@ import (
  */
 //void av_image_fill_max_pixsteps(int max_pixsteps[4], int max_pixstep_comps[4],
 //const AVPixFmtDescriptor *pixdesc);
-//todo
-func av_image_fill_max_pixsteps() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_image_fill_max_pixsteps").Call()
-	if t == 0 {
-
-	}
+func AvImageFillMaxPixsteps(max_pixsteps, max_pixstep_comps *[4]ffcommon.FInt, pixdesc *AVPixFmtDescriptor) (res ffcommon.FCharP) {
+	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_image_fill_max_pixsteps").Call(
+		uintptr(unsafe.Pointer(max_pixsteps)),
+		uintptr(unsafe.Pointer(max_pixstep_comps)),
+		uintptr(unsafe.Pointer(pixdesc)),
+	)
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -79,9 +80,6 @@ func AvImageGetLinesize(pix_fmt AVPixelFormat, width, plane ffcommon.FInt) (res 
 		uintptr(width),
 		uintptr(plane),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -94,15 +92,12 @@ func AvImageGetLinesize(pix_fmt AVPixelFormat, width, plane ffcommon.FInt) (res 
  * @return >= 0 in case of success, a negative error code otherwise
  */
 //int av_image_fill_linesizes(int linesizes[4], enum AVPixelFormat pix_fmt, int width);
-func AvImageFillLinesizes(linesizes [4]ffcommon.FInt, pix_fmt AVPixelFormat, width ffcommon.FInt) (res ffcommon.FInt) {
+func AvImageFillLinesizes(linesizes *[4]ffcommon.FInt, pix_fmt AVPixelFormat, width ffcommon.FInt) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_image_fill_linesizes").Call(
-		uintptr(unsafe.Pointer(&linesizes)),
+		uintptr(unsafe.Pointer(linesizes)),
 		uintptr(pix_fmt),
 		uintptr(width),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -120,16 +115,13 @@ func AvImageFillLinesizes(linesizes [4]ffcommon.FInt, pix_fmt AVPixelFormat, wid
  */
 //int av_image_fill_plane_sizes(size_t size[4], enum AVPixelFormat pix_fmt,
 //int height, const ptrdiff_t linesizes[4]);
-func AvImageFillPlaneSizes(size [4]ffcommon.FSizeT, pix_fmt AVPixelFormat, height ffcommon.FInt, linesizes [4]ffcommon.FPtrdiffT) (res ffcommon.FInt) {
+func AvImageFillPlaneSizes(size *[4]ffcommon.FSizeT, pix_fmt AVPixelFormat, height ffcommon.FInt, linesizes *[4]ffcommon.FPtrdiffT) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_image_fill_plane_sizes").Call(
-		uintptr(unsafe.Pointer(&size)),
+		uintptr(unsafe.Pointer(size)),
 		uintptr(pix_fmt),
 		uintptr(height),
-		uintptr(unsafe.Pointer(&linesizes)),
+		uintptr(unsafe.Pointer(linesizes)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -147,17 +139,14 @@ func AvImageFillPlaneSizes(size [4]ffcommon.FSizeT, pix_fmt AVPixelFormat, heigh
  */
 //int av_image_fill_pointers(uint8_t *data[4], enum AVPixelFormat pix_fmt, int height,
 //uint8_t *ptr, const int linesizes[4]);
-func AvImageFillPointers(data [4]*ffcommon.FUint8T, pix_fmt AVPixelFormat, height ffcommon.FInt, ptr *ffcommon.FUint8T, linesizes [4]ffcommon.FInt) (res ffcommon.FInt) {
+func AvImageFillPointers(data *[4]*ffcommon.FUint8T, pix_fmt AVPixelFormat, height ffcommon.FInt, ptr *ffcommon.FUint8T, linesizes *[4]ffcommon.FInt) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_image_fill_pointers").Call(
-		uintptr(unsafe.Pointer(&data)),
+		uintptr(unsafe.Pointer(data)),
 		uintptr(pix_fmt),
 		uintptr(height),
 		uintptr(unsafe.Pointer(ptr)),
-		uintptr(unsafe.Pointer(&linesizes)),
+		uintptr(unsafe.Pointer(linesizes)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -174,19 +163,16 @@ func AvImageFillPointers(data [4]*ffcommon.FUint8T, pix_fmt AVPixelFormat, heigh
  */
 //int av_image_alloc(uint8_t *pointers[4], int linesizes[4],
 //int w, int h, enum AVPixelFormat pix_fmt, int align);
-func AvImageAlloc(pointers [4]*ffcommon.FUint8T, linesizes [4]ffcommon.FInt,
+func AvImageAlloc(pointers *[4]*ffcommon.FUint8T, linesizes *[4]ffcommon.FInt,
 	w, h ffcommon.FInt, pix_fmt AVPixelFormat, align ffcommon.FInt) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_image_alloc").Call(
-		uintptr(unsafe.Pointer(&pointers)),
-		uintptr(unsafe.Pointer(&linesizes)),
+		uintptr(unsafe.Pointer(pointers)),
+		uintptr(unsafe.Pointer(linesizes)),
 		uintptr(w),
 		uintptr(h),
 		uintptr(pix_fmt),
 		uintptr(align),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -209,7 +195,7 @@ func AvImageAlloc(pointers [4]*ffcommon.FUint8T, linesizes [4]ffcommon.FInt,
 func AvImageCopyPlane(dst *ffcommon.FUint8T, dst_linesize ffcommon.FInt,
 	src *ffcommon.FUint8T, src_linesize,
 	bytewidth, height ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_image_copy_plane").Call(
+	ffcommon.GetAvutilDll().NewProc("av_image_copy_plane").Call(
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(dst_linesize),
 		uintptr(unsafe.Pointer(src)),
@@ -217,10 +203,6 @@ func AvImageCopyPlane(dst *ffcommon.FUint8T, dst_linesize ffcommon.FInt,
 		uintptr(bytewidth),
 		uintptr(height),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -232,22 +214,18 @@ func AvImageCopyPlane(dst *ffcommon.FUint8T, dst_linesize ffcommon.FInt,
 //void av_image_copy(uint8_t *dst_data[4], int dst_linesizes[4],
 //const uint8_t *src_data[4], const int src_linesizes[4],
 //enum AVPixelFormat pix_fmt, int width, int height);
-func AvImageCopy(dst_data [4]*ffcommon.FUint8T, dst_linesizes [4]ffcommon.FInt,
-	src_data [4]*ffcommon.FUint8T, src_linesizes [4]ffcommon.FInt,
+func AvImageCopy(dst_data *[4]*ffcommon.FUint8T, dst_linesizes *[4]ffcommon.FInt,
+	src_data *[4]*ffcommon.FUint8T, src_linesizes *[4]ffcommon.FInt,
 	pix_fmt AVPixelFormat, width, height ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_image_copy").Call(
-		uintptr(unsafe.Pointer(&dst_data)),
-		uintptr(unsafe.Pointer(&dst_linesizes)),
-		uintptr(unsafe.Pointer(&src_data)),
-		uintptr(unsafe.Pointer(&src_linesizes)),
+	ffcommon.GetAvutilDll().NewProc("av_image_copy").Call(
+		uintptr(unsafe.Pointer(dst_data)),
+		uintptr(unsafe.Pointer(dst_linesizes)),
+		uintptr(unsafe.Pointer(src_data)),
+		uintptr(unsafe.Pointer(src_linesizes)),
 		uintptr(pix_fmt),
 		uintptr(width),
 		uintptr(height),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -267,22 +245,18 @@ func AvImageCopy(dst_data [4]*ffcommon.FUint8T, dst_linesizes [4]ffcommon.FInt,
 //void av_image_copy_uc_from(uint8_t *dst_data[4],       const ptrdiff_t dst_linesizes[4],
 //const uint8_t *src_data[4], const ptrdiff_t src_linesizes[4],
 //enum AVPixelFormat pix_fmt, int width, int height);
-func AvImageCopyUcFrom(dst_data [4]*ffcommon.FUint8T, dst_linesizes [4]ffcommon.FPtrdiffT,
-	src_data [4]*ffcommon.FUint8T, src_linesizes [4]ffcommon.FPtrdiffT,
+func AvImageCopyUcFrom(dst_data *[4]*ffcommon.FUint8T, dst_linesizes *[4]ffcommon.FPtrdiffT,
+	src_data *[4]*ffcommon.FUint8T, src_linesizes *[4]ffcommon.FPtrdiffT,
 	pix_fmt AVPixelFormat, width, height ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_image_copy_uc_from").Call(
-		uintptr(unsafe.Pointer(&dst_data)),
-		uintptr(unsafe.Pointer(&dst_linesizes)),
-		uintptr(unsafe.Pointer(&src_data)),
-		uintptr(unsafe.Pointer(&src_linesizes)),
+	ffcommon.GetAvutilDll().NewProc("av_image_copy_uc_from").Call(
+		uintptr(unsafe.Pointer(dst_data)),
+		uintptr(unsafe.Pointer(dst_linesizes)),
+		uintptr(unsafe.Pointer(src_data)),
+		uintptr(unsafe.Pointer(src_linesizes)),
 		uintptr(pix_fmt),
 		uintptr(width),
 		uintptr(height),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -314,21 +288,18 @@ func AvImageCopyUcFrom(dst_data [4]*ffcommon.FUint8T, dst_linesizes [4]ffcommon.
 //int av_image_fill_arrays(uint8_t *dst_data[4], int dst_linesize[4],
 //const uint8_t *src,
 //enum AVPixelFormat pix_fmt, int width, int height, int align);
-func AvImageFillArrays(dst_data [4]*ffcommon.FUint8T, dst_linesize [4]ffcommon.FInt,
-	src ffcommon.FUint8T,
+func AvImageFillArrays(dst_data *[4]*ffcommon.FUint8T, dst_linesize *[4]ffcommon.FInt,
+	src *ffcommon.FUint8T,
 	pix_fmt AVPixelFormat, width, height, align ffcommon.FInt) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_image_fill_arrays").Call(
-		uintptr(unsafe.Pointer(&dst_data)),
-		uintptr(unsafe.Pointer(&dst_linesize)),
-		uintptr(src),
+		uintptr(unsafe.Pointer(dst_data)),
+		uintptr(unsafe.Pointer(dst_linesize)),
+		uintptr(unsafe.Pointer(src)),
 		uintptr(pix_fmt),
 		uintptr(width),
 		uintptr(height),
 		uintptr(align),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -351,9 +322,6 @@ func AvImageGetBufferSize(pix_fmt AVPixelFormat, width, height, align ffcommon.F
 		uintptr(height),
 		uintptr(align),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -391,9 +359,6 @@ func AvImageCopyToBuffer(dst *ffcommon.FUint8T, dst_size ffcommon.FInt,
 		uintptr(height),
 		uintptr(align),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -416,9 +381,6 @@ func AvImageCheckSize(w, h ffcommon.FUnsignedInt, log_offset ffcommon.FInt, log_
 		uintptr(log_offset),
 		log_ctx,
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -446,9 +408,6 @@ func AvImageCheckSize2(w, h ffcommon.FUnsignedInt, max_pixels ffcommon.FInt64T, 
 		uintptr(log_offset),
 		log_ctx,
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -472,9 +431,6 @@ func AvImageCheckSar(w, h ffcommon.FUnsignedInt, sar AVRational) (res ffcommon.F
 		uintptr(h),
 		uintptr(unsafe.Pointer(&sar)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -516,9 +472,6 @@ func AvImageFillBlack(dst_data [4]*ffcommon.FUint8T, dst_linesize [4]ffcommon.FP
 		uintptr(width),
 		uintptr(height),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }

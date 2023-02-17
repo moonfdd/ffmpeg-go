@@ -1,7 +1,5 @@
 package libavutil
 
-import "github.com/moonfdd/ffmpeg-go/ffcommon"
-
 /*
  * This file is part of FFmpeg.
  *
@@ -51,14 +49,14 @@ const AV_TS_MAX_STRING_SIZE = 32
 //return buf;
 //}
 //todo
-func av_ts_make_string() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_ts_make_string").Call()
-	if t == 0 {
+// func av_ts_make_string() (res ffcommon.FCharP) {
+// 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_ts_make_string").Call()
+// 	if t == 0 {
 
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
-}
+// 	}
+// 	res = ffcommon.StringFromPtr(t)
+// 	return
+// }
 
 /**
  * Convenience macro, the return value should be used only directly in
@@ -66,14 +64,14 @@ func av_ts_make_string() (res ffcommon.FCharP) {
  */
 //#define av_ts2str(ts) av_ts_make_string((char[AV_TS_MAX_STRING_SIZE]){0}, ts)
 //todo
-func av_ts2str() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_ts2str").Call()
-	if t == 0 {
+// func av_ts2str() (res ffcommon.FCharP) {
+// 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_ts2str").Call()
+// 	if t == 0 {
 
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
-}
+// 	}
+// 	res = ffcommon.StringFromPtr(t)
+// 	return
+// }
 
 /**
  * Fill the provided buffer with a string containing a timestamp time
@@ -91,14 +89,14 @@ func av_ts2str() (res ffcommon.FCharP) {
 //return buf;
 //}
 //todo
-func av_ts_make_time_string() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_ts_make_time_string").Call()
-	if t == 0 {
+// func av_ts_make_time_string() (res ffcommon.FCharP) {
+// 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_ts_make_time_string").Call()
+// 	if t == 0 {
 
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
-}
+// 	}
+// 	res = ffcommon.StringFromPtr(t)
+// 	return
+// }
 
 /**
  * Convenience macro, the return value should be used only directly in
@@ -106,13 +104,13 @@ func av_ts_make_time_string() (res ffcommon.FCharP) {
  */
 //#define av_ts2timestr(ts, tb) av_ts_make_time_string((char[AV_TS_MAX_STRING_SIZE]){0}, ts, tb)
 //todo
-func av_ts2timestr() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_ts2timestr").Call()
-	if t == 0 {
+// func av_ts2timestr() (res ffcommon.FCharP) {
+// 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_ts2timestr").Call()
+// 	if t == 0 {
 
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
-}
+// 	}
+// 	res = ffcommon.StringFromPtr(t)
+// 	return
+// }
 
 //#endif /* AVUTIL_TIMESTAMP_H */

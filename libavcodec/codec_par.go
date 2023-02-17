@@ -1,9 +1,10 @@
 package libavcodec
 
 import (
+	"unsafe"
+
 	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"github.com/moonfdd/ffmpeg-go/libavutil"
-	"unsafe"
 )
 
 /*
@@ -40,7 +41,7 @@ import (
 /**
  * @addtogroup lavc_core
  */
-type AVFieldOrder = int32
+type AVFieldOrder int32
 
 const (
 	AV_FIELD_UNKNOWN = iota
@@ -223,9 +224,6 @@ type AVCodecParameters struct {
 //AVCodecParameters *avcodec_parameters_alloc(void);
 func AvcodecParametersAlloc() (res *AVCodecParameters) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("avcodec_parameters_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*AVCodecParameters)(unsafe.Pointer(t))
 	return
 }
@@ -236,13 +234,9 @@ func AvcodecParametersAlloc() (res *AVCodecParameters) {
  */
 //void avcodec_parameters_free(AVCodecParameters **par);
 func AvcodecParametersFree(par **AVCodecParameters) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("avcodec_parameters_free").Call(
+	ffcommon.GetAvcodecDll().NewProc("avcodec_parameters_free").Call(
 		uintptr(unsafe.Pointer(par)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -257,9 +251,6 @@ func AvcodecParametersCopy(dst, src *AVCodecParameters) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(src)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }

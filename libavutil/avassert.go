@@ -76,11 +76,7 @@ import "github.com/moonfdd/ffmpeg-go/ffcommon"
  */
 //void av_assert0_fpu(void);
 func AvAssert0Fpu() {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_assert0_fpu").Call()
-	if t == 0 {
-
-	}
-	return
+	ffcommon.GetAvutilDll().NewProc("av_assert0_fpu").Call()
 }
 
 //#endif /* AVUTIL_AVASSERT_H */

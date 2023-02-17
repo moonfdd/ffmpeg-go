@@ -1,9 +1,10 @@
 package libavcodec
 
 import (
+	"unsafe"
+
 	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"github.com/moonfdd/ffmpeg-go/libavutil"
-	"unsafe"
 )
 
 /*
@@ -155,9 +156,6 @@ func AvBsfGetByName(name ffcommon.FConstCharP) (res *AVBitStreamFilter) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_bsf_get_by_name").Call(
 		ffcommon.UintPtrFromString(name),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVBitStreamFilter)(unsafe.Pointer(t))
 	return
 }
@@ -176,9 +174,6 @@ func AvBsfIterate(opaque *ffcommon.FVoidP) (res *AVBitStreamFilter) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_bsf_iterate").Call(
 		uintptr(unsafe.Pointer(opaque)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVBitStreamFilter)(unsafe.Pointer(t))
 	return
 }
@@ -201,9 +196,6 @@ func (filter *AVBitStreamFilter) AvBsfAlloc(ctx **AVBSFContext) (res ffcommon.FI
 		uintptr(unsafe.Pointer(filter)),
 		uintptr(unsafe.Pointer(ctx)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -217,9 +209,6 @@ func (ctx *AVBSFContext) AvBsfInit() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_bsf_init").Call(
 		uintptr(unsafe.Pointer(ctx)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -248,9 +237,6 @@ func (ctx *AVBSFContext) AvBsfSendPacket(pkt *AVPacket) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(pkt)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -285,9 +271,6 @@ func (ctx *AVBSFContext) AvBsfReceivePacket(pkt *AVPacket) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(pkt)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -297,13 +280,9 @@ func (ctx *AVBSFContext) AvBsfReceivePacket(pkt *AVPacket) (res ffcommon.FInt) {
  */
 //void av_bsf_flush(AVBSFContext *ctx);
 func (ctx *AVBSFContext) AvBsfFlush() {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_bsf_flush").Call(
+	ffcommon.GetAvcodecDll().NewProc("av_bsf_flush").Call(
 		uintptr(unsafe.Pointer(ctx)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -312,13 +291,9 @@ func (ctx *AVBSFContext) AvBsfFlush() {
  */
 //void av_bsf_free(AVBSFContext **ctx);
 func AvBsfFree(ctx **AVBSFContext) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_bsf_free").Call(
+	ffcommon.GetAvcodecDll().NewProc("av_bsf_free").Call(
 		uintptr(unsafe.Pointer(ctx)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -330,9 +305,6 @@ func AvBsfFree(ctx **AVBSFContext) {
 //const AVClass *av_bsf_get_class(void);
 func AvBsfGetClass() (res *AVClass) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_bsf_get_class").Call()
-	if t == 0 {
-
-	}
 	res = (*AVClass)(unsafe.Pointer(t))
 	return
 }
@@ -355,9 +327,6 @@ type AVBSFList struct {
 //AVBSFList *av_bsf_list_alloc(void);
 func AvBsfListAlloc() (res *AVBSFList) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_bsf_list_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*AVBSFList)(unsafe.Pointer(t))
 	return
 }
@@ -369,13 +338,9 @@ func AvBsfListAlloc() (res *AVBSFList) {
  */
 //void av_bsf_list_free(AVBSFList **lst);
 func AvBsfListFree(lst **AVBSFList) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_bsf_list_free").Call(
+	ffcommon.GetAvcodecDll().NewProc("av_bsf_list_free").Call(
 		uintptr(unsafe.Pointer(lst)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -392,9 +357,6 @@ func (lst *AVBSFList) AvBsfListAppend(bsf *AVBSFContext) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(lst)),
 		uintptr(unsafe.Pointer(bsf)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -416,9 +378,6 @@ func (lst *AVBSFList) AvBsfListAppend2(bsf_name ffcommon.FConstCharP, options **
 		ffcommon.UintPtrFromString(bsf_name),
 		uintptr(unsafe.Pointer(options)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -445,9 +404,6 @@ func AvBsfListFinalize(lst **AVBSFList, bsf *AVBSFContext) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(lst)),
 		uintptr(unsafe.Pointer(bsf)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -471,9 +427,6 @@ func AvBsfListParseStr(str ffcommon.FConstCharP, bsf *AVBSFContext) (res ffcommo
 		ffcommon.UintPtrFromString(str),
 		uintptr(unsafe.Pointer(bsf)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -490,9 +443,6 @@ func AvBsfGetNullFilter(bsf *AVBSFContext) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_bsf_get_null_filter").Call(
 		uintptr(unsafe.Pointer(bsf)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }

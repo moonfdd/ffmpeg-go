@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -64,9 +65,6 @@ func AvPixelutilsGetSadFn(w_bits, h_bits,
 		uintptr(aligned),
 		log_ctx,
 	)
-	if t == 0 {
-
-	}
 	res = *(*AvPixelutilsSadFn)(unsafe.Pointer(t))
 	return
 }

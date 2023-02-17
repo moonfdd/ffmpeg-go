@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -51,9 +52,6 @@ func AvFifoAlloc(size ffcommon.FUnsignedInt) (res *AVFifoBuffer) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_fifo_alloc").Call(
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVFifoBuffer)(unsafe.Pointer(t))
 	return
 }
@@ -70,9 +68,6 @@ func AvFifoAllocArray(nmemb, size ffcommon.FSizeT) (res *AVFifoBuffer) {
 		uintptr(nmemb),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVFifoBuffer)(unsafe.Pointer(t))
 	return
 }
@@ -83,13 +78,9 @@ func AvFifoAllocArray(nmemb, size ffcommon.FSizeT) (res *AVFifoBuffer) {
  */
 //void av_fifo_free(AVFifoBuffer *f);
 func (f *AVFifoBuffer) AvFifoFree() {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_fifo_free").Call(
+	ffcommon.GetAvutilDll().NewProc("av_fifo_free").Call(
 		uintptr(unsafe.Pointer(f)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -98,13 +89,9 @@ func (f *AVFifoBuffer) AvFifoFree() {
  */
 //void av_fifo_freep(AVFifoBuffer **f);
 func AvFifoFreep(f **AVFifoBuffer) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_fifo_freep").Call(
+	ffcommon.GetAvutilDll().NewProc("av_fifo_freep").Call(
 		uintptr(unsafe.Pointer(f)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -113,13 +100,9 @@ func AvFifoFreep(f **AVFifoBuffer) {
  */
 //void av_fifo_reset(AVFifoBuffer *f);
 func (f *AVFifoBuffer) AvFifoReset() {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_fifo_reset").Call(
+	ffcommon.GetAvutilDll().NewProc("av_fifo_reset").Call(
 		uintptr(unsafe.Pointer(f)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -133,9 +116,6 @@ func (f *AVFifoBuffer) AvFifoSize() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_fifo_size").Call(
 		uintptr(unsafe.Pointer(f)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -151,9 +131,6 @@ func (f *AVFifoBuffer) AvFifoSpace() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_fifo_space").Call(
 		uintptr(unsafe.Pointer(f)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -176,9 +153,6 @@ func (f *AVFifoBuffer) AvFifoGenericPeekAt(dest ffcommon.FVoidP, offset, buf_siz
 		uintptr(buf_size),
 		ffcommon.NewCallback(func0),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -199,9 +173,6 @@ func (f *AVFifoBuffer) AvFifoGenericPeek(dest ffcommon.FVoidP, buf_size ffcommon
 		uintptr(buf_size),
 		ffcommon.NewCallback(func0),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -221,9 +192,6 @@ func (f *AVFifoBuffer) AvFifoGenericRead(dest ffcommon.FVoidP, buf_size ffcommon
 		uintptr(buf_size),
 		ffcommon.NewCallback(func0),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -249,9 +217,6 @@ func (f *AVFifoBuffer) AvFifoGenericWrite(src ffcommon.FVoidP, size ffcommon.FIn
 		uintptr(size),
 		ffcommon.NewCallback(func0),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -270,9 +235,6 @@ func (f *AVFifoBuffer) AvFifoRealloc2(size ffcommon.FUnsignedInt) (res ffcommon.
 		uintptr(unsafe.Pointer(f)),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -292,9 +254,6 @@ func (f *AVFifoBuffer) AvFifoGrow(additional_space ffcommon.FUnsignedInt) (res f
 		uintptr(unsafe.Pointer(f)),
 		uintptr(additional_space),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -306,14 +265,10 @@ func (f *AVFifoBuffer) AvFifoGrow(additional_space ffcommon.FUnsignedInt) (res f
  */
 //void av_fifo_drain(AVFifoBuffer *f, int size);
 func (f *AVFifoBuffer) AvFifoDrain(size ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_fifo_drain").Call(
+	ffcommon.GetAvutilDll().NewProc("av_fifo_drain").Call(
 		uintptr(unsafe.Pointer(f)),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -336,13 +291,13 @@ func (f *AVFifoBuffer) AvFifoDrain(size ffcommon.FInt) {
 //return ptr;
 //}
 //todo
-func av_fifo_peek2() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_fifo_peek2").Call()
-	if t == 0 {
+// func av_fifo_peek2() (res ffcommon.FCharP) {
+// 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_fifo_peek2").Call()
+// 	if t == 0 {
 
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
-}
+// 	}
+// 	res = ffcommon.StringFromPtr(t)
+// 	return
+// }
 
 //#endif /* AVUTIL_FIFO_H */

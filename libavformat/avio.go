@@ -1,9 +1,10 @@
 package libavformat
 
 import (
+	"unsafe"
+
 	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"github.com/moonfdd/ffmpeg-go/libavutil"
-	"unsafe"
 )
 
 /*
@@ -74,7 +75,7 @@ type AVIOInterruptCB struct {
 /**
  * Directory entry types.
  */
-type AVIODirEntryType = int32
+type AVIODirEntryType int32
 
 const (
 	AVIO_ENTRY_UNKNOWN = iota
@@ -122,7 +123,7 @@ type AVIODirContext struct {
  * Different data types that can be returned via the AVIO
  * write_data_type callback.
  */
-type AVIODataMarkerType = int32
+type AVIODataMarkerType int32
 
 const (
 	/**
@@ -388,9 +389,6 @@ func AvioFindProtocolName(url ffcommon.FConstCharP) (res ffcommon.FConstCharP) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_find_protocol_name").Call(
 		ffcommon.UintPtrFromString(url),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -413,9 +411,6 @@ func AvioCheck(url ffcommon.FConstCharP, flags ffcommon.FInt) (res ffcommon.FInt
 		ffcommon.UintPtrFromString(url),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -435,9 +430,6 @@ func AvprivIoMove(url_src, url_dst ffcommon.FConstCharP) (res ffcommon.FInt) {
 		ffcommon.UintPtrFromString(url_src),
 		ffcommon.UintPtrFromString(url_dst),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -453,9 +445,6 @@ func AvprivIoDelete(url ffcommon.FConstCharP) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avpriv_io_delete").Call(
 		ffcommon.UintPtrFromString(url),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -477,9 +466,6 @@ func AvioOpenDir(s **AVIODirContext, url ffcommon.FConstCharP, options **AVDicti
 		ffcommon.UintPtrFromString(url),
 		uintptr(unsafe.Pointer(options)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -501,9 +487,6 @@ func (s *AVIODirContext) AvioReadDir(next **AVIODirEntry) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(s)),
 		uintptr(unsafe.Pointer(next)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -522,9 +505,6 @@ func AvioCloseDir(s **AVIODirContext) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_close_dir").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -536,14 +516,9 @@ func AvioCloseDir(s **AVIODirContext) (res ffcommon.FInt) {
  */
 //void avio_free_directory_entry(AVIODirEntry **entry);
 func AvioFreeDirectoryEntry(entry **AVIODirEntry) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_free_directory_entry").Call(
+	ffcommon.GetAvformatDll().NewProc("avio_free_directory_entry").Call(
 		uintptr(unsafe.Pointer(entry)),
 	)
-
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -593,9 +568,6 @@ func AvioAllocContext(buffer ffcommon.FUnsignedCharP,
 		ffcommon.NewCallback(write_packet),
 		ffcommon.NewCallback(seek),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVIOContext)(unsafe.Pointer(t))
 	return
 }
@@ -608,134 +580,90 @@ func AvioAllocContext(buffer ffcommon.FUnsignedCharP,
  */
 //void avio_context_free(AVIOContext **s);
 func AvioContextFree(s **AVIOContext) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_context_free").Call(
+	ffcommon.GetAvformatDll().NewProc("avio_context_free").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //void avio_w8(AVIOContext *s, int b);
 func (s *AVIOContext) AvioW8(b ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_w8").Call(
+	ffcommon.GetAvformatDll().NewProc("avio_w8").Call(
 		uintptr(unsafe.Pointer(s)),
 		uintptr(b),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //void avio_write(AVIOContext *s, const unsigned char *buf, int size);
 func (s *AVIOContext) AvioWrite(buf ffcommon.FUnsignedCharP, size ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_write").Call(
+	ffcommon.GetAvformatDll().NewProc("avio_write").Call(
 		uintptr(unsafe.Pointer(s)),
 		ffcommon.UintPtrFromString(buf),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //void avio_wl64(AVIOContext *s, uint64_t val);
 func (s *AVIOContext) AvioWl64(val ffcommon.FUint64T) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_wl64").Call(
+	ffcommon.GetAvformatDll().NewProc("avio_wl64").Call(
 		uintptr(unsafe.Pointer(s)),
 		uintptr(val),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //void avio_wb64(AVIOContext *s, uint64_t val);
 func (s *AVIOContext) AvioWb64(val ffcommon.FUint64T) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_wb64").Call(
+	ffcommon.GetAvformatDll().NewProc("avio_wb64").Call(
 		uintptr(unsafe.Pointer(s)),
 		uintptr(val),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //void avio_wl32(AVIOContext *s, unsigned int val);
 func (s *AVIOContext) AvioWl32(val ffcommon.FUnsignedInt) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_wl32").Call(
+	ffcommon.GetAvformatDll().NewProc("avio_wl32").Call(
 		uintptr(unsafe.Pointer(s)),
 		uintptr(val),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //void avio_wb32(AVIOContext *s, unsigned int val);
 func (s *AVIOContext) AvioWb32(val ffcommon.FUnsignedInt) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_wb32").Call(
+	ffcommon.GetAvformatDll().NewProc("avio_wb32").Call(
 		uintptr(unsafe.Pointer(s)),
 		uintptr(val),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //void avio_wl24(AVIOContext *s, unsigned int val);
 func (s *AVIOContext) AvioWl24(val ffcommon.FUnsignedInt) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_wl24").Call(
+	ffcommon.GetAvformatDll().NewProc("avio_wl24").Call(
 		uintptr(unsafe.Pointer(s)),
 		uintptr(val),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //void avio_wb24(AVIOContext *s, unsigned int val);
 func (s *AVIOContext) AvioWb24(val ffcommon.FUnsignedInt) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_wb24").Call(
+	ffcommon.GetAvformatDll().NewProc("avio_wb24").Call(
 		uintptr(unsafe.Pointer(s)),
 		uintptr(val),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //void avio_wl16(AVIOContext *s, unsigned int val);
 func (s *AVIOContext) AvioWl16(val ffcommon.FUnsignedInt) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_wl16").Call(
+	ffcommon.GetAvformatDll().NewProc("avio_wl16").Call(
 		uintptr(unsafe.Pointer(s)),
 		uintptr(val),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //void avio_wb16(AVIOContext *s, unsigned int val);
 func (s *AVIOContext) AvioWb16(val ffcommon.FUnsignedInt) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_wb16").Call(
+	ffcommon.GetAvformatDll().NewProc("avio_wb16").Call(
 		uintptr(unsafe.Pointer(s)),
 		uintptr(val),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -748,9 +676,6 @@ func (s *AVIOContext) AvioPutStr(str ffcommon.FConstCharP) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(s)),
 		ffcommon.UintPtrFromString(str),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -768,9 +693,6 @@ func (s *AVIOContext) AvioPutStr16le(str ffcommon.FConstCharP) (res ffcommon.FIn
 		uintptr(unsafe.Pointer(s)),
 		ffcommon.UintPtrFromString(str),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -788,9 +710,6 @@ func (s *AVIOContext) AvioPutStr16be(str ffcommon.FConstCharP) (res ffcommon.FIn
 		uintptr(unsafe.Pointer(s)),
 		ffcommon.UintPtrFromString(str),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -807,15 +726,11 @@ func (s *AVIOContext) AvioPutStr16be(str ffcommon.FConstCharP) (res ffcommon.FIn
  */
 //void avio_write_marker(AVIOContext *s, int64_t time, enum AVIODataMarkerType type);
 func (s *AVIOContext) AvioWriteMarker(time ffcommon.FInt64T, type0 AVIODataMarkerType) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_write_marker").Call(
+	ffcommon.GetAvformatDll().NewProc("avio_write_marker").Call(
 		uintptr(unsafe.Pointer(s)),
 		uintptr(time),
 		uintptr(type0),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -844,9 +759,6 @@ func (s *AVIOContext) AvioSeek(offset ffcommon.FInt64T, whence ffcommon.FInt) (r
 		uintptr(offset),
 		uintptr(whence),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt64T(t)
 	return
 }
@@ -861,9 +773,6 @@ func (s *AVIOContext) AvioSkip(offset ffcommon.FInt64T) (res ffcommon.FInt64T) {
 		uintptr(unsafe.Pointer(s)),
 		uintptr(offset),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt64T(t)
 	return
 }
@@ -876,16 +785,11 @@ func (s *AVIOContext) AvioSkip(offset ffcommon.FInt64T) (res ffcommon.FInt64T) {
 //{
 //return avio_seek(s, 0, SEEK_CUR);
 //}
-//todo
-func (s *AVIOContext) avio_tell() (res ffcommon.FCharP) {
-	//s.AvioSeek(0, SEEK_CUR)
+const SEEK_CUR = 1
+
+func (s *AVIOContext) AvioTell() (res ffcommon.FInt64T) {
+	res = s.AvioSeek(0, SEEK_CUR)
 	return
-	//t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_tell").Call()
-	//if t == 0 {
-	//
-	//}
-	//res = ffcommon.StringFromPtr(t)
-	//return
 }
 
 /**
@@ -897,9 +801,6 @@ func (s *AVIOContext) AvioSize() (res ffcommon.FInt64T) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_size").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt64T(t)
 	return
 }
@@ -913,9 +814,6 @@ func (s *AVIOContext) AvioFeof() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_feof").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -934,9 +832,6 @@ func (s *AVIOContext) AvioPrintf(fmt0 ...ffcommon.FConstCharP) (res ffcommon.FIn
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_printf").Call(
 		uintptrs...,
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -948,14 +843,10 @@ func (s *AVIOContext) AvioPrintf(fmt0 ...ffcommon.FConstCharP) (res ffcommon.FIn
  */
 //void avio_print_string_array(AVIOContext *s, const char *strings[]);
 func (s *AVIOContext) AvioPrintStringArray(strings *ffcommon.FBuf) {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_print_string_array").Call(
+	ffcommon.GetAvformatDll().NewProc("avio_print_string_array").Call(
 		uintptr(unsafe.Pointer(s)),
 		uintptr(unsafe.Pointer(strings)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -980,13 +871,9 @@ func (s *AVIOContext) AvioPrintStringArray(strings *ffcommon.FBuf) {
  */
 //void avio_flush(AVIOContext *s);
 func (s *AVIOContext) AvioFlush() {
-	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_flush").Call(
+	ffcommon.GetAvformatDll().NewProc("avio_flush").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -1000,9 +887,6 @@ func (s *AVIOContext) AvioRead(buf ffcommon.FUnsignedCharP, size ffcommon.FInt) 
 		ffcommon.UintPtrFromString(buf),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1021,9 +905,6 @@ func (s *AVIOContext) AvioReadPartial(buf ffcommon.FUnsignedCharP, size ffcommon
 		ffcommon.UintPtrFromString(buf),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1040,9 +921,6 @@ func (s *AVIOContext) AvioR8() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_r8").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1052,9 +930,6 @@ func (s *AVIOContext) AvioRl16() (res ffcommon.FUnsignedInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_rl16").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FUnsignedInt(t)
 	return
 }
@@ -1064,9 +939,6 @@ func (s *AVIOContext) AvioRl24() (res ffcommon.FUnsignedInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_rl24").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FUnsignedInt(t)
 	return
 }
@@ -1076,9 +948,6 @@ func (s *AVIOContext) AvioRl32() (res ffcommon.FUnsignedInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_rl32").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FUnsignedInt(t)
 	return
 }
@@ -1088,9 +957,6 @@ func (s *AVIOContext) AvioRl64() (res ffcommon.FUint64T) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_rl64").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FUint64T(t)
 	return
 }
@@ -1100,9 +966,6 @@ func (s *AVIOContext) AvioRb16() (res ffcommon.FUnsignedInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_rb16").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FUnsignedInt(t)
 	return
 }
@@ -1112,9 +975,6 @@ func (s *AVIOContext) AvioRb24() (res ffcommon.FUnsignedInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_rb24").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FUnsignedInt(t)
 	return
 }
@@ -1124,9 +984,6 @@ func (s *AVIOContext) AvioRb32() (res ffcommon.FUnsignedInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_rb32").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FUnsignedInt(t)
 	return
 }
@@ -1136,9 +993,6 @@ func (s *AVIOContext) AvioRb64() (res ffcommon.FUint64T) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_rb64").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FUint64T(t)
 	return
 }
@@ -1167,9 +1021,6 @@ func (pb *AVIOContext) AvioGetStr(maxlen ffcommon.FInt, buf ffcommon.FCharP, buf
 		ffcommon.UintPtrFromString(buf),
 		uintptr(buflen),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1188,9 +1039,6 @@ func (pb *AVIOContext) AvioGetStr16le(maxlen ffcommon.FInt, buf ffcommon.FCharP,
 		ffcommon.UintPtrFromString(buf),
 		uintptr(buflen),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1203,9 +1051,6 @@ func (pb *AVIOContext) AvioGetStr16be(maxlen ffcommon.FInt, buf ffcommon.FCharP,
 		ffcommon.UintPtrFromString(buf),
 		uintptr(buflen),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1266,9 +1111,6 @@ func AvioOpen(s **AVIOContext, url ffcommon.FConstCharP, flags ffcommon.FInt) (r
 		ffcommon.UintPtrFromString(url),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1302,9 +1144,6 @@ func AvioOpen2(s **AVIOContext, url ffcommon.FConstCharP, flags ffcommon.FInt,
 		uintptr(unsafe.Pointer(int_cb)),
 		uintptr(unsafe.Pointer(options)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1324,9 +1163,6 @@ func (s *AVIOContext) AvioClose() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_close").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1347,9 +1183,6 @@ func AvioClosep(s **AVIOContext) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_closep").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1365,9 +1198,6 @@ func AvioOpenDynBuf(s **AVIOContext) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_open_dyn_buf").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1388,9 +1218,6 @@ func (s *AVIOContext) AvioGetDynBuf(pbuffer **ffcommon.FUint8T) (res ffcommon.FI
 		uintptr(unsafe.Pointer(s)),
 		uintptr(unsafe.Pointer(pbuffer)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1410,9 +1237,6 @@ func (s *AVIOContext) AvioCloseDynBuf(pbuffer **ffcommon.FUint8T) (res ffcommon.
 		uintptr(unsafe.Pointer(s)),
 		uintptr(unsafe.Pointer(pbuffer)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1434,9 +1258,6 @@ func AvioEnumProtocols(opaque *ffcommon.FVoidP, output ffcommon.FInt) (res ffcom
 		uintptr(unsafe.Pointer(opaque)),
 		uintptr(output),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -1451,9 +1272,6 @@ func AvioProtocolGetClass(name ffcommon.FConstCharP) (res *AVClass) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_protocol_get_class").Call(
 		ffcommon.UintPtrFromString(name),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVClass)(unsafe.Pointer(t))
 	return
 }
@@ -1471,9 +1289,6 @@ func (h *AVIOContext) AvioPause(pause ffcommon.FInt) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(h)),
 		uintptr(pause),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1506,9 +1321,6 @@ func (h *AVIOContext) AvioSeekTime(stream_index ffcommon.FInt, timestamp ffcommo
 		uintptr(timestamp),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt64T(t)
 	return
 }
@@ -1531,9 +1343,6 @@ func (h *AVIOContext) AvioReadToBprint(pb *AVBPrint, max_size ffcommon.FSizeT) (
 		uintptr(unsafe.Pointer(pb)),
 		uintptr(max_size),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt64T(t)
 	return
 }
@@ -1551,9 +1360,6 @@ func (h *AVIOContext) AvioAccept(c **AVIOContext) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(h)),
 		uintptr(unsafe.Pointer(c)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1582,9 +1388,6 @@ func (c *AVIOContext) AvioHandshake() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_handshake").Call(
 		uintptr(unsafe.Pointer(c)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }

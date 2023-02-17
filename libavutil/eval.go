@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -80,9 +81,6 @@ func AvExprParseAndEval(res0 *ffcommon.FDouble, s ffcommon.FConstCharP,
 		uintptr(log_offset),
 		log_ctx,
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -125,9 +123,6 @@ func AvExprParse(expr **AVExpr, s ffcommon.FConstCharP,
 		uintptr(log_offset),
 		log_ctx,
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -146,9 +141,6 @@ func (e *AVExpr) AvExprEval(const_values *ffcommon.FDouble, opaque ffcommon.FVoi
 		uintptr(unsafe.Pointer(const_values)),
 		opaque,
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FDouble(t)
 	return
 }
@@ -168,9 +160,6 @@ func (e *AVExpr) AvExprCountVars(counter *ffcommon.FUnsigned, size ffcommon.FInt
 		uintptr(unsafe.Pointer(counter)),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -195,9 +184,6 @@ func (e *AVExpr) AvExprCountFunc(counter *ffcommon.FUnsigned, size, arg ffcommon
 		uintptr(size),
 		uintptr(arg),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -207,13 +193,9 @@ func (e *AVExpr) AvExprCountFunc(counter *ffcommon.FUnsigned, size, arg ffcommon
  */
 //void av_expr_free(AVExpr *e);
 func (e *AVExpr) AvExprFree() {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_expr_free").Call(
+	ffcommon.GetAvutilDll().NewProc("av_expr_free").Call(
 		uintptr(unsafe.Pointer(e)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -239,9 +221,6 @@ func AvStrtod(numstr ffcommon.FConstCharP, tail ffcommon.FBuf) (res ffcommon.FDo
 		ffcommon.UintPtrFromString(numstr),
 		uintptr(unsafe.Pointer(tail)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FDouble(t)
 	return
 }

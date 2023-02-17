@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -51,9 +52,6 @@ type AVAES struct {
 //struct AVAES *av_aes_alloc(void);
 func AvAesAlloc() (res *AVAES) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_aes_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*AVAES)(unsafe.Pointer(t))
 	return
 }
@@ -71,9 +69,6 @@ func (a *AVAES) AvAesInit(key *ffcommon.FUint8T, key_bits, decrypt ffcommon.FUin
 		uintptr(key_bits),
 		uintptr(decrypt),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -88,7 +83,7 @@ func (a *AVAES) AvAesInit(key *ffcommon.FUint8T, key_bits, decrypt ffcommon.FUin
  */
 //void av_aes_crypt(struct AVAES *a, uint8_t *dst, const uint8_t *src, int count, uint8_t *iv, int decrypt);
 func (a *AVAES) AvAesCrypt(dst, src *ffcommon.FUint8T, count ffcommon.FInt, iv *ffcommon.FUint8T, decrypt ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_aes_crypt").Call(
+	ffcommon.GetAvutilDll().NewProc("av_aes_crypt").Call(
 		uintptr(unsafe.Pointer(a)),
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(src)),
@@ -96,10 +91,6 @@ func (a *AVAES) AvAesCrypt(dst, src *ffcommon.FUint8T, count ffcommon.FInt, iv *
 		uintptr(unsafe.Pointer(iv)),
 		uintptr(decrypt),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**

@@ -1,9 +1,10 @@
 package libavcodec
 
 import (
+	"unsafe"
+
 	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"github.com/moonfdd/ffmpeg-go/libavutil"
-	"unsafe"
 )
 
 /*
@@ -124,9 +125,6 @@ func AvcodecDescriptorGet(id AVCodecID) (res *AVCodecDescriptor) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("avcodec_descriptor_get").Call(
 		uintptr(id),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVCodecDescriptor)(unsafe.Pointer(t))
 	return
 }
@@ -143,9 +141,6 @@ func (prev *AVCodecDescriptor) AvcodecDescriptorNext(id AVCodecID) (res *AVCodec
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("avcodec_descriptor_next").Call(
 		uintptr(unsafe.Pointer(prev)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVCodecDescriptor)(unsafe.Pointer(t))
 	return
 }
@@ -159,9 +154,6 @@ func AvcodecDescriptorGetByName(name ffcommon.FConstCharP) (res *AVCodecDescript
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("avcodec_descriptor_get_by_name").Call(
 		ffcommon.UintPtrFromString(name),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVCodecDescriptor)(unsafe.Pointer(t))
 	return
 }

@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -61,9 +62,6 @@ func AvFileMap(filename ffcommon.FConstCharP, bufptr **ffcommon.FUint8T, size *f
 		uintptr(log_offset),
 		log_ctx,
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -76,14 +74,10 @@ func AvFileMap(filename ffcommon.FConstCharP, bufptr **ffcommon.FUint8T, size *f
  */
 //void av_file_unmap(uint8_t *bufptr, size_t size);
 func AvFileUnmap(bufptr *ffcommon.FUint8T, size ffcommon.FSizeT) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_file_unmap").Call(
+	ffcommon.GetAvutilDll().NewProc("av_file_unmap").Call(
 		uintptr(unsafe.Pointer(bufptr)),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -106,9 +100,6 @@ func AvTempfile(prefix ffcommon.FConstCharP, filename *ffcommon.FBuf, log_offset
 		uintptr(log_offset),
 		log_ctx,
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }

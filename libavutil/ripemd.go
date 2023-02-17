@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -61,9 +62,6 @@ type AVRIPEMD struct {
 //struct AVRIPEMD *av_ripemd_alloc(void);
 func AvRipemdAlloc() (res *AVRIPEMD) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_ripemd_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*AVRIPEMD)(unsafe.Pointer(t))
 	return
 }
@@ -81,9 +79,6 @@ func (context *AVRIPEMD) AvRipemdInit(bits ffcommon.FInt) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(context)),
 		uintptr(bits),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -101,15 +96,11 @@ func (context *AVRIPEMD) AvRipemdInit(bits ffcommon.FInt) (res ffcommon.FInt) {
 //void av_ripemd_update(struct AVRIPEMD* context, const uint8_t* data, size_t len);
 //#endif
 func (context *AVRIPEMD) AvRipemdUpdate(data *ffcommon.FUint8T, len0 ffcommon.FUnsignedIntOrSizeT) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_ripemd_update").Call(
+	ffcommon.GetAvutilDll().NewProc("av_ripemd_update").Call(
 		uintptr(unsafe.Pointer(context)),
 		uintptr(unsafe.Pointer(data)),
 		uintptr(len0),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -120,14 +111,10 @@ func (context *AVRIPEMD) AvRipemdUpdate(data *ffcommon.FUint8T, len0 ffcommon.FU
  */
 //void av_ripemd_final(struct AVRIPEMD* context, uint8_t *digest);
 func (context *AVRIPEMD) AvRipemdFinal(digest *ffcommon.FUint8T) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_ripemd_final").Call(
+	ffcommon.GetAvutilDll().NewProc("av_ripemd_final").Call(
 		uintptr(unsafe.Pointer(context)),
 		uintptr(unsafe.Pointer(digest)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**

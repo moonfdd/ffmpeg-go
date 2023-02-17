@@ -1,9 +1,10 @@
 package libavcodec
 
 import (
+	"unsafe"
+
 	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"github.com/moonfdd/ffmpeg-go/libavutil"
-	"unsafe"
 )
 
 /*
@@ -404,9 +405,6 @@ func AvCodecIterate(opaque *ffcommon.FVoidP) (res *AVCodec) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_codec_iterate").Call(
 		uintptr(unsafe.Pointer(opaque)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVCodec)(unsafe.Pointer(t))
 	return
 }
@@ -422,9 +420,6 @@ func AvcodecFindDecoder(id AVCodecID) (res *AVCodec) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("avcodec_find_decoder").Call(
 		uintptr(id),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVCodec)(unsafe.Pointer(t))
 	return
 }
@@ -440,9 +435,6 @@ func AvcodecFindDecoderByName(name ffcommon.FConstCharP) (res *AVCodec) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("avcodec_find_decoder_by_name").Call(
 		ffcommon.UintPtrFromString(name),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVCodec)(unsafe.Pointer(t))
 	return
 }
@@ -458,9 +450,6 @@ func AvcodecFindEncoder(id AVCodecID) (res *AVCodec) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("avcodec_find_encoder").Call(
 		uintptr(id),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVCodec)(unsafe.Pointer(t))
 	return
 }
@@ -476,9 +465,6 @@ func AvcodecFindEncoderByName(name ffcommon.FConstCharP) (res *AVCodec) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("avcodec_find_encoder_by_name").Call(
 		ffcommon.UintPtrFromString(name),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVCodec)(unsafe.Pointer(t))
 	return
 }
@@ -491,9 +477,6 @@ func (codec *AVCodec) AvCodecIsEncoder() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_codec_is_encoder").Call(
 		uintptr(unsafe.Pointer(codec)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -506,9 +489,6 @@ func (codec *AVCodec) AvCodecIsDecoder() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_codec_is_decoder").Call(
 		uintptr(unsafe.Pointer(codec)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -591,9 +571,6 @@ func (codec *AVCodec) AvcodecGetHwConfig(index ffcommon.FInt) (res *AVCodecHWCon
 		uintptr(unsafe.Pointer(codec)),
 		uintptr(index),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVCodecHWConfig)(unsafe.Pointer(t))
 	return
 }

@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -79,9 +80,6 @@ func AvAdler32Update(adler ffcommon.FAVAdler,
 		uintptr(unsafe.Pointer(buf)),
 		uintptr(av_pure),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FAVAdler(t)
 	return
 }

@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -53,7 +54,7 @@ import (
 
 //typedef uint32_t AVCRC;
 type AVCRC ffcommon.FUint32T
-type AVCRCId = int32
+type AVCRCId int32
 
 const (
 	AV_CRC_8_ATM = iota
@@ -92,9 +93,6 @@ func (ctx *AVCRC) AvCrcInit(le, bits ffcommon.FInt, poly ffcommon.FUint32T, ctx_
 		uintptr(poly),
 		uintptr(ctx_size),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -109,9 +107,6 @@ func AvCrcGetTable(crc_id AVCRCId) (res *AVCRC) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_crc_get_table").Call(
 		uintptr(crc_id),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVCRC)(unsafe.Pointer(t))
 	return
 }
@@ -133,9 +128,6 @@ func (ctx *AVCRC) AvCrc(crc ffcommon.FUint32T,
 		uintptr(unsafe.Pointer(buffer)),
 		uintptr(length),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FUint32T(t)
 	return
 }

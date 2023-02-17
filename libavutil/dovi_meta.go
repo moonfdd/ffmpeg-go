@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -74,9 +75,6 @@ type AVDOVIDecoderConfigurationRecord struct {
 //AVDOVIDecoderConfigurationRecord *av_dovi_alloc(size_t *size);
 func AvDoviAlloc() (res *AVDOVIDecoderConfigurationRecord) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_dovi_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*AVDOVIDecoderConfigurationRecord)(unsafe.Pointer(t))
 	return
 }

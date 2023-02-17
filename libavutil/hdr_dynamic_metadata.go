@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -34,7 +35,7 @@ import (
 /**
  * Option for overlapping elliptical pixel selectors in an image.
  */
-type AVHDRPlusOverlapProcessOption = int32
+type AVHDRPlusOverlapProcessOption int32
 
 const (
 	AV_HDR_PLUS_OVERLAP_PROCESS_WEIGHTED_AVERAGING = 0
@@ -341,13 +342,11 @@ type AVDynamicHDRPlus struct {
  *         on failure.
  */
 //AVDynamicHDRPlus *av_dynamic_hdr_plus_alloc(size_t *size);
-//todo
-func av_dynamic_hdr_plus_alloc() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_dynamic_hdr_plus_alloc").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func AvDynamicHdrPlusAlloc(size *ffcommon.FSizeT) (res *AVDynamicHDRPlus) {
+	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_dynamic_hdr_plus_alloc").Call(
+		uintptr(unsafe.Pointer(size)),
+	)
+	res = (*AVDynamicHDRPlus)(unsafe.Pointer(t))
 	return
 }
 
@@ -363,9 +362,6 @@ func (frame *AVFrame) AvDynamicHdrPlusCreateSideData() (res *AVDynamicHDRPlus) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_dynamic_hdr_plus_create_side_data").Call(
 		uintptr(unsafe.Pointer(frame)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVDynamicHDRPlus)(unsafe.Pointer(t))
 	return
 }

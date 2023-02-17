@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -39,7 +40,7 @@ import (
 
 const AV_TIMECODE_STR_SIZE = 23
 
-type AVTimecodeFlag = int32
+type AVTimecodeFlag int32
 
 const (
 	AV_TIMECODE_FLAG_DROPFRAME     = 1 << 0 ///< timecode is drop frame
@@ -68,9 +69,6 @@ func AvTimecodeAdjustNtscFramenum2(framenum, fps ffcommon.FInt) (res ffcommon.FI
 		uintptr(framenum),
 		uintptr(fps),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -106,9 +104,6 @@ func (tc *AVTimecode) AvTimecodeGetSmpteFromFramenum(framenum ffcommon.FInt) (re
 		uintptr(unsafe.Pointer(tc)),
 		uintptr(framenum),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FUint32T(t)
 	return
 }
@@ -134,9 +129,6 @@ func AvTimecodeGetSmpte(rate AVRational, drop, hh, mm, ss, ff ffcommon.FInt) (re
 		uintptr(ss),
 		uintptr(ff),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FUint32T(t)
 	return
 }
@@ -160,9 +152,6 @@ func (tc *AVTimecode) AvTimecodeMakeString(buf ffcommon.FCharP, framenum ffcommo
 		ffcommon.UintPtrFromString(buf),
 		uintptr(framenum),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -191,9 +180,6 @@ func AvTimecodeMakeSmpteTcString2(buf ffcommon.FCharP, rate AVRational, tcsmpte 
 		uintptr(prevent_df),
 		uintptr(skip_field),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -214,9 +200,6 @@ func AvTimecodeMakeSmpteTcString(buf ffcommon.FCharP, tcsmpte ffcommon.FUint32T,
 		uintptr(tcsmpte),
 		uintptr(prevent_df),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -234,9 +217,6 @@ func AvTimecodeMakeMpegTcString(buf ffcommon.FCharP, tc25bit ffcommon.FUint32T) 
 		ffcommon.UintPtrFromString(buf),
 		uintptr(tc25bit),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -262,9 +242,6 @@ func (tc *AVTimecode) AvTimecodeInit(rate AVRational, flags, frame_start ffcommo
 		uintptr(frame_start),
 		log_ctx,
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -296,9 +273,6 @@ func (tc *AVTimecode) AvTimecodeInitFromComponents(rate AVRational, flags, hh, m
 		uintptr(ff),
 		log_ctx,
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -321,9 +295,6 @@ func (tc *AVTimecode) AvTimecodeInitFromString(rate AVRational, str ffcommon.FCo
 		ffcommon.UintPtrFromString(str),
 		log_ctx,
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -338,9 +309,6 @@ func AvTimecodeCheckFrameRate(rate AVRational) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_timecode_check_frame_rate").Call(
 		uintptr(unsafe.Pointer(&rate)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }

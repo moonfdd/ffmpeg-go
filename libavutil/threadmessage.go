@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -29,7 +30,7 @@ import (
 //typedef struct AVThreadMessageQueue AVThreadMessageQueue;
 type AVThreadMessageQueue struct {
 }
-type AVThreadMessageFlags = int32
+type AVThreadMessageFlags int32
 
 const (
 
@@ -59,9 +60,6 @@ func AvThreadMessageQueueAlloc(mq **AVThreadMessageQueue, nelem, elsize ffcommon
 		uintptr(nelem),
 		uintptr(elsize),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -73,13 +71,9 @@ func AvThreadMessageQueueAlloc(mq **AVThreadMessageQueue, nelem, elsize ffcommon
  */
 //void av_thread_message_queue_free(AVThreadMessageQueue **mq);
 func AvThreadMessageQueueFree(mq **AVThreadMessageQueue) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_thread_message_queue_free").Call(
+	ffcommon.GetAvutilDll().NewProc("av_thread_message_queue_free").Call(
 		uintptr(unsafe.Pointer(mq)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -94,9 +88,6 @@ func (mq *AVThreadMessageQueue) AvThreadMessageQueueSend(msg ffcommon.FVoidP, fl
 		msg,
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -113,9 +104,6 @@ func (mq *AVThreadMessageQueue) AvThreadMessageQueueRecv(msg ffcommon.FVoidP, fl
 		msg,
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -131,14 +119,10 @@ func (mq *AVThreadMessageQueue) AvThreadMessageQueueRecv(msg ffcommon.FVoidP, fl
 //void av_thread_message_queue_set_err_send(AVThreadMessageQueue *mq,
 //int err);
 func (mq *AVThreadMessageQueue) AvThreadMessageQueueSetErrSend(err ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_thread_message_queue_set_err_send").Call(
+	ffcommon.GetAvutilDll().NewProc("av_thread_message_queue_set_err_send").Call(
 		uintptr(unsafe.Pointer(mq)),
 		uintptr(err),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -152,14 +136,10 @@ func (mq *AVThreadMessageQueue) AvThreadMessageQueueSetErrSend(err ffcommon.FInt
 //void av_thread_message_queue_set_err_recv(AVThreadMessageQueue *mq,
 //int err);
 func (mq *AVThreadMessageQueue) AvThreadMessageQueueSetErrRecv(err ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_thread_message_queue_set_err_recv").Call(
+	ffcommon.GetAvutilDll().NewProc("av_thread_message_queue_set_err_recv").Call(
 		uintptr(unsafe.Pointer(mq)),
 		uintptr(err),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -169,14 +149,10 @@ func (mq *AVThreadMessageQueue) AvThreadMessageQueueSetErrRecv(err ffcommon.FInt
 //void av_thread_message_queue_set_free_func(AVThreadMessageQueue *mq,
 //void (*free_func)(void *msg));
 func (mq *AVThreadMessageQueue) AvThreadMessageQueueSetFreeFunc(free_func func(msg ffcommon.FVoidP) uintptr) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_thread_message_queue_set_free_func").Call(
+	ffcommon.GetAvutilDll().NewProc("av_thread_message_queue_set_free_func").Call(
 		uintptr(unsafe.Pointer(mq)),
 		ffcommon.NewCallback(free_func),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -190,9 +166,6 @@ func (mq *AVThreadMessageQueue) AvThreadMessageQueueNbElems() (res ffcommon.FInt
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_thread_message_queue_nb_elems").Call(
 		uintptr(unsafe.Pointer(mq)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -206,13 +179,9 @@ func (mq *AVThreadMessageQueue) AvThreadMessageQueueNbElems() (res ffcommon.FInt
  */
 //void av_thread_message_flush(AVThreadMessageQueue *mq);
 func (mq *AVThreadMessageQueue) AvThreadMessageFlush() {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_thread_message_flush").Call(
+	ffcommon.GetAvutilDll().NewProc("av_thread_message_flush").Call(
 		uintptr(unsafe.Pointer(mq)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //#endif /* AVUTIL_THREADMESSAGE_H */

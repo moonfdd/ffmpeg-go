@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /**
@@ -149,9 +150,6 @@ func AvEncryptionInfoAlloc(subsample_count, key_id_size, iv_size ffcommon.FUint3
 		uintptr(key_id_size),
 		uintptr(iv_size),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVEncryptionInfo)(unsafe.Pointer(t))
 	return
 }
@@ -165,9 +163,6 @@ func (info *AVEncryptionInfo) AvEncryptionInfoClone() (res *AVEncryptionInfo) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_encryption_info_clone").Call(
 		uintptr(unsafe.Pointer(info)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVEncryptionInfo)(unsafe.Pointer(t))
 	return
 }
@@ -178,13 +173,9 @@ func (info *AVEncryptionInfo) AvEncryptionInfoClone() (res *AVEncryptionInfo) {
  */
 //void av_encryption_info_free(AVEncryptionInfo *info);
 func (info *AVEncryptionInfo) AvEncryptionInfoFree() {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_encryption_info_free").Call(
+	ffcommon.GetAvutilDll().NewProc("av_encryption_info_free").Call(
 		uintptr(unsafe.Pointer(info)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -200,9 +191,6 @@ func AvEncryptionInfoGetSideData(side_data ffcommon.FConstCharP, side_data_size 
 		ffcommon.UintPtrFromString(side_data),
 		uintptr(side_data_size),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVEncryptionInfo)(unsafe.Pointer(t))
 	return
 }
@@ -221,9 +209,6 @@ func (info *AVEncryptionInfo) AvEncryptionInfo_AddSideData(side_data_size ffcomm
 		uintptr(unsafe.Pointer(info)),
 		uintptr(side_data_size),
 	)
-	if t == 0 {
-
-	}
 	res = (*ffcommon.FUint8T)(unsafe.Pointer(t))
 	return
 }
@@ -243,9 +228,6 @@ func AvEncryptionInitInfoAlloc(system_id_size, num_key_ids, key_id_size, data_si
 		uintptr(key_id_size),
 		uintptr(data_size),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVEncryptionInitInfo)(unsafe.Pointer(t))
 	return
 }
@@ -256,13 +238,9 @@ func AvEncryptionInitInfoAlloc(system_id_size, num_key_ids, key_id_size, data_si
  */
 //void av_encryption_init_info_free(AVEncryptionInitInfo* info);
 func (info *AVEncryptionInfo) AvEncryptionInitInfoFree() {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_encryption_init_info_free").Call(
+	ffcommon.GetAvutilDll().NewProc("av_encryption_init_info_free").Call(
 		uintptr(unsafe.Pointer(info)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -279,9 +257,6 @@ func AvEncryptionInitInfoGetSideData(side_data *ffcommon.FUint8T, side_data_size
 		uintptr(unsafe.Pointer(side_data)),
 		uintptr(side_data_size),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVEncryptionInitInfo)(unsafe.Pointer(t))
 	return
 }
@@ -300,9 +275,6 @@ func (info *AVEncryptionInfo) AvEncryptionInitInfoAddSideData(side_data_size *ff
 		uintptr(unsafe.Pointer(info)),
 		uintptr(unsafe.Pointer(side_data_size)),
 	)
-	if t == 0 {
-
-	}
 	res = (*ffcommon.FUint8T)(unsafe.Pointer(t))
 	return
 }

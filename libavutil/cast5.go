@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -52,9 +53,6 @@ type AVCAST5 struct {
 //struct AVCAST5 *av_cast5_alloc(void);
 func AvCast5Alloc() (res *AVCAST5) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_cast5_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*AVCAST5)(unsafe.Pointer(t))
 	return
 }
@@ -74,9 +72,6 @@ func (ctx *AVCAST5) AvCast5Init(key *ffcommon.FUint8T, key_bits ffcommon.FInt) (
 		uintptr(unsafe.Pointer(key)),
 		uintptr(key_bits),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -92,17 +87,13 @@ func (ctx *AVCAST5) AvCast5Init(key *ffcommon.FUint8T, key_bits ffcommon.FInt) (
  */
 //void av_cast5_crypt(struct AVCAST5 *ctx, uint8_t *dst, const uint8_t *src, int count, int decrypt);
 func (ctx *AVCAST5) AvCast5Crypt(dst, src *ffcommon.FUint8T, count, decrypt ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_cast5_crypt").Call(
+	ffcommon.GetAvutilDll().NewProc("av_cast5_crypt").Call(
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(src)),
 		uintptr(count),
 		uintptr(decrypt),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -117,7 +108,7 @@ func (ctx *AVCAST5) AvCast5Crypt(dst, src *ffcommon.FUint8T, count, decrypt ffco
  */
 //void av_cast5_crypt2(struct AVCAST5 *ctx, uint8_t *dst, const uint8_t *src, int count, uint8_t *iv, int decrypt);
 func (ctx *AVCAST5) AvCast5Crypt2(dst, src *ffcommon.FUint8T, count ffcommon.FInt, iv *ffcommon.FUint8T, decrypt ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_cast5_crypt2").Call(
+	ffcommon.GetAvutilDll().NewProc("av_cast5_crypt2").Call(
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(src)),
@@ -125,10 +116,6 @@ func (ctx *AVCAST5) AvCast5Crypt2(dst, src *ffcommon.FUint8T, count ffcommon.FIn
 		uintptr(unsafe.Pointer(iv)),
 		uintptr(decrypt),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**

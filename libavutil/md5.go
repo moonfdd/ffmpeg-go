@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -60,9 +61,6 @@ type AVMD5 struct {
 //struct AVMD5 *av_md5_alloc(void);
 func AvMd5Alloc() (res *AVMD5) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_md5_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*AVMD5)(unsafe.Pointer(t))
 	return
 }
@@ -74,13 +72,9 @@ func AvMd5Alloc() (res *AVMD5) {
  */
 //void av_md5_init(struct AVMD5 *ctx);
 func (ctx *AVMD5) AvMd5Init() {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_md5_init").Call(
+	ffcommon.GetAvutilDll().NewProc("av_md5_init").Call(
 		uintptr(unsafe.Pointer(ctx)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -96,15 +90,11 @@ func (ctx *AVMD5) AvMd5Init() {
 //void av_md5_update(struct AVMD5 *ctx, const uint8_t *src, size_t len);
 //#endif
 func (ctx *AVMD5) AvMd5Update(src *ffcommon.FUint8T, len0 ffcommon.FUnsignedIntOrSizeT) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_md5_update").Call(
+	ffcommon.GetAvutilDll().NewProc("av_md5_update").Call(
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(src)),
 		uintptr(len0),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -115,14 +105,10 @@ func (ctx *AVMD5) AvMd5Update(src *ffcommon.FUint8T, len0 ffcommon.FUnsignedIntO
  */
 //void av_md5_final(struct AVMD5 *ctx, uint8_t *dst);
 func (ctx *AVMD5) AvMd5Final(dst *ffcommon.FUint8T) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_md5_final").Call(
+	ffcommon.GetAvutilDll().NewProc("av_md5_final").Call(
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(dst)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -138,16 +124,12 @@ func (ctx *AVMD5) AvMd5Final(dst *ffcommon.FUint8T) {
 //void av_md5_sum(uint8_t *dst, const uint8_t *src, size_t len);
 //#endif
 func (ctx *AVMD5) AvMd5Sum(dst, src *ffcommon.FUint8T, len0 ffcommon.FUnsignedIntOrSizeT) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_md5_sum").Call(
+	ffcommon.GetAvutilDll().NewProc("av_md5_sum").Call(
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(src)),
 		uintptr(len0),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**

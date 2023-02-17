@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -47,9 +48,6 @@ type AVAESCTR struct {
 //struct AVAESCTR *av_aes_ctr_alloc(void);
 func AvAesCtrAlloc() (res *AVAESCTR) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_aes_ctr_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*AVAESCTR)(unsafe.Pointer(t))
 	return
 }
@@ -64,9 +62,6 @@ func (a *AVAESCTR) AvAesCtrInit(key *ffcommon.FUint8T) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(a)),
 		uintptr(unsafe.Pointer(key)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -76,13 +71,9 @@ func (a *AVAESCTR) AvAesCtrInit(key *ffcommon.FUint8T) (res ffcommon.FInt) {
  */
 //void av_aes_ctr_free(struct AVAESCTR *a);
 func (a *AVAESCTR) AvAesCtrFree() {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_aes_ctr_free").Call(
+	ffcommon.GetAvutilDll().NewProc("av_aes_ctr_free").Call(
 		uintptr(unsafe.Pointer(a)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -93,16 +84,12 @@ func (a *AVAESCTR) AvAesCtrFree() {
  */
 //void av_aes_ctr_crypt(struct AVAESCTR *a, uint8_t *dst, const uint8_t *src, int size);
 func (a *AVAESCTR) AvAesCtrCrypt(dst, src *ffcommon.FUint8T, size ffcommon.FUint) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_aes_ctr_crypt").Call(
+	ffcommon.GetAvutilDll().NewProc("av_aes_ctr_crypt").Call(
 		uintptr(unsafe.Pointer(a)),
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(src)),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -113,9 +100,6 @@ func (a *AVAESCTR) AvAesCtrGetIv() (res *ffcommon.FUint8T) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_aes_ctr_get_iv").Call(
 		uintptr(unsafe.Pointer(a)),
 	)
-	if t == 0 {
-
-	}
 	res = (*ffcommon.FUint8T)(unsafe.Pointer(t))
 	return
 }
@@ -125,13 +109,9 @@ func (a *AVAESCTR) AvAesCtrGetIv() (res *ffcommon.FUint8T) {
  */
 //void av_aes_ctr_set_random_iv(struct AVAESCTR *a);
 func (a *AVAESCTR) AvAesCtrSetRandomIv() {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_aes_ctr_set_random_iv").Call(
+	ffcommon.GetAvutilDll().NewProc("av_aes_ctr_set_random_iv").Call(
 		uintptr(unsafe.Pointer(a)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -139,14 +119,10 @@ func (a *AVAESCTR) AvAesCtrSetRandomIv() {
  */
 //void av_aes_ctr_set_iv(struct AVAESCTR *a, const uint8_t* iv);
 func (a *AVAESCTR) AvAesCtrSetIv(iv *ffcommon.FUint8T) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_aes_ctr_set_iv").Call(
+	ffcommon.GetAvutilDll().NewProc("av_aes_ctr_set_iv").Call(
 		uintptr(unsafe.Pointer(a)),
 		uintptr(unsafe.Pointer(iv)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -154,14 +130,10 @@ func (a *AVAESCTR) AvAesCtrSetIv(iv *ffcommon.FUint8T) {
  */
 //void av_aes_ctr_set_full_iv(struct AVAESCTR *a, const uint8_t* iv);
 func (a *AVAESCTR) AvAesCtrSetFullIv(iv *ffcommon.FUint8T) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_aes_ctr_set_full_iv").Call(
+	ffcommon.GetAvutilDll().NewProc("av_aes_ctr_set_full_iv").Call(
 		uintptr(unsafe.Pointer(a)),
 		uintptr(unsafe.Pointer(iv)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -169,13 +141,9 @@ func (a *AVAESCTR) AvAesCtrSetFullIv(iv *ffcommon.FUint8T) {
  */
 //void av_aes_ctr_increment_iv(struct AVAESCTR *a);
 func (a *AVAESCTR) AvAesCtrIncrementIv() {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_aes_ctr_increment_iv").Call(
+	ffcommon.GetAvutilDll().NewProc("av_aes_ctr_increment_iv").Call(
 		uintptr(unsafe.Pointer(a)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**

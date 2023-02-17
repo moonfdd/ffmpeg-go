@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -90,9 +91,6 @@ const AV_CPU_FLAG_MSA = (1 << 1)
 //int av_get_cpu_flags(void);
 func AvGetCpuFlags() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_get_cpu_flags").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -103,13 +101,9 @@ func AvGetCpuFlags() (res ffcommon.FInt) {
  */
 //void av_force_cpu_flags(int flags);
 func AvForceCpuFlags(flags ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_force_cpu_flags").Call(
+	ffcommon.GetAvutilDll().NewProc("av_force_cpu_flags").Call(
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -119,13 +113,9 @@ func AvForceCpuFlags(flags ffcommon.FInt) {
  */
 //attribute_deprecated void av_set_cpu_flags_mask(int mask);
 func AvSetCpuFlagsMask(mask ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_set_cpu_flags_mask").Call(
+	ffcommon.GetAvutilDll().NewProc("av_set_cpu_flags_mask").Call(
 		uintptr(mask),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -143,9 +133,6 @@ func AvParseCpuFlags(s ffcommon.FConstCharP) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_parse_cpu_flags").Call(
 		ffcommon.UintPtrFromString(s),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -161,9 +148,6 @@ func AvParseCpuCaps(flag *ffcommon.FUnsigned, s ffcommon.FConstCharP) (res ffcom
 		uintptr(unsafe.Pointer(flag)),
 		ffcommon.UintPtrFromString(s),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -174,9 +158,6 @@ func AvParseCpuCaps(flag *ffcommon.FUnsigned, s ffcommon.FConstCharP) (res ffcom
 //int av_cpu_count(void);
 func AvCpuCount() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_cpu_count").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -193,9 +174,6 @@ func AvCpuCount() (res ffcommon.FInt) {
 //size_t av_cpu_max_align(void);
 func AvCpuMaxAlign() (res ffcommon.FSizeT) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_cpu_max_align").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.FSizeT(t)
 	return
 }

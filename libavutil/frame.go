@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -50,7 +51,7 @@ import (
  * @{
  * AVFrame is an abstraction for reference-counted raw multimedia data.
  */
-type AVFrameSideDataType = int32
+type AVFrameSideDataType int32
 
 const (
 	/**
@@ -207,7 +208,7 @@ const (
 	AV_FRAME_DATA_FILM_GRAIN_PARAMS
 )
 
-type AVActiveFormatDescription = int32
+type AVActiveFormatDescription int32
 
 const (
 	AV_AFD_SAME         = 8
@@ -725,9 +726,6 @@ func (frame *AVFrame) AvFrameGetBestEffortTimestamp() (res ffcommon.FInt64T) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_get_best_effort_timestamp").Call(
 		uintptr(unsafe.Pointer(frame)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt64T(t)
 	return
 }
@@ -735,14 +733,10 @@ func (frame *AVFrame) AvFrameGetBestEffortTimestamp() (res ffcommon.FInt64T) {
 //attribute_deprecated
 //void    av_frame_set_best_effort_timestamp(AVFrame *frame, int64_t val);
 func (frame *AVFrame) av_frame_set_best_effort_timestamp(val ffcommon.FInt64T) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_set_best_effort_timestamp").Call(
+	ffcommon.GetAvutilDll().NewProc("av_frame_set_best_effort_timestamp").Call(
 		uintptr(unsafe.Pointer(frame)),
 		uintptr(val),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //attribute_deprecated
@@ -751,9 +745,6 @@ func (frame *AVFrame) AvFrameGetPktDuration() (res ffcommon.FInt64T) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_get_pkt_duration").Call(
 		uintptr(unsafe.Pointer(frame)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt64T(t)
 	return
 }
@@ -761,14 +752,10 @@ func (frame *AVFrame) AvFrameGetPktDuration() (res ffcommon.FInt64T) {
 //attribute_deprecated
 //void    av_frame_set_pkt_duration         (AVFrame *frame, int64_t val);
 func (frame *AVFrame) AvFrameSetPktDuration(val ffcommon.FInt64T) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_set_pkt_duration").Call(
+	ffcommon.GetAvutilDll().NewProc("av_frame_set_pkt_duration").Call(
 		uintptr(unsafe.Pointer(frame)),
 		uintptr(val),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //attribute_deprecated
@@ -777,9 +764,6 @@ func (frame *AVFrame) AvFrameGetPktPos() (res ffcommon.FInt64T) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_get_pkt_pos").Call(
 		uintptr(unsafe.Pointer(frame)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt64T(t)
 	return
 }
@@ -787,14 +771,10 @@ func (frame *AVFrame) AvFrameGetPktPos() (res ffcommon.FInt64T) {
 //attribute_deprecated
 //void    av_frame_set_pkt_pos              (AVFrame *frame, int64_t val);
 func (frame *AVFrame) AvFrameSetPktPos(val ffcommon.FInt64T) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_set_pkt_pos").Call(
+	ffcommon.GetAvutilDll().NewProc("av_frame_set_pkt_pos").Call(
 		uintptr(unsafe.Pointer(frame)),
 		uintptr(val),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //attribute_deprecated
@@ -803,217 +783,177 @@ func (frame *AVFrame) AvFrameGetChannelLayout() (res ffcommon.FInt64T) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_get_channel_layout").Call(
 		uintptr(unsafe.Pointer(frame)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt64T(t)
 	return
 }
 
 //attribute_deprecated
 //void    av_frame_set_channel_layout       (AVFrame *frame, int64_t val);
-//todo
-func av_frame_set_channel_layout() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_set_channel_layout").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (frame *AVFrame) AvFrameSetChannelLayout(val ffcommon.FInt64T) {
+	ffcommon.GetAvutilDll().NewProc("av_frame_set_channel_layout").Call(
+		uintptr(unsafe.Pointer(frame)),
+		uintptr(val),
+	)
 }
 
 //attribute_deprecated
 //int     av_frame_get_channels             (const AVFrame *frame);
-//todo
-func av_frame_get_channels() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_get_channels").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (frame *AVFrame) AvFrameGetChannels() (res ffcommon.FInt) {
+	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_get_channels").Call(
+		uintptr(unsafe.Pointer(frame)),
+	)
+	res = ffcommon.FInt(t)
 	return
 }
 
 //attribute_deprecated
 //void    av_frame_set_channels             (AVFrame *frame, int     val);
-//todo
-func av_frame_set_channels() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_set_channels").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (frame *AVFrame) AvFrameSetChannels(val ffcommon.FInt) {
+	ffcommon.GetAvutilDll().NewProc("av_frame_set_channels").Call(
+		uintptr(unsafe.Pointer(frame)),
+		uintptr(val),
+	)
 }
 
 //attribute_deprecated
 //int     av_frame_get_sample_rate          (const AVFrame *frame);
-//todo
-func av_frame_get_sample_rate() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_get_sample_rate").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (frame *AVFrame) AvFrameGetSampleRate() (res ffcommon.FInt) {
+	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_get_sample_rate").Call(
+		uintptr(unsafe.Pointer(frame)),
+	)
+	res = ffcommon.FInt(t)
 	return
 }
 
 //attribute_deprecated
 //void    av_frame_set_sample_rate          (AVFrame *frame, int     val);
-//todo
-func av_frame_set_sample_rate() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_set_sample_rate").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (frame *AVFrame) AvFrameSetSampleRate(val ffcommon.FInt) {
+	ffcommon.GetAvutilDll().NewProc("av_frame_set_sample_rate").Call(
+		uintptr(unsafe.Pointer(frame)),
+		uintptr(val),
+	)
 }
 
 //attribute_deprecated
 //AVDictionary *av_frame_get_metadata       (const AVFrame *frame);
-//todo
-func av_frame_get_metadata() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_get_metadata").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (frame *AVFrame) AvFrameGetMetadata() (res *AVDictionary) {
+	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_get_metadata").Call(
+		uintptr(unsafe.Pointer(frame)),
+	)
+	res = (*AVDictionary)(unsafe.Pointer(t))
 	return
 }
 
 //attribute_deprecated
 //void          av_frame_set_metadata       (AVFrame *frame, AVDictionary *val);
-//todo
-func av_frame_set_metadata() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_set_metadata").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (frame *AVFrame) AvFrameSetMetadata(val *AVDictionary) {
+	ffcommon.GetAvutilDll().NewProc("av_frame_set_metadata").Call(
+		uintptr(unsafe.Pointer(frame)),
+		uintptr(unsafe.Pointer(val)),
+	)
 }
 
 //attribute_deprecated
 //int     av_frame_get_decode_error_flags   (const AVFrame *frame);
-//todo
-func av_frame_get_decode_error_flags() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_get_decode_error_flags").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (frame *AVFrame) AvFrameGetDecodeErrorFlags() (res ffcommon.FInt) {
+	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_get_decode_error_flags").Call(
+		uintptr(unsafe.Pointer(frame)),
+	)
+	res = ffcommon.FInt(t)
 	return
 }
 
 //attribute_deprecated
 //void    av_frame_set_decode_error_flags   (AVFrame *frame, int     val);
-//todo
-func av_frame_set_decode_error_flags() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_set_decode_error_flags").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (frame *AVFrame) AvFrameSetDecodeErrorFlags(val ffcommon.FInt) {
+	ffcommon.GetAvutilDll().NewProc("av_frame_set_decode_error_flags").Call(
+		uintptr(unsafe.Pointer(frame)),
+		uintptr(val),
+	)
 }
 
 //attribute_deprecated
 //int     av_frame_get_pkt_size(const AVFrame *frame);
-//todo
-func av_frame_get_pkt_size() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_get_pkt_size").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (frame *AVFrame) AvFrameGetPktSize() (res ffcommon.FInt) {
+	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_get_pkt_size").Call(
+		uintptr(unsafe.Pointer(frame)),
+	)
+	res = ffcommon.FInt(t)
 	return
 }
 
 //attribute_deprecated
 //void    av_frame_set_pkt_size(AVFrame *frame, int val);
-//todo
-func av_frame_set_pkt_size() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_set_pkt_size").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (frame *AVFrame) AvFrameSetPktSize(val ffcommon.FInt) {
+	ffcommon.GetAvutilDll().NewProc("av_frame_set_pkt_size").Call(
+		uintptr(unsafe.Pointer(frame)),
+		uintptr(val),
+	)
 }
 
 //#if FF_API_FRAME_QP
 //attribute_deprecated
 //int8_t *av_frame_get_qp_table(AVFrame *f, int *stride, int *type);
-//todo
-func av_frame_get_qp_table() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_get_qp_table").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (f *AVFrame) AvFrameGetQpTable(stride, type0 *ffcommon.FInt) (res *ffcommon.FInt8T) {
+	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_get_qp_table").Call(
+		uintptr(unsafe.Pointer(f)),
+		uintptr(unsafe.Pointer(stride)),
+		uintptr(unsafe.Pointer(type0)),
+	)
+	res = (*ffcommon.FInt8T)(unsafe.Pointer(t))
 	return
 }
 
 //attribute_deprecated
 //int av_frame_set_qp_table(AVFrame *f, AVBufferRef *buf, int stride, int type);
-//todo
-func av_frame_set_qp_table() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_set_qp_table").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (f *AVFrame) AvFrameSetQpTable(buf *AVBufferRef, stride, type0 ffcommon.FInt) (res *ffcommon.FInt8T) {
+	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_set_qp_table").Call(
+		uintptr(unsafe.Pointer(f)),
+		uintptr(unsafe.Pointer(buf)),
+		uintptr(stride),
+		uintptr(type0),
+	)
+	res = (*ffcommon.FInt8T)(unsafe.Pointer(t))
 	return
 }
 
 //#endif
 //attribute_deprecated
 //enum AVColorSpace av_frame_get_colorspace(const AVFrame *frame);
-//todo
-func av_frame_get_colorspace() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_get_colorspace").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (frame *AVFrame) AvFrameGetColorspace() (res AVColorSpace) {
+	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_get_colorspace").Call(
+		uintptr(unsafe.Pointer(frame)),
+	)
+	res = AVColorSpace(t)
 	return
 }
 
 //attribute_deprecated
 //void    av_frame_set_colorspace(AVFrame *frame, enum AVColorSpace val);
-//todo
-func av_frame_set_colorspace() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_set_colorspace").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (frame *AVFrame) AvFrameSetColorspace(val AVColorSpace) {
+	ffcommon.GetAvutilDll().NewProc("av_frame_set_colorspace").Call(
+		uintptr(unsafe.Pointer(frame)),
+		uintptr(val),
+	)
 }
 
 //attribute_deprecated
 //enum AVColorRange av_frame_get_color_range(const AVFrame *frame);
-//todo
-func av_frame_get_color_range() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_get_color_range").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (frame *AVFrame) AvFrameGetColorRange() (res AVColorRange) {
+	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_get_color_range").Call(
+		uintptr(unsafe.Pointer(frame)),
+	)
+	res = AVColorRange(t)
 	return
 }
 
 //attribute_deprecated
 //void    av_frame_set_color_range(AVFrame *frame, enum AVColorRange val);
-//todo
-func av_frame_set_color_range() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_set_color_range").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (frame *AVFrame) AvFrameSetColorRange(val AVColorSpace) {
+	ffcommon.GetAvutilDll().NewProc("av_frame_set_color_range").Call(
+		uintptr(unsafe.Pointer(frame)),
+		uintptr(val),
+	)
 }
 
 //#endif
@@ -1027,9 +967,6 @@ func AvGetColorspaceName(val AVColorSpace) (res ffcommon.FCharP) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_get_colorspace_name").Call(
 		uintptr(val),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -1047,9 +984,6 @@ func AvGetColorspaceName(val AVColorSpace) (res ffcommon.FCharP) {
 //AVFrame *av_frame_alloc(void);
 func AvFrameAlloc() (res *AVFrame) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*AVFrame)(unsafe.Pointer(t))
 	return
 }
@@ -1063,13 +997,9 @@ func AvFrameAlloc() (res *AVFrame) {
  */
 //void av_frame_free(AVFrame **frame);
 func AvFrameFree(frame **AVFrame) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_free").Call(
+	ffcommon.GetAvutilDll().NewProc("av_frame_free").Call(
 		uintptr(unsafe.Pointer(frame)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -1093,9 +1023,6 @@ func AvFrameRef(dst, src *AVFrame) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(src)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1112,9 +1039,6 @@ func (src *AVFrame) AvFrameClone() (res *AVFrame) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_clone").Call(
 		uintptr(unsafe.Pointer(src)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVFrame)(unsafe.Pointer(t))
 	return
 }
@@ -1124,13 +1048,9 @@ func (src *AVFrame) AvFrameClone() (res *AVFrame) {
  */
 //void av_frame_unref(AVFrame *frame);
 func (src *AVFrame) AvFrameUnref() {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_unref").Call(
+	ffcommon.GetAvutilDll().NewProc("av_frame_unref").Call(
 		uintptr(unsafe.Pointer(src)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -1146,9 +1066,6 @@ func AvFrameMoveRef(dst, src *AVFrame) (res ffcommon.FCharP) {
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(src)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -1182,9 +1099,6 @@ func (frame *AVFrame) AvFrameGetBuffer(align ffcommon.FInt) (res ffcommon.FInt) 
 		uintptr(unsafe.Pointer(frame)),
 		uintptr(align),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1206,9 +1120,6 @@ func (frame *AVFrame) AvFrameIsWritable() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_is_writable").Call(
 		uintptr(unsafe.Pointer(frame)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1229,9 +1140,6 @@ func (frame *AVFrame) AvFrameMakeWritable() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_make_writable").Call(
 		uintptr(unsafe.Pointer(frame)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1253,9 +1161,6 @@ func AvFrameCopy(dst, src *AVFrame) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(src)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1274,9 +1179,6 @@ func AvFrameCopyProps(dst, src *AVFrame) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(src)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1295,9 +1197,6 @@ func (frame *AVFrame) AvFrameGetPlaneBuffer(plane ffcommon.FInt) (res *AVBufferR
 		uintptr(unsafe.Pointer(frame)),
 		uintptr(plane),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVBufferRef)(unsafe.Pointer(t))
 	return
 }
@@ -1324,9 +1223,6 @@ func (frame *AVFrame) AvFrameNewSideData(type0 AVFrameSideDataType, size ffcommo
 		uintptr(type0),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVFrameSideData)(unsafe.Pointer(t))
 	return
 }
@@ -1352,9 +1248,6 @@ func (frame *AVFrame) AvFrameNewSideDataFromBuf(type0 AVFrameSideDataType, buf *
 		uintptr(type0),
 		uintptr(unsafe.Pointer(buf)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVFrameSideData)(unsafe.Pointer(t))
 	return
 }
@@ -1370,9 +1263,6 @@ func (frame *AVFrame) AvFrameGetSideData(type0 AVFrameSideDataType) (res *AVFram
 		uintptr(unsafe.Pointer(frame)),
 		uintptr(type0),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVFrameSideData)(unsafe.Pointer(t))
 	return
 }
@@ -1382,14 +1272,10 @@ func (frame *AVFrame) AvFrameGetSideData(type0 AVFrameSideDataType) (res *AVFram
  */
 //void av_frame_remove_side_data(AVFrame *frame, enum AVFrameSideDataType type);
 func (frame *AVFrame) AvFrameRemoveSideData(type0 AVFrameSideDataType) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_remove_side_data").Call(
+	ffcommon.GetAvutilDll().NewProc("av_frame_remove_side_data").Call(
 		uintptr(unsafe.Pointer(frame)),
 		uintptr(type0),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -1430,9 +1316,6 @@ func (frame *AVFrame) AvFrameApplyCropping(flags ffcommon.FInt) (res ffcommon.FI
 		uintptr(unsafe.Pointer(frame)),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1445,9 +1328,6 @@ func AvFrameSideDataName(type0 AVFrameSideDataType) (res ffcommon.FCharP) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_frame_side_data_name").Call(
 		uintptr(type0),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }

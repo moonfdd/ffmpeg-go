@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -44,14 +45,10 @@ type AVLFG struct {
 
 //void av_lfg_init(AVLFG *c, unsigned int seed);
 func (c *AVLFG) AvLfgInit(seed ffcommon.FUnsignedInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_lfg_init").Call(
+	ffcommon.GetAvutilDll().NewProc("av_lfg_init").Call(
 		uintptr(unsafe.Pointer(c)),
 		uintptr(seed),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -66,9 +63,6 @@ func (c *AVLFG) AvLfgInitFromData(data *ffcommon.FUint8T, length ffcommon.FUnsig
 		uintptr(unsafe.Pointer(data)),
 		uintptr(length),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -121,14 +115,10 @@ func (c *AVLFG) AvMlfgGet() (res ffcommon.FUnsignedInt) {
  */
 //void av_bmg_get(AVLFG *lfg, double out[2]);
 func (lfg *AVLFG) AvBmgGet(out [2]ffcommon.FDouble) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_bmg_get").Call(
+	ffcommon.GetAvutilDll().NewProc("av_bmg_get").Call(
 		uintptr(unsafe.Pointer(lfg)),
 		uintptr(unsafe.Pointer(&out)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //#endif /* AVUTIL_LFG_H */

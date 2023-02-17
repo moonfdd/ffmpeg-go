@@ -1,8 +1,9 @@
 package libavcodec
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -60,7 +61,7 @@ const MAX_DWT_LEVELS = 5
  * VC-2 Specification  ->
  * 10.4.1 Table 10.1
  */
-type DiracParseCodes = int32
+type DiracParseCodes int32
 
 const (
 	DIRAC_PCODE_SEQ_HEADER      = 0x00
@@ -144,9 +145,6 @@ func AvDiracParseSequenceHeader(dsh **AVDiracSeqHeader,
 		uintptr(buf_size),
 		log_ctx,
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }

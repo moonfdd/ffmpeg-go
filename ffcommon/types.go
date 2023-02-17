@@ -41,9 +41,9 @@ type FFTSample = float32
 
 type FIntOrSizeT = int32
 
-type FCharPStruct = *byte
+type FCharPStruct = uintptr
 type FChar = byte
-type FUnsignedCharPStruct = *byte
+type FUnsignedCharPStruct = uintptr
 type FIntOrInt64 = int32
 
 type FUnsignedIntOrSizeT = int32

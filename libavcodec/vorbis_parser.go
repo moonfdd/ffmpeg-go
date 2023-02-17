@@ -1,6 +1,10 @@
 package libavcodec
 
-import "github.com/moonfdd/ffmpeg-go/ffcommon"
+import (
+	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
+)
 
 /*
  * This file is part of FFmpeg.
@@ -41,13 +45,12 @@ type AVVorbisParseContext struct {
  */
 //AVVorbisParseContext *av_vorbis_parse_init(const uint8_t *extradata,
 //                                           int extradata_size);
-//todo
-func av_vorbis_parse_init() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_vorbis_parse_init").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func AvVorbisParseInit(extradata *ffcommon.FUint8T, extradata_size ffcommon.FInt) (res *AVVorbisParseContext) {
+	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_vorbis_parse_init").Call(
+		uintptr(unsafe.Pointer(extradata)),
+		uintptr(extradata_size),
+	)
+	res = (*AVVorbisParseContext)(unsafe.Pointer(t))
 	return
 }
 
@@ -55,14 +58,10 @@ func av_vorbis_parse_init() (res ffcommon.FCharP) {
  * Free the parser and everything associated with it.
  */
 //void av_vorbis_parse_free(AVVorbisParseContext **s);
-//todo
-func av_vorbis_parse_free() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_vorbis_parse_free").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func AvVorbisParseFree(s **AVVorbisParseContext) {
+	ffcommon.GetAvcodecDll().NewProc("av_vorbis_parse_free").Call(
+		uintptr(unsafe.Pointer(s)),
+	)
 }
 
 const VORBIS_FLAG_HEADER = 0x00000001
@@ -82,13 +81,14 @@ const VORBIS_FLAG_SETUP = 0x00000004
  */
 //int av_vorbis_parse_frame_flags(AVVorbisParseContext *s, const uint8_t *buf,
 //                                int buf_size, int *flags);
-//todo
-func av_vorbis_parse_frame_flags() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_vorbis_parse_frame_flags").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (s *AVVorbisParseContext) AvVorbisParseFrameFlags(buf *ffcommon.FUint8T, buf_size ffcommon.FInt, flags *ffcommon.FInt) (res ffcommon.FInt) {
+	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_vorbis_parse_frame_flags").Call(
+		uintptr(unsafe.Pointer(s)),
+		uintptr(unsafe.Pointer(buf)),
+		uintptr(buf_size),
+		uintptr(unsafe.Pointer(flags)),
+	)
+	res = ffcommon.FInt(t)
 	return
 }
 
@@ -101,25 +101,21 @@ func av_vorbis_parse_frame_flags() (res ffcommon.FCharP) {
  */
 //int av_vorbis_parse_frame(AVVorbisParseContext *s, const uint8_t *buf,
 //                          int buf_size);
-//todo
-func av_vorbis_parse_frame() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_vorbis_parse_frame").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (s *AVVorbisParseContext) AvVorbisParseFrame(buf *ffcommon.FUint8T, buf_size ffcommon.FInt) (res ffcommon.FInt) {
+	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_vorbis_parse_frame").Call(
+		uintptr(unsafe.Pointer(s)),
+		uintptr(unsafe.Pointer(buf)),
+		uintptr(buf_size),
+	)
+	res = ffcommon.FInt(t)
 	return
 }
 
 //void av_vorbis_parse_reset(AVVorbisParseContext *s);
-//todo
-func av_vorbis_parse_reset() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_vorbis_parse_reset").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (s *AVVorbisParseContext) AvVorbisParseReset() {
+	ffcommon.GetAvcodecDll().NewProc("av_vorbis_parse_reset").Call(
+		uintptr(unsafe.Pointer(s)),
+	)
 }
 
 //#endif /* AVCODEC_VORBIS_PARSER_H */

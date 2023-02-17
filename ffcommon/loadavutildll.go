@@ -2,147 +2,140 @@ package ffcommon
 
 import (
 	"sync"
-	"syscall"
+
+	"github.com/ying32/dylib"
 )
 
-var avUtilDll *syscall.LazyDLL
+var avUtilDll *dylib.LazyDLL
 var avUtilDllOnce sync.Once
 
-func GetAvutilDll() (ans *syscall.LazyDLL) {
+func GetAvutilDll() (ans *dylib.LazyDLL) {
 	avUtilDllOnce.Do(func() {
-		avUtilDll = syscall.NewLazyDLL(avutilPath)
+		avUtilDll = dylib.NewLazyDLL(avutilPath)
 	})
 	ans = avUtilDll
 	return
 }
 
-//F:/BaiduNetdiskDownload/ffmpeg-4.4-full_build-shared/bin/avutil-56.dll
 var avutilPath = "avutil-56.dll"
 
 func SetAvutilPath(path0 string) {
 	avutilPath = path0
 }
 
-var avcodecDll *syscall.LazyDLL
+var avcodecDll *dylib.LazyDLL
 var avcodecDllOnce sync.Once
 
-func GetAvcodecDll() (ans *syscall.LazyDLL) {
+func GetAvcodecDll() (ans *dylib.LazyDLL) {
 	avcodecDllOnce.Do(func() {
-		avcodecDll = syscall.NewLazyDLL(avcodecPath)
+		avcodecDll = dylib.NewLazyDLL(avcodecPath)
 	})
 	ans = avcodecDll
 	return
 }
 
-//F:/BaiduNetdiskDownload/ffmpeg-4.4-full_build-shared/bin/avcodec-56.dll
 var avcodecPath = "avcodec-56.dll"
 
 func SetAvcodecPath(path0 string) {
 	avcodecPath = path0
 }
 
-var avdeviceDll *syscall.LazyDLL
+var avdeviceDll *dylib.LazyDLL
 var avdeviceDllOnce sync.Once
 
-func GetAvdeviceDll() (ans *syscall.LazyDLL) {
+func GetAvdeviceDll() (ans *dylib.LazyDLL) {
 	avdeviceDllOnce.Do(func() {
-		avdeviceDll = syscall.NewLazyDLL(avdevicePath)
+		avdeviceDll = dylib.NewLazyDLL(avdevicePath)
 	})
 	ans = avdeviceDll
 	return
 }
 
-//F:/BaiduNetdiskDownload/ffmpeg-4.4-full_build-shared/bin/avdevice-56.dll
 var avdevicePath = "avdevice-56.dll"
 
 func SetAvdevicePath(path0 string) {
 	avdevicePath = path0
 }
 
-var avfilterDll *syscall.LazyDLL
+var avfilterDll *dylib.LazyDLL
 var avfilterDllOnce sync.Once
 
-func GetAvfilterDll() (ans *syscall.LazyDLL) {
+func GetAvfilterDll() (ans *dylib.LazyDLL) {
 	avfilterDllOnce.Do(func() {
-		avfilterDll = syscall.NewLazyDLL(avfilterPath)
+		avfilterDll = dylib.NewLazyDLL(avfilterPath)
 	})
 	ans = avfilterDll
 	return
 }
 
-//F:/BaiduNetdiskDownload/ffmpeg-4.4-full_build-shared/bin/avfilter-56.dll
 var avfilterPath = "avfilter-56.dll"
 
 func SetAvfilterPath(path0 string) {
 	avfilterPath = path0
 }
 
-var avformatDll *syscall.LazyDLL
+var avformatDll *dylib.LazyDLL
 var avformatDllOnce sync.Once
 
-func GetAvformatDll() (ans *syscall.LazyDLL) {
+func GetAvformatDll() (ans *dylib.LazyDLL) {
 	avformatDllOnce.Do(func() {
-		avformatDll = syscall.NewLazyDLL(avformatPath)
+		avformatDll = dylib.NewLazyDLL(avformatPath)
 	})
 	ans = avformatDll
 	return
 }
 
-//F:/BaiduNetdiskDownload/ffmpeg-4.4-full_build-shared/bin/avformat-56.dll
-var avformatPath = "avformat-56.dll"
+var avformatPath = "avformat-58.dll"
 
 func SetAvformatPath(path0 string) {
 	avformatPath = path0
 }
 
-var avpostprocDll *syscall.LazyDLL
+var avpostprocDll *dylib.LazyDLL
 var avpostprocDllOnce sync.Once
 
-func GetAvpostprocDll() (ans *syscall.LazyDLL) {
+func GetAvpostprocDll() (ans *dylib.LazyDLL) {
 	avpostprocDllOnce.Do(func() {
-		avpostprocDll = syscall.NewLazyDLL(avpostprocPath)
+		avpostprocDll = dylib.NewLazyDLL(avpostprocPath)
 	})
 	ans = avpostprocDll
 	return
 }
 
-//F:/BaiduNetdiskDownload/ffmpeg-4.4-full_build-shared/bin/postproc-55.dll
 var avpostprocPath = "postproc-55.dll"
 
 func SetAvpostprocPath(path0 string) {
 	avpostprocPath = path0
 }
 
-var avswresampleDll *syscall.LazyDLL
+var avswresampleDll *dylib.LazyDLL
 var avswresampleDllOnce sync.Once
 
-func GetAvswresampleDll() (ans *syscall.LazyDLL) {
+func GetAvswresampleDll() (ans *dylib.LazyDLL) {
 	avswresampleDllOnce.Do(func() {
-		avswresampleDll = syscall.NewLazyDLL(avswresamplePath)
+		avswresampleDll = dylib.NewLazyDLL(avswresamplePath)
 	})
 	ans = avswresampleDll
 	return
 }
 
-//F:/BaiduNetdiskDownload/ffmpeg-4.4-full_build-shared/bin/swresample-3.dll
 var avswresamplePath = "swresample-3.dll"
 
 func SetAvswresamplePath(path0 string) {
 	avswresamplePath = path0
 }
 
-var avswscaleDll *syscall.LazyDLL
+var avswscaleDll *dylib.LazyDLL
 var avswscaleDllOnce sync.Once
 
-func GetAvswscaleDll() (ans *syscall.LazyDLL) {
+func GetAvswscaleDll() (ans *dylib.LazyDLL) {
 	avswscaleDllOnce.Do(func() {
-		avswscaleDll = syscall.NewLazyDLL(avswscalePath)
+		avswscaleDll = dylib.NewLazyDLL(avswscalePath)
 	})
 	ans = avswscaleDll
 	return
 }
 
-//F:/BaiduNetdiskDownload/ffmpeg-4.4-full_build-shared/bin/swscale-5.dll
 var avswscalePath = "swscale-5.dll"
 
 func SetAvswscalePath(path0 string) {

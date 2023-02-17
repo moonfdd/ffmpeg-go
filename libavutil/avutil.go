@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -233,7 +234,7 @@ func AvutilLicense() (res ffcommon.FCharP) {
  * @addtogroup lavu_media Media Type
  * @brief Media Type
  */
-type AVMediaType = int32
+type AVMediaType int32
 
 const (
 	AVMEDIA_TYPE_UNKNOWN = iota - 1 ///< Usually treated as AVMEDIA_TYPE_DATA
@@ -254,9 +255,6 @@ func AvGetMediaTypeString(media_type AVMediaType) (res ffcommon.FCharP) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_get_media_type_string").Call(
 		uintptr(media_type),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -320,7 +318,7 @@ var AV_TIME_BASE_Q = AVRational{Num: 1, Den: AV_TIME_BASE}
  *
  * @{
  */
-type AVPictureType = int32
+type AVPictureType int32
 
 const (
 	AV_PICTURE_TYPE_NONE = iota ///< Undefined
@@ -345,9 +343,6 @@ func AvGetPictureTypeChar(pict_type AVPictureType) (res ffcommon.FChar) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_get_picture_type_char").Call(
 		uintptr(pict_type),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FChar(t)
 	return
 }
@@ -397,9 +392,6 @@ func AvIntListLengthForSize(elsize ffcommon.FUnsigned, list0 ffcommon.FConstVoid
 		list0,
 		uintptr(term),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FUnsigned(t)
 	return
 }
@@ -414,14 +406,14 @@ func AvIntListLengthForSize(elsize ffcommon.FUnsigned, list0 ffcommon.FConstVoid
 //#define av_int_list_length(list, term) \
 //av_int_list_length_for_size(sizeof(*(list)), list, term)
 //todo
-func av_int_list_length() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_int_list_length").Call()
-	if t == 0 {
+// func av_int_list_length() (res ffcommon.FCharP) {
+// 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_int_list_length").Call()
+// 	if t == 0 {
 
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
-}
+// 	}
+// 	res = ffcommon.StringFromPtr(t)
+// 	return
+// }
 
 /**
  * Open a file using a UTF-8 filename.
@@ -434,9 +426,6 @@ func AvFopenUtf8(path0, mode ffcommon.FConstCharP) (res ffcommon.FFileP) {
 		ffcommon.UintPtrFromString(path0),
 		ffcommon.UintPtrFromString(mode),
 	)
-	if t == 0 {
-
-	}
 	res = t
 	return
 }
@@ -447,9 +436,6 @@ func AvFopenUtf8(path0, mode ffcommon.FConstCharP) (res ffcommon.FFileP) {
 //AVRational av_get_time_base_q(void);
 func AvGetTimeBaseQ() (res AVRational) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_get_time_base_q").Call()
-	if t == 0 {
-
-	}
 	res = *(*AVRational)(unsafe.Pointer(&t))
 	return
 }
@@ -458,14 +444,14 @@ const AV_FOURCC_MAX_STRING_SIZE = 32
 
 //#define av_fourcc2str(fourcc) av_fourcc_make_string((char[AV_FOURCC_MAX_STRING_SIZE]){0}, fourcc)
 //todo
-func av_fourcc2str() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_fourcc2str").Call()
-	if t == 0 {
+// func av_fourcc2str() (res ffcommon.FCharP) {
+// 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_fourcc2str").Call()
+// 	if t == 0 {
 
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
-}
+// 	}
+// 	res = ffcommon.StringFromPtr(t)
+// 	return
+// }
 
 /**
  * Fill the provided buffer with a string containing a FourCC (four-character
@@ -481,8 +467,6 @@ func AvFourccMakeString(buf ffcommon.FCharP, fourcc ffcommon.FUint32T) (res ffco
 		ffcommon.UintPtrFromString(buf),
 		uintptr(fourcc),
 	)
-	if t == 0 {
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }

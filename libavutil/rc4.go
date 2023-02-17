@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -47,9 +48,6 @@ type AVRC4 struct {
 //AVRC4 *av_rc4_alloc(void);
 func AvRc4Alloc() (res *AVRC4) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_rc4_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*AVRC4)(unsafe.Pointer(t))
 	return
 }
@@ -69,9 +67,6 @@ func (d *AVRC4) AvRc4Init(key *ffcommon.FUint8T, key_bits, decrypt ffcommon.FInt
 		uintptr(key_bits),
 		uintptr(decrypt),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -87,7 +82,7 @@ func (d *AVRC4) AvRc4Init(key *ffcommon.FUint8T, key_bits, decrypt ffcommon.FInt
  */
 //void av_rc4_crypt(struct AVRC4 *d, uint8_t *dst, const uint8_t *src, int count, uint8_t *iv, int decrypt);
 func (d *AVRC4) AvRc4Crypt(dst, src *ffcommon.FUint8T, count ffcommon.FInt, iv *ffcommon.FUint8T, decrypt ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_rc4_crypt").Call(
+	ffcommon.GetAvutilDll().NewProc("av_rc4_crypt").Call(
 		uintptr(unsafe.Pointer(d)),
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(src)),
@@ -95,10 +90,6 @@ func (d *AVRC4) AvRc4Crypt(dst, src *ffcommon.FUint8T, count ffcommon.FInt, iv *
 		uintptr(unsafe.Pointer(iv)),
 		uintptr(decrypt),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**

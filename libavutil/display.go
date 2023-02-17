@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -93,14 +94,11 @@ import (
  *       recommended to round the return value to nearest integer before use.
  */
 //double av_display_rotation_get(const int32_t matrix[9]);
-func AvDisplayRotationGet(matrix [9]ffcommon.FInt32T) (res ffcommon.FDouble) {
+func AvDisplayRotationGet(matrix *[9]ffcommon.FInt32T) (res ffcommon.FDouble) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_display_rotation_get").Call(
-		uintptr(unsafe.Pointer(&matrix)),
+		uintptr(unsafe.Pointer(matrix)),
 	)
-	if t == 0 {
-
-	}
-	res = ffcommon.FDouble(t)
+	res = *(*ffcommon.FDouble)(unsafe.Pointer(t))
 	return
 }
 
@@ -113,15 +111,11 @@ func AvDisplayRotationGet(matrix [9]ffcommon.FInt32T) (res ffcommon.FDouble) {
  * @param angle rotation angle in degrees.
  */
 //void av_display_rotation_set(int32_t matrix[9], double angle);
-func AvDisplayRotationSet(matrix [9]ffcommon.FInt32T, angle ffcommon.FDouble) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_display_rotation_set").Call(
-		uintptr(unsafe.Pointer(&matrix)),
+func AvDisplayRotationSet(matrix *[9]ffcommon.FInt32T, angle ffcommon.FDouble) {
+	ffcommon.GetAvutilDll().NewProc("av_display_rotation_set").Call(
+		uintptr(unsafe.Pointer(matrix)),
 		uintptr(angle),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -132,16 +126,12 @@ func AvDisplayRotationSet(matrix [9]ffcommon.FInt32T, angle ffcommon.FDouble) {
  * @param vflip whether the matrix should be flipped vertically
  */
 //void av_display_matrix_flip(int32_t matrix[9], int hflip, int vflip);
-func AvDisplayMatrixFlip(matrix [9]ffcommon.FInt32T, hflip, vflip ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_display_matrix_flip").Call(
-		uintptr(unsafe.Pointer(&matrix)),
+func AvDisplayMatrixFlip(matrix *[9]ffcommon.FInt32T, hflip, vflip ffcommon.FInt) {
+	ffcommon.GetAvutilDll().NewProc("av_display_matrix_flip").Call(
+		uintptr(unsafe.Pointer(matrix)),
 		uintptr(hflip),
 		uintptr(vflip),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**

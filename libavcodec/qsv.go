@@ -1,8 +1,9 @@
 package libavcodec
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -47,18 +48,18 @@ type AVQSVContext struct {
 	 * Otherwise, libavcodec will try to create an internal session.
 	 */
 	//mfxSession session;
-	session uintptr
+	Session uintptr
 	/**
 	 * The IO pattern to use.
 	 */
-	iopattern ffcommon.FInt
+	Iopattern ffcommon.FInt
 
 	/**
 	 * Extra buffers to pass to encoder or decoder initialization.
 	 */
 	//mfxExtBuffer **ext_buffers;
-	ext_buffers    *uintptr
-	nb_ext_buffers ffcommon.FInt
+	ExtBuffers   *uintptr
+	NbExtBuffers ffcommon.FInt
 
 	/**
 	 * Encoding only. If this field is set to non-zero by the caller, libavcodec
@@ -71,7 +72,7 @@ type AVQSVContext struct {
 	 * The array of the opaque surfaces will be exported to the caller through
 	 * the opaque_surfaces field.
 	 */
-	opaque_alloc ffcommon.FInt
+	OpaqueAlloc ffcommon.FInt
 
 	/**
 	 * Encoding only, and only if opaque_alloc is set to non-zero. Before
@@ -82,7 +83,7 @@ type AVQSVContext struct {
 	 * On return from avcodec_open2(), this field will be set by libavcodec to
 	 * the total number of allocated opaque surfaces.
 	 */
-	nb_opaque_surfaces ffcommon.FInt
+	NbOpaqueSurfaces ffcommon.FInt
 
 	/**
 	 * Encoding only, and only if opaque_alloc is set to non-zero. On return
@@ -96,14 +97,14 @@ type AVQSVContext struct {
 	 *
 	 * The buffer data is an nb_opaque_surfaces-sized array of mfxFrameSurface1.
 	 */
-	opaque_surfaces *AVBufferRef
+	OpaqueSurfaces *AVBufferRef
 
 	/**
 	 * Encoding only, and only if opaque_alloc is set to non-zero. On return
 	 * from avcodec_open2(), this field will be set to the surface type used in
 	 * the opaque allocation request.
 	 */
-	opaque_alloc_type ffcommon.FInt
+	OpaqueAllocType ffcommon.FInt
 }
 
 /**
@@ -114,9 +115,6 @@ type AVQSVContext struct {
 //AVQSVContext *av_qsv_alloc_context(void);
 func AvQsvAllocContext() (res *AVQSVContext) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_qsv_alloc_context").Call()
-	if t == 0 {
-
-	}
 	res = (*AVQSVContext)(unsafe.Pointer(t))
 	return
 }

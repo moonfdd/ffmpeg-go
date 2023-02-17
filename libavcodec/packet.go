@@ -1,9 +1,10 @@
 package libavcodec
 
 import (
+	"unsafe"
+
 	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"github.com/moonfdd/ffmpeg-go/libavutil"
-	"unsafe"
 )
 
 /*
@@ -45,7 +46,7 @@ import (
  * Types and functions for working with AVPacket.
  * @{
  */
-type AVPacketSideDataType = int32
+type AVPacketSideDataType int32
 
 const (
 	/**
@@ -468,9 +469,6 @@ const (
 //AVPacket *av_packet_alloc(void);
 func AvPacketAlloc() (res *AVPacket) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_packet_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*AVPacket)(unsafe.Pointer(t))
 	return
 }
@@ -490,9 +488,6 @@ func (src *AVPacket) AvPacketClone() (res *AVPacket) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_packet_clone").Call(
 		uintptr(unsafe.Pointer(src)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVPacket)(unsafe.Pointer(t))
 	return
 }
@@ -506,13 +501,9 @@ func (src *AVPacket) AvPacketClone() (res *AVPacket) {
  */
 //void av_packet_free(AVPacket **pkt);
 func AvPacketFree(pkt **AVPacket) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_packet_free").Call(
+	ffcommon.GetAvcodecDll().NewProc("av_packet_free").Call(
 		uintptr(unsafe.Pointer(pkt)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //#if FF_API_INIT_PACKET
@@ -532,14 +523,10 @@ func AvPacketFree(pkt **AVPacket) {
 */
 //attribute_deprecated
 //void av_init_packet(AVPacket *pkt);
-//todo
-func av_init_packet() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_init_packet").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (pkt *AVPacket) AvInitPacket() {
+	ffcommon.GetAvcodecDll().NewProc("av_init_packet").Call(
+		uintptr(unsafe.Pointer(pkt)),
+	)
 }
 
 //#endif
@@ -558,9 +545,6 @@ func (pkt *AVPacket) AvNewPacket(size ffcommon.FInt) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(pkt)),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -573,14 +557,10 @@ func (pkt *AVPacket) AvNewPacket(size ffcommon.FInt) (res ffcommon.FInt) {
  */
 //void av_shrink_packet(AVPacket *pkt, int size);
 func (pkt *AVPacket) AvShrinkPacket(size ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_shrink_packet").Call(
+	ffcommon.GetAvcodecDll().NewProc("av_shrink_packet").Call(
 		uintptr(unsafe.Pointer(pkt)),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -595,9 +575,6 @@ func (pkt *AVPacket) AvGrowPacket(size ffcommon.FInt) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(pkt)),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -622,9 +599,6 @@ func (pkt *AVPacket) AvPacketFromData(data *ffcommon.FUint8T, size ffcommon.FInt
 		uintptr(unsafe.Pointer(data)),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -638,13 +612,11 @@ func (pkt *AVPacket) AvPacketFromData(data *ffcommon.FUint8T, size ffcommon.FInt
  */
 //attribute_deprecated
 //int av_dup_packet(AVPacket *pkt);
-//todo
-func av_dup_packet() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_dup_packet").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (pkt *AVPacket) AvDupPacket() (res ffcommon.FInt) {
+	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_dup_packet").Call(
+		uintptr(unsafe.Pointer(pkt)),
+	)
+	res = ffcommon.FInt(t)
 	return
 }
 
@@ -657,13 +629,12 @@ func av_dup_packet() (res ffcommon.FCharP) {
  */
 //attribute_deprecated
 //int av_copy_packet(AVPacket *dst, const AVPacket *src);
-//todo
-func av_copy_packet() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_copy_packet").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (dst *AVPacket) AvCopyPacket(src *AVPacket) (res ffcommon.FInt) {
+	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_copy_packet").Call(
+		uintptr(unsafe.Pointer(dst)),
+		uintptr(unsafe.Pointer(src)),
+	)
+	res = ffcommon.FInt(t)
 	return
 }
 
@@ -676,13 +647,12 @@ func av_copy_packet() (res ffcommon.FCharP) {
  */
 //attribute_deprecated
 //int av_copy_packet_side_data(AVPacket *dst, const AVPacket *src);
-//todo
-func av_copy_packet_side_data() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_copy_packet_side_data").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (dst *AVPacket) AvCopyPacketSideData(src *AVPacket) (res ffcommon.FInt) {
+	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_copy_packet_side_data").Call(
+		uintptr(unsafe.Pointer(dst)),
+		uintptr(unsafe.Pointer(src)),
+	)
+	res = ffcommon.FInt(t)
 	return
 }
 
@@ -695,14 +665,10 @@ func av_copy_packet_side_data() (res ffcommon.FCharP) {
  */
 //attribute_deprecated
 //void av_free_packet(AVPacket *pkt);
-//todo
-func av_free_packet() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_free_packet").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (pkt *AVPacket) AvFreePacket() {
+	ffcommon.GetAvcodecDll().NewProc("av_free_packet").Call(
+		uintptr(unsafe.Pointer(pkt)),
+	)
 }
 
 //#endif
@@ -726,9 +692,6 @@ func (pkt *AVPacket) AvPacketNewSideData(type0 AVPacketSideDataType, size ffcomm
 		uintptr(type0),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -755,9 +718,6 @@ func (pkt *AVPacket) AvPacketAddSideData(type0 AVPacketSideDataType, data *ffcom
 		uintptr(unsafe.Pointer(data)),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -783,9 +743,6 @@ func (pkt *AVPacket) AvPacketShrinkSideData(type0 AVPacketSideDataType, data *ff
 		uintptr(unsafe.Pointer(data)),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -811,9 +768,6 @@ func (pkt *AVPacket) AvPacketGetSideData(type0 AVPacketSideDataType, data *ffcom
 		uintptr(unsafe.Pointer(data)),
 		uintptr(unsafe.Pointer(size)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -823,25 +777,21 @@ func (pkt *AVPacket) AvPacketGetSideData(type0 AVPacketSideDataType, data *ffcom
 //#if FF_API_MERGE_SD_API
 //attribute_deprecated
 //int av_packet_merge_side_data(AVPacket *pkt);
-//todo
-func av_packet_merge_side_data() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_packet_merge_side_data").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (pkt *AVPacket) AvPacketMergeSideData() (res ffcommon.FInt) {
+	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_packet_merge_side_data").Call(
+		uintptr(unsafe.Pointer(pkt)),
+	)
+	res = ffcommon.FInt(t)
 	return
 }
 
 //attribute_deprecated
 //int av_packet_split_side_data(AVPacket *pkt);
-//todo
-func av_packet_split_side_data() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_packet_split_side_data").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (pkt *AVPacket) AvPacketSplitSideData() (res ffcommon.FInt) {
+	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_packet_split_side_data").Call(
+		uintptr(unsafe.Pointer(pkt)),
+	)
+	res = ffcommon.FInt(t)
 	return
 }
 
@@ -852,9 +802,6 @@ func AvPacketSideDataName(type0 AVPacketSideDataType) (res ffcommon.FCharP) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_packet_side_data_name").Call(
 		uintptr(type0),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -876,9 +823,6 @@ func AvPacketPackDictionary(dict *AVDictionary, size *ffcommon.FIntOrSizeT) (res
 		uintptr(unsafe.Pointer(dict)),
 		uintptr(unsafe.Pointer(size)),
 	)
-	if t == 0 {
-
-	}
 	res = (*ffcommon.FUint8T)(unsafe.Pointer(t))
 	return
 }
@@ -903,9 +847,6 @@ func AvPacketUnpackDictionary(data *ffcommon.FUint8T, size ffcommon.FIntOrSizeT,
 		uintptr(size),
 		uintptr(unsafe.Pointer(dict)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -918,13 +859,9 @@ func AvPacketUnpackDictionary(data *ffcommon.FUint8T, size ffcommon.FIntOrSizeT,
  */
 //void av_packet_free_side_data(AVPacket *pkt);
 func (pkt *AVPacket) AvPacketFreeSideData() {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_packet_free_side_data").Call(
+	ffcommon.GetAvcodecDll().NewProc("av_packet_free_side_data").Call(
 		uintptr(unsafe.Pointer(pkt)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -950,9 +887,6 @@ func AvPacketRef(dst, src *AVPacket) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(src)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -967,13 +901,9 @@ func AvPacketRef(dst, src *AVPacket) (res ffcommon.FInt) {
  */
 //void av_packet_unref(AVPacket *pkt);
 func (pkt *AVPacket) AvPacketUnref() {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_packet_unref").Call(
+	ffcommon.GetAvcodecDll().NewProc("av_packet_unref").Call(
 		uintptr(unsafe.Pointer(pkt)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -986,14 +916,10 @@ func (pkt *AVPacket) AvPacketUnref() {
  */
 //void av_packet_move_ref(AVPacket *dst, AVPacket *src);
 func AvPacketMoveRef(dst, src *AVPacket) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_packet_move_ref").Call(
+	ffcommon.GetAvcodecDll().NewProc("av_packet_move_ref").Call(
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(src)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -1013,9 +939,6 @@ func AvPacketCopyProps(dst, src *AVPacket) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(src)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1039,9 +962,6 @@ func (pkt *AVPacket) AvPacketMakeRefcounted() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_packet_make_refcounted").Call(
 		uintptr(unsafe.Pointer(pkt)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1060,9 +980,6 @@ func (pkt *AVPacket) AvPacketMakeWritable() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_packet_make_writable").Call(
 		uintptr(unsafe.Pointer(pkt)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -1080,15 +997,11 @@ func (pkt *AVPacket) AvPacketMakeWritable() (res ffcommon.FInt) {
  */
 //void av_packet_rescale_ts(AVPacket *pkt, AVRational tb_src, AVRational tb_dst);
 func (pkt *AVPacket) AvPacketRescaleTs(tb_src, tb_dst AVRational) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_packet_rescale_ts").Call(
+	ffcommon.GetAvcodecDll().NewProc("av_packet_rescale_ts").Call(
 		uintptr(unsafe.Pointer(pkt)),
 		uintptr(unsafe.Pointer(&tb_src)),
 		uintptr(unsafe.Pointer(&tb_dst)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**

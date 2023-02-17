@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -84,9 +85,6 @@ type AVMasteringDisplayMetadata struct {
 //AVMasteringDisplayMetadata *av_mastering_display_metadata_alloc(void);
 func AvMasteringDisplayMetadataAlloc() (res *AVMasteringDisplayMetadata) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_mastering_display_metadata_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*AVMasteringDisplayMetadata)(unsafe.Pointer(t))
 	return
 }
@@ -103,9 +101,6 @@ func (frame *AVFrame) AvMasteringDisplayMetadataCreateSideData() (res *AVMasteri
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_mastering_display_metadata_create_side_data").Call(
 		uintptr(unsafe.Pointer(frame)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVMasteringDisplayMetadata)(unsafe.Pointer(t))
 	return
 }
@@ -144,9 +139,6 @@ func AvContentLightMetadataAlloc(size ffcommon.FSizeT) (res *AVContentLightMetad
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_content_light_metadata_alloc").Call(
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVContentLightMetadata)(unsafe.Pointer(t))
 	return
 }
@@ -163,9 +155,6 @@ func (frame *AVFrame) AvContentLightMetadataCreateSideData() (res *AVContentLigh
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_content_light_metadata_create_side_data").Call(
 		uintptr(unsafe.Pointer(frame)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVContentLightMetadata)(unsafe.Pointer(t))
 	return
 }

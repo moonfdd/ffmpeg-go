@@ -20,30 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c2890d4-1914-4350-9b85-9115ad68d096" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/libavcodec/vorbis_parser.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavcodec/ac3_parser.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavcodec/ac3_parser.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavcodec/adts_parser.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavcodec/adts_parser.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavcodec/avcodec.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavcodec/avcodec.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavcodec/avdct.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavcodec/avdct.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavcodec/avfft.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavcodec/avfft.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavcodec/bsf.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavcodec/bsf.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavcodec/codec.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavcodec/codec.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavcodec/codec_desc.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavcodec/codec_desc.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavcodec/codec_id.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavcodec/codec_id.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavcodec/codec_par.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavcodec/codec_par.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavcodec/d3d11va.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavcodec/d3d11va.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavcodec/dirac.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavcodec/dirac.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavcodec/dv_profile.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavcodec/dv_profile.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavcodec/jni.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavcodec/jni.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavcodec/mediacodec.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavcodec/mediacodec.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavcodec/packet.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavcodec/packet.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavcodec/qsv.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavcodec/qsv.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavcodec/vdpau.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavcodec/vdpau.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavcodec/vorbis_parser.h" beforeDir="false" afterPath="$PROJECT_DIR$/libavcodec/vorbis_parser.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavcodec/xvmc.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavcodec/xvmc.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libavdevice/avdevice.go" beforeDir="false" afterPath="$PROJECT_DIR$/libavdevice/avdevice.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +52,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../govcl" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../cef2go" />
     <property name="settings.editor.selected.configurable" value="go.sdk" />
   </component>
   <component name="RecentsManager">
@@ -159,10 +136,10 @@
     </environment>
   </component>
   <component name="WindowStateProjectService">
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1654570885955">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1654587125846">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1654570885955" />
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1654587125846" />
     <state width="1877" height="174" key="GridCell.Tab.0.bottom" timestamp="1654501757005">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

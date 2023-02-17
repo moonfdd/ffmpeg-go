@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -48,9 +49,6 @@ type AVDES struct {
 //AVDES *av_des_alloc(void);
 func AvDesAlloc() (res *AVDES) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_des_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*AVDES)(unsafe.Pointer(t))
 	return
 }
@@ -70,9 +68,6 @@ func (d *AVDES) AvDesInit(key *ffcommon.FUint8T, key_bits, decrypt ffcommon.FUin
 		uintptr(key_bits),
 		uintptr(decrypt),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -89,7 +84,7 @@ func (d *AVDES) AvDesInit(key *ffcommon.FUint8T, key_bits, decrypt ffcommon.FUin
  */
 //void av_des_crypt(struct AVDES *d, uint8_t *dst, const uint8_t *src, int count, uint8_t *iv, int decrypt);
 func (d *AVDES) AvDesCrypt(dst, src *ffcommon.FUint8T, count ffcommon.FInt, iv *ffcommon.FUint8T, decrypt ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_des_crypt").Call(
+	ffcommon.GetAvutilDll().NewProc("av_des_crypt").Call(
 		uintptr(unsafe.Pointer(d)),
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(src)),
@@ -97,10 +92,6 @@ func (d *AVDES) AvDesCrypt(dst, src *ffcommon.FUint8T, count ffcommon.FInt, iv *
 		uintptr(unsafe.Pointer(iv)),
 		uintptr(decrypt),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -112,16 +103,12 @@ func (d *AVDES) AvDesCrypt(dst, src *ffcommon.FUint8T, count ffcommon.FInt, iv *
  */
 //void av_des_mac(struct AVDES *d, uint8_t *dst, const uint8_t *src, int count);
 func (d *AVDES) AvDesMac(dst, src *ffcommon.FUint8T, count ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_des_mac").Call(
+	ffcommon.GetAvutilDll().NewProc("av_des_mac").Call(
 		uintptr(unsafe.Pointer(d)),
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(src)),
 		uintptr(count),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**

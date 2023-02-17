@@ -1,8 +1,9 @@
 package libavcodec
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -68,45 +69,45 @@ type AVD3D11VAContext struct {
 	 * D3D11 decoder object
 	 */
 	//decoder *ID3D11VideoDecoder
-	decoder uintptr
+	Decoder uintptr
 
 	/**
 	 * D3D11 VideoContext
 	 */
 	//ID3D11VideoContext *video_context;
-	video_context uintptr
+	VideoContext uintptr
 
 	/**
 	 * D3D11 configuration used to create the decoder
 	 */
 	//D3D11_VIDEO_DECODER_CONFIG *cfg;
-	cfg uintptr
+	Cfg uintptr
 
 	/**
 	 * The number of surface in the surface array
 	 */
-	surface_count ffcommon.FUnsigned
+	SurfaceCount ffcommon.FUnsigned
 
 	/**
 	 * The array of Direct3D surfaces used to create the decoder
 	 */
 	//ID3D11VideoDecoderOutputView **surface;
-	surface *uintptr
+	Surface *uintptr
 	/**
 	 * A bit field configuring the workarounds needed for using the decoder
 	 */
-	workaround ffcommon.FUint64T
+	Workaround ffcommon.FUint64T
 
 	/**
 	 * Private to the FFmpeg AVHWAccel implementation
 	 */
-	report_id ffcommon.FUnsigned
+	ReportId ffcommon.FUnsigned
 
 	/**
 	 * Mutex to access video_context
 	 */
 	//HANDLE  context_mutex;
-	context_mutex uintptr
+	ContextMutex uintptr
 }
 
 /**
@@ -117,9 +118,6 @@ type AVD3D11VAContext struct {
 //AVD3D11VAContext *av_d3d11va_alloc_context(void);
 func AvD3d11vaAllocContext() (res *AVD3D11VAContext) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_d3d11va_alloc_context").Call()
-	if t == 0 {
-
-	}
 	res = (*AVD3D11VAContext)(unsafe.Pointer(t))
 	return
 }

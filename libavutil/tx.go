@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -43,7 +44,7 @@ type AVComplexDouble struct {
 type AVComplexInt32 struct {
 	Re, Im ffcommon.FInt32T
 }
-type AVTXType = int32
+type AVTXType int32
 
 const (
 	/**
@@ -111,7 +112,7 @@ type AvTxFn = func(s *AVTXContext, out ffcommon.FVoidP, in ffcommon.FVoidP, stri
 /**
  * Flags for av_tx_init()
  */
-type AVTXFlags = int32
+type AVTXFlags int32
 
 const (
 	/**
@@ -149,9 +150,6 @@ func AvTxInit(ctx **AVTXContext, tx AvTxFn, type0 AVTXType,
 		scale,
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -161,13 +159,9 @@ func AvTxInit(ctx **AVTXContext, tx AvTxFn, type0 AVTXType,
  */
 //void av_tx_uninit(AVTXContext **ctx);
 func AvTxUninit(ctx **AVTXContext) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_tx_uninit").Call(
+	ffcommon.GetAvutilDll().NewProc("av_tx_uninit").Call(
 		uintptr(unsafe.Pointer(ctx)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //#endif /* AVUTIL_TX_H */

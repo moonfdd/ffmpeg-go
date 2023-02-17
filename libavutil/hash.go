@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -139,9 +140,6 @@ func AvHashAlloc(ctx **AVHashContext, name ffcommon.FConstCharP) (res ffcommon.F
 		uintptr(unsafe.Pointer(ctx)),
 		ffcommon.UintPtrFromString(name),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -159,9 +157,6 @@ func AvHashNames(i ffcommon.FInt) (res ffcommon.FCharP) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_hash_names").Call(
 		uintptr(i),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -174,9 +169,6 @@ func (ctx *AVHashContext) AvHashGetName() (res ffcommon.FCharP) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_hash_get_name").Call(
 		uintptr(unsafe.Pointer(ctx)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -211,9 +203,6 @@ func (ctx *AVHashContext) AvHashGetSize() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_hash_get_size").Call(
 		uintptr(unsafe.Pointer(ctx)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -225,13 +214,9 @@ func (ctx *AVHashContext) AvHashGetSize() (res ffcommon.FInt) {
  */
 //void av_hash_init(struct AVHashContext *ctx);
 func (ctx *AVHashContext) AvHashInit() {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_hash_init").Call(
+	ffcommon.GetAvutilDll().NewProc("av_hash_init").Call(
 		uintptr(unsafe.Pointer(ctx)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -247,15 +232,11 @@ func (ctx *AVHashContext) AvHashInit() {
 //void av_hash_update(struct AVHashContext *ctx, const uint8_t *src, size_t len);
 //#endif
 func (ctx *AVHashContext) AvHashUpdate(src *ffcommon.FUint8T, len0 ffcommon.FIntOrSizeT) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_hash_update").Call(
+	ffcommon.GetAvutilDll().NewProc("av_hash_update").Call(
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(src)),
 		uintptr(len0),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -274,14 +255,10 @@ func (ctx *AVHashContext) AvHashUpdate(src *ffcommon.FUint8T, len0 ffcommon.FInt
  */
 //void av_hash_final(struct AVHashContext *ctx, uint8_t *dst);
 func (ctx *AVHashContext) AvHashFinal(dst *ffcommon.FUint8T) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_hash_final").Call(
+	ffcommon.GetAvutilDll().NewProc("av_hash_final").Call(
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(dst)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -299,15 +276,11 @@ func (ctx *AVHashContext) AvHashFinal(dst *ffcommon.FUint8T) {
  */
 //void av_hash_final_bin(struct AVHashContext *ctx, uint8_t *dst, int size);
 func (ctx *AVHashContext) AvHashFinalBin(dst *ffcommon.FUint8T, size ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_hash_final_bin").Call(
+	ffcommon.GetAvutilDll().NewProc("av_hash_final_bin").Call(
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -328,15 +301,11 @@ func (ctx *AVHashContext) AvHashFinalBin(dst *ffcommon.FUint8T, size ffcommon.FI
  */
 //void av_hash_final_hex(struct AVHashContext *ctx, uint8_t *dst, int size);
 func (ctx *AVHashContext) AvHashFinalHex(dst *ffcommon.FUint8T, size ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_hash_final_hex").Call(
+	ffcommon.GetAvutilDll().NewProc("av_hash_final_hex").Call(
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(size),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -356,14 +325,12 @@ func (ctx *AVHashContext) AvHashFinalHex(dst *ffcommon.FUint8T, size ffcommon.FI
  * @param[in]     size Maximum number of bytes to write to `dst`
  */
 //void av_hash_final_b64(struct AVHashContext *ctx, uint8_t *dst, int size);
-//todo
-func av_hash_final_b64() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_hash_final_b64").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (ctx *AVHashContext) AvHashFinalB64(dst *ffcommon.FUint8T, size ffcommon.FInt) {
+	ffcommon.GetAvutilDll().NewProc("av_hash_final_b64").Call(
+		uintptr(unsafe.Pointer(ctx)),
+		uintptr(unsafe.Pointer(dst)),
+		uintptr(size),
+	)
 }
 
 /**
@@ -373,13 +340,9 @@ func av_hash_final_b64() (res ffcommon.FCharP) {
  */
 //void av_hash_freep(struct AVHashContext **ctx);
 func AvHashFreep(ctx **AVHashContext) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_hash_freep").Call(
+	ffcommon.GetAvutilDll().NewProc("av_hash_freep").Call(
 		uintptr(unsafe.Pointer(ctx)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**

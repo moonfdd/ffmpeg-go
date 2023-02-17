@@ -1,9 +1,10 @@
 package libavfilter
 
 import (
+	"unsafe"
+
 	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"github.com/moonfdd/ffmpeg-go/libavutil"
-	"unsafe"
 )
 
 /*
@@ -73,9 +74,6 @@ func (buffer_src *AVFilterContext) AvBuffersrcGetNbFailedRequests() (res ffcommo
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("av_buffersrc_get_nb_failed_requests").Call(
 		uintptr(unsafe.Pointer(buffer_src)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FUnsigned(t)
 	return
 }
@@ -143,9 +141,6 @@ type AVBufferSrcParameters struct {
 //AVBufferSrcParameters *av_buffersrc_parameters_alloc(void);
 func AvBuffersrcParametersAlloc() (res *AVBufferSrcParameters) {
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("av_buffersrc_parameters_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*AVBufferSrcParameters)(unsafe.Pointer(t))
 	return
 }
@@ -169,9 +164,6 @@ func (ctx *AVFilterContext) AvBuffersrcParametersSet(param *AVBufferSrcParameter
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(param)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -196,9 +188,6 @@ func (ctx *AVFilterContext) AvBuffersrcWriteFrame(frame *AVFrame) (res ffcommon.
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(frame)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -228,9 +217,6 @@ func (ctx *AVFilterContext) AvBuffersrcAddFrame(frame *AVFrame) (res ffcommon.FI
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(frame)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -258,9 +244,6 @@ func (ctx *AVFilterContext) AvBuffersrcAddFrameFlags(frame *AVFrame, flags ffcom
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(frame)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -279,9 +262,6 @@ func (ctx *AVFilterContext) AvBuffersrcClose(pts ffcommon.FInt, flags ffcommon.F
 		uintptr(pts),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }

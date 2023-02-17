@@ -1,9 +1,10 @@
 package libavcodec
 
 import (
+	"unsafe"
+
 	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"github.com/moonfdd/ffmpeg-go/libavutil"
-	"unsafe"
 )
 
 /*
@@ -92,9 +93,6 @@ type AVDCT struct {
 //AVDCT *avcodec_dct_alloc(void);
 func AvcodecDctAlloc() (res *AVDCT) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("avcodec_dct_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*AVDCT)(unsafe.Pointer(t))
 	return
 }
@@ -104,9 +102,6 @@ func (a *AVDCT) AvcodecDctInit() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("avcodec_dct_init").Call(
 		uintptr(unsafe.Pointer(a)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -114,9 +109,6 @@ func (a *AVDCT) AvcodecDctInit() (res ffcommon.FInt) {
 //const AVClass *avcodec_dct_get_class(void);
 func AvcodecDctGetClass() (res *AVClass) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("avcodec_dct_get_class").Call()
-	if t == 0 {
-
-	}
 	res = (*AVClass)(unsafe.Pointer(t))
 	return
 }

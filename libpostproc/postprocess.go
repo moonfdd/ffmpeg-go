@@ -46,9 +46,6 @@ import "github.com/moonfdd/ffmpeg-go/ffcommon"
 //unsigned postproc_version(void);
 func PostprocVersion() (res ffcommon.FUnsigned) {
 	t, _, _ := ffcommon.GetAvpostprocDll().NewProc("postproc_version").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.FUnsigned(t)
 	return
 }
@@ -59,9 +56,6 @@ func PostprocVersion() (res ffcommon.FUnsigned) {
 //const char *postproc_configuration(void);
 func PostprocConfiguration() (res ffcommon.FConstCharP) {
 	t, _, _ := ffcommon.GetAvpostprocDll().NewProc("postproc_configuration").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -72,9 +66,6 @@ func PostprocConfiguration() (res ffcommon.FConstCharP) {
 //const char *postproc_license(void);
 func PostprocLicense() (res ffcommon.FConstCharP) {
 	t, _, _ := ffcommon.GetAvpostprocDll().NewProc("postproc_license").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -112,22 +103,15 @@ func PpGetModeByNameAndQuality(name ffcommon.FConstCharP, quality ffcommon.FInt)
 		ffcommon.UintPtrFromString(name),
 		uintptr(quality),
 	)
-	if t == 0 {
-
-	}
 	res = t
 	return
 }
 
 //void pp_free_mode(pp_mode *mode);
 func PpFreeMode(mode ffcommon.FVoidP) {
-	t, _, _ := ffcommon.GetAvpostprocDll().NewProc("pp_free_mode").Call(
+	ffcommon.GetAvpostprocDll().NewProc("pp_free_mode").Call(
 		mode,
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //pp_context *pp_get_context(int width, int height, int flags);
@@ -137,22 +121,15 @@ func PpGetContext(width, height, flags ffcommon.FInt) (res ffcommon.FVoidP) {
 		uintptr(height),
 		uintptr(flags),
 	)
-	if t == 0 {
-
-	}
 	res = t
 	return
 }
 
 //void pp_free_context(pp_context *ppContext);
 func PpFreeContext(ppContext ffcommon.FVoidP) {
-	t, _, _ := ffcommon.GetAvpostprocDll().NewProc("pp_free_context").Call(
+	ffcommon.GetAvpostprocDll().NewProc("pp_free_context").Call(
 		ppContext,
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 const PP_CPU_CAPS_MMX = 0x80000000

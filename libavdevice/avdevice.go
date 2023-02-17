@@ -1,11 +1,12 @@
 package libavdevice
 
 import (
+	"unsafe"
+
 	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"github.com/moonfdd/ffmpeg-go/libavcodec"
 	"github.com/moonfdd/ffmpeg-go/libavformat"
 	"github.com/moonfdd/ffmpeg-go/libavutil"
-	"unsafe"
 )
 
 /*
@@ -67,9 +68,6 @@ import (
 
 func AvdeviceVersion() (res ffcommon.FUnsigned) {
 	t, _, _ := ffcommon.GetAvdeviceDll().NewProc("avdevice_version").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.FUnsigned(t)
 	return
 }
@@ -80,9 +78,6 @@ func AvdeviceVersion() (res ffcommon.FUnsigned) {
 //const char *avdevice_configuration(void);
 func AvdeviceConfiguration() (res ffcommon.FConstCharP) {
 	t, _, _ := ffcommon.GetAvdeviceDll().NewProc("avdevice_configuration").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -93,9 +88,6 @@ func AvdeviceConfiguration() (res ffcommon.FConstCharP) {
 //const char *avdevice_license(void);
 func AvdeviceLicense() (res ffcommon.FConstCharP) {
 	t, _, _ := ffcommon.GetAvdeviceDll().NewProc("avdevice_license").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -105,11 +97,7 @@ func AvdeviceLicense() (res ffcommon.FConstCharP) {
  */
 //void avdevice_register_all(void);
 func AvdeviceRegisterAll() {
-	t, _, _ := ffcommon.GetAvdeviceDll().NewProc("avdevice_register_all").Call()
-	if t == 0 {
-
-	}
-	return
+	ffcommon.GetAvdeviceDll().NewProc("avdevice_register_all").Call()
 }
 
 /**
@@ -126,9 +114,6 @@ func AvInputAudioDeviceNext(d *AVInputFormat) (res *AVInputFormat) {
 	t, _, _ := ffcommon.GetAvdeviceDll().NewProc("av_input_audio_device_next").Call(
 		uintptr(unsafe.Pointer(d)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVInputFormat)(unsafe.Pointer(t))
 	return
 }
@@ -145,9 +130,6 @@ func AvInputVideoDeviceNext(d *AVInputFormat) (res *AVInputFormat) {
 	t, _, _ := ffcommon.GetAvdeviceDll().NewProc("av_input_video_device_next").Call(
 		uintptr(unsafe.Pointer(d)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVInputFormat)(unsafe.Pointer(t))
 	return
 }
@@ -166,9 +148,6 @@ func AvUutputAudioDeviceNext(d *AVOutputFormat) (res *AVOutputFormat) {
 	t, _, _ := ffcommon.GetAvdeviceDll().NewProc("av_output_audio_device_next").Call(
 		uintptr(unsafe.Pointer(d)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVOutputFormat)(unsafe.Pointer(t))
 	return
 }
@@ -185,9 +164,6 @@ func AvOutputVideoDeviceNext(d *AVOutputFormat) (res *AVOutputFormat) {
 	t, _, _ := ffcommon.GetAvdeviceDll().NewProc("av_output_video_device_next").Call(
 		uintptr(unsafe.Pointer(d)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVOutputFormat)(unsafe.Pointer(t))
 	return
 }
@@ -202,7 +178,7 @@ type AVDeviceRect struct {
 /**
  * Message types used by avdevice_app_to_dev_control_message().
  */
-type AVAppToDevMessageType = int32
+type AVAppToDevMessageType int32
 
 const (
 //todo
@@ -284,7 +260,7 @@ const (
 /**
  * Message types used by avdevice_dev_to_app_control_message().
  */
-type AVDevToAppMessageType = int32
+type AVDevToAppMessageType int32
 
 const (
 /**
@@ -408,9 +384,6 @@ func AvdeviceAppToDevControlMessage(s *AVFormatContext,
 		data,
 		uintptr(data_size),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -437,9 +410,6 @@ func AvdeviceDevToAppControlMessage(s *AVFormatContext,
 		data,
 		uintptr(data_size),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -568,12 +538,12 @@ type AVDeviceCapabilitiesQuery struct {
 //attribute_deprecated
 //int avdevice_capabilities_create(AVDeviceCapabilitiesQuery **caps, AVFormatContext *s,
 //AVDictionary **device_options);
-//todo
-func avdevice_capabilities_create() (res ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvdeviceDll().NewProc("avdevice_capabilities_create").Call()
-	if t == 0 {
-
-	}
+func AvdeviceCapabilitiesCreate(caps **AVDeviceCapabilitiesQuery, s *AVFormatContext, device_options **AVDictionary) (res ffcommon.FInt) {
+	t, _, _ := ffcommon.GetAvdeviceDll().NewProc("avdevice_capabilities_create").Call(
+		uintptr(unsafe.Pointer(caps)),
+		uintptr(unsafe.Pointer(s)),
+		uintptr(unsafe.Pointer(device_options)),
+	)
 	res = ffcommon.FInt(t)
 	return
 }
@@ -586,14 +556,11 @@ func avdevice_capabilities_create() (res ffcommon.FInt) {
  */
 //attribute_deprecated
 //void avdevice_capabilities_free(AVDeviceCapabilitiesQuery **caps, AVFormatContext *s);
-//todo
-func avdevice_capabilities_free() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvdeviceDll().NewProc("avdevice_capabilities_free").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func AvdeviceCapabilitiesFree(caps **AVDeviceCapabilitiesQuery, s *AVFormatContext) {
+	ffcommon.GetAvdeviceDll().NewProc("avdevice_capabilities_free").Call(
+		uintptr(unsafe.Pointer(caps)),
+		uintptr(unsafe.Pointer(s)),
+	)
 }
 
 //#endif
@@ -634,9 +601,6 @@ func AvdeviceListDevices(s *AVFormatContext, device_list *AVDeviceInfoList) (res
 		uintptr(unsafe.Pointer(s)),
 		uintptr(unsafe.Pointer(device_list)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -648,13 +612,9 @@ func AvdeviceListDevices(s *AVFormatContext, device_list *AVDeviceInfoList) (res
  */
 //void avdevice_free_list_devices(AVDeviceInfoList **device_list);
 func AvdeviceFreeListDevices(device_list **AVDeviceInfoList) {
-	t, _, _ := ffcommon.GetAvdeviceDll().NewProc("avdevice_free_list_devices").Call(
+	ffcommon.GetAvdeviceDll().NewProc("avdevice_free_list_devices").Call(
 		uintptr(unsafe.Pointer(device_list)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -686,9 +646,6 @@ func AvdeviceListInputSources(device *AVInputFormat, device_name ffcommon.FConst
 		uintptr(unsafe.Pointer(device_options)),
 		uintptr(unsafe.Pointer(device_list)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -703,9 +660,6 @@ func AvdeviceListOutputSinks(device *AVOutputFormat, device_name ffcommon.FConst
 		uintptr(unsafe.Pointer(device_options)),
 		uintptr(unsafe.Pointer(device_list)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }

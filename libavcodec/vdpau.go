@@ -1,9 +1,10 @@
 package libavcodec
 
 import (
+	"unsafe"
+
 	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"github.com/moonfdd/ffmpeg-go/libavutil"
-	"unsafe"
 )
 
 /*
@@ -94,7 +95,7 @@ type AVVDPAUContext struct {
 	 * Set by user.
 	 */
 	//decoder VdpDecoder
-	decoder uintptr
+	Decoder uintptr
 
 	/**
 	 * VDPAU decoder render callback
@@ -102,10 +103,10 @@ type AVVDPAUContext struct {
 	 * Set by the user.
 	 */
 	//render *VdpDecoderRender
-	render uintptr
+	Render uintptr
 
 	//render2 AVVDPAU_Render2
-	render2 uintptr
+	Render2 uintptr
 }
 
 /**
@@ -116,33 +117,25 @@ type AVVDPAUContext struct {
 //AVVDPAUContext *av_alloc_vdpaucontext(void);
 func AvAllocVdpaucontext() (res *AVVDPAUContext) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_alloc_vdpaucontext").Call()
-	if t == 0 {
-
-	}
 	res = (*AVVDPAUContext)(unsafe.Pointer(t))
 	return
 }
 
 //AVVDPAU_Render2 av_vdpau_hwaccel_get_render2(const AVVDPAUContext *);
-//todo
-func av_vdpau_hwaccel_get_render2() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_vdpau_hwaccel_get_render2").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (c *AVVDPAUContext) AvVdpauHwaccelGetRender2() (res uintptr) {
+	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_vdpau_hwaccel_get_render2").Call(
+		uintptr(unsafe.Pointer(c)),
+	)
+	res = t
 	return
 }
 
 //void av_vdpau_hwaccel_set_render2(AVVDPAUContext *, AVVDPAU_Render2);
-//todo
-func av_vdpau_hwaccel_set_render2() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_vdpau_hwaccel_set_render2").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (c *AVVDPAUContext) AvVdpauHwaccelSetRender2(r2 uintptr) {
+	ffcommon.GetAvcodecDll().NewProc("av_vdpau_hwaccel_set_render2").Call(
+		uintptr(unsafe.Pointer(c)),
+		r2,
+	)
 }
 
 /**
@@ -236,7 +229,7 @@ func av_vdpau_alloc_context() (res ffcommon.FCharP) {
 //attribute_deprecated
 //int av_vdpau_get_profile(AVCodecContext *avctx, VdpDecoderProfile *profile);
 //todo
-func av_vdpau_get_profile() (res ffcommon.FCharP) {
+func (avctx *AVCodecContext) av_vdpau_get_profile() (res ffcommon.FCharP) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_vdpau_get_profile").Call()
 	if t == 0 {
 

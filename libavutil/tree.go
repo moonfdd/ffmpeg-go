@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -58,13 +59,9 @@ type AVTreeNode struct {
  * Allocate an AVTreeNode.
  */
 //struct AVTreeNode *av_tree_node_alloc(void);
-//todo
-func av_tree_node_alloc() (res ffcommon.FCharP) {
+func AvTreeNodeAlloc() (res *AVTreeNode) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_tree_node_alloc").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+	res = (*AVTreeNode)(unsafe.Pointer(t))
 	return
 }
 
@@ -84,13 +81,14 @@ func av_tree_node_alloc() (res ffcommon.FCharP) {
  */
 //void *av_tree_find(const struct AVTreeNode *root, void *key,
 //int (*cmp)(const void *key, const void *b), void *next[2]);
-//todo
-func av_tree_find() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_tree_find").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (root *AVTreeNode) AvTreeFind(key ffcommon.FVoidP, cmp func(key, b ffcommon.FVoidP), next *[2]ffcommon.FVoidP) (res ffcommon.FVoidP) {
+	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_tree_find").Call(
+		uintptr(unsafe.Pointer(root)),
+		key,
+		ffcommon.NewCallback(cmp),
+		uintptr(unsafe.Pointer(next)),
+	)
+	res = t
 	return
 }
 
@@ -148,9 +146,6 @@ func AvTreeInsert(rootp **AVTreeNode, key ffcommon.FVoidP, cmp func(key ffcommon
 		ffcommon.NewCallback(cmp),
 		uintptr(unsafe.Pointer(next)),
 	)
-	if t == 0 {
-
-	}
 	res = t
 	return
 }
@@ -160,9 +155,6 @@ func (tt *AVTreeNode) AvTreeDestroy() (res ffcommon.FVoidP) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_tree_destroy").Call(
 		uintptr(unsafe.Pointer(tt)),
 	)
-	if t == 0 {
-
-	}
 	res = t
 	return
 }
@@ -189,9 +181,6 @@ func (tt *AVTreeNode) AvTreeEnumerate(opaque ffcommon.FVoidP,
 		ffcommon.NewCallback(cmp),
 		ffcommon.NewCallback(enu),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }

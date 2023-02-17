@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -68,9 +69,6 @@ type AVSHA struct {
 //struct AVSHA *av_sha_alloc(void);
 func AvShaSlloc() (res *AVRC4) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_sha_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*AVRC4)(unsafe.Pointer(t))
 	return
 }
@@ -89,9 +87,6 @@ func (context *AVSHA) AvShaInit(key *ffcommon.FUint8T, bits ffcommon.FInt) (res 
 		uintptr(unsafe.Pointer(key)),
 		uintptr(bits),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -109,15 +104,11 @@ func (context *AVSHA) AvShaInit(key *ffcommon.FUint8T, bits ffcommon.FInt) (res 
 //void av_sha_update(struct AVSHA *ctx, const uint8_t *data, size_t len);
 //#endif
 func (context *AVSHA) AvShaUpdate(data *ffcommon.FUint8T, len0 ffcommon.FUnsignedIntOrSizeT) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_sha_update").Call(
+	ffcommon.GetAvutilDll().NewProc("av_sha_update").Call(
 		uintptr(unsafe.Pointer(context)),
 		uintptr(unsafe.Pointer(data)),
 		uintptr(len0),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -128,14 +119,10 @@ func (context *AVSHA) AvShaUpdate(data *ffcommon.FUint8T, len0 ffcommon.FUnsigne
  */
 //void av_sha_final(struct AVSHA* context, uint8_t *digest);
 func (context *AVRIPEMD) AvShaFinal(digest *ffcommon.FUint8T) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_sha_final").Call(
+	ffcommon.GetAvutilDll().NewProc("av_sha_final").Call(
 		uintptr(unsafe.Pointer(context)),
 		uintptr(unsafe.Pointer(digest)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**

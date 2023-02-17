@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -32,7 +33,7 @@ import (
 //#include "avutil.h"
 //#include "attributes.h"
 //#include "version.h"
-type AVClassCategory = int32
+type AVClassCategory int32
 
 const (
 	AV_CLASS_CATEGORY_NA = iota
@@ -276,11 +277,7 @@ func AvLog(avcl ffcommon.FVoidP, level ffcommon.FInt, fmt0 ...ffcommon.FConstCha
 	for i := 0; i < len(fmt0); i++ {
 		uintptrs = append(uintptrs, ffcommon.UintPtrFromString(fmt0[i]))
 	}
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_log").Call(uintptrs...)
-	if t == 0 {
-
-	}
-	return
+	ffcommon.GetAvutilDll().NewProc("av_log").Call(uintptrs...)
 }
 
 /**
@@ -312,11 +309,7 @@ func AvLogOnce(avcl ffcommon.FVoidP, initial_level, subsequent_level ffcommon.FI
 	for i := 0; i < len(fmt0); i++ {
 		uintptrs = append(uintptrs, ffcommon.UintPtrFromString(fmt0[i]))
 	}
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_log_once").Call(uintptrs...)
-	if t == 0 {
-
-	}
-	return
+	ffcommon.GetAvutilDll().NewProc("av_log_once").Call(uintptrs...)
 }
 
 /**
@@ -336,16 +329,12 @@ func AvLogOnce(avcl ffcommon.FVoidP, initial_level, subsequent_level ffcommon.FI
  */
 //void av_vlog(void *avcl, int level, const char *fmt, va_list vl);
 func AvVlog(avcl ffcommon.FVoidP, level ffcommon.FInt, fmt0 ffcommon.FConstCharP, vl ffcommon.FVaList) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_vlog").Call(
+	ffcommon.GetAvutilDll().NewProc("av_vlog").Call(
 		avcl,
 		uintptr(level),
 		ffcommon.UintPtrFromString(fmt0),
 		uintptr(unsafe.Pointer(vl)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -358,9 +347,6 @@ func AvVlog(avcl ffcommon.FVoidP, level ffcommon.FInt, fmt0 ffcommon.FConstCharP
 //int av_log_get_level(void);
 func AvLogGetLevel() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_log_get_level").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -374,13 +360,9 @@ func AvLogGetLevel() (res ffcommon.FInt) {
  */
 //void av_log_set_level(int level);
 func AvLogSetLevel(level ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_log_set_level").Call(
+	ffcommon.GetAvutilDll().NewProc("av_log_set_level").Call(
 		uintptr(level),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -395,13 +377,9 @@ func AvLogSetLevel(level ffcommon.FInt) {
  */
 //void av_log_set_callback(void (*callback)(void*, int, const char*, va_list));
 func AvLogSetCallback(callback func(ffcommon.FVoidP, ffcommon.FInt, ffcommon.FCharPStruct, ffcommon.FVaList) uintptr) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_log_set_callback").Call(
+	ffcommon.GetAvutilDll().NewProc("av_log_set_callback").Call(
 		ffcommon.NewCallback(callback),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -420,16 +398,12 @@ func AvLogSetCallback(callback func(ffcommon.FVoidP, ffcommon.FInt, ffcommon.FCh
 //void av_log_default_callback(void *avcl, int level, const char *fmt,
 //va_list vl);
 func AvLogDefaultCallback(avcl ffcommon.FVoidP, level ffcommon.FInt, fmt0 ffcommon.FConstCharP, vl ffcommon.FVaList) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_log_default_callback").Call(
+	ffcommon.GetAvutilDll().NewProc("av_log_default_callback").Call(
 		avcl,
 		uintptr(level),
 		ffcommon.UintPtrFromString(fmt0),
 		uintptr(unsafe.Pointer(vl)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -444,9 +418,6 @@ func AvDefaultItemName(ctx ffcommon.FVoidP) (res ffcommon.FCharP) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_default_item_name").Call(
 		ctx,
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -456,9 +427,6 @@ func AvDefaultGetCategory(ptr ffcommon.FVoidP) (res AVClassCategory) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_default_get_category").Call(
 		ptr,
 	)
-	if t == 0 {
-
-	}
 	res = AVClassCategory(t)
 	return
 }
@@ -474,7 +442,7 @@ func AvDefaultGetCategory(ptr ffcommon.FVoidP) (res AVClassCategory) {
 //char *line, int line_size, int *print_prefix);
 func AvLogFormatLine(ptr ffcommon.FVoidP, level ffcommon.FInt, fmt0 ffcommon.FConstCharP, vl ffcommon.FVaList,
 	line ffcommon.FCharP, line_size ffcommon.FInt, print_prefix *ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_log_format_line").Call(
+	ffcommon.GetAvutilDll().NewProc("av_log_format_line").Call(
 		ptr,
 		uintptr(level),
 		ffcommon.UintPtrFromString(fmt0),
@@ -483,10 +451,6 @@ func AvLogFormatLine(ptr ffcommon.FVoidP, level ffcommon.FInt, fmt0 ffcommon.FCo
 		uintptr(line_size),
 		uintptr(unsafe.Pointer(print_prefix)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -516,9 +480,6 @@ func AvLogFormatLine2(ptr ffcommon.FVoidP, level ffcommon.FInt, fmt0 ffcommon.FC
 		uintptr(line_size),
 		uintptr(unsafe.Pointer(print_prefix)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -546,9 +507,6 @@ func AvLogSetFlags(arg ffcommon.FInt) (res ffcommon.FCharP) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_log_set_flags").Call(
 		uintptr(arg),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -556,9 +514,6 @@ func AvLogSetFlags(arg ffcommon.FInt) (res ffcommon.FCharP) {
 //int av_log_get_flags(void);
 func AvLogGetFlags() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_log_get_flags").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }

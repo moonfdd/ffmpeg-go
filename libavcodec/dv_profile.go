@@ -1,8 +1,9 @@
 package libavcodec
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -62,7 +63,7 @@ type AVDVProfile struct {
 	AudioSamplesDist [5]ffcommon.FInt /* how many samples are supposed to be */
 	/* in each frame in a 5 frames window */
 	//const uint8_t  (*audio_shuffle)[9];     /* PCM shuffling table */
-	aAdioShuffle *[9]ffcommon.FUint8T
+	AdioShuffle *[9]ffcommon.FUint8T
 }
 
 /**
@@ -81,9 +82,6 @@ func (sys *AVDVProfile) AvDvFrameProfile(frame *ffcommon.FUint8T, buf_size ffcom
 		uintptr(unsafe.Pointer(frame)),
 		uintptr(buf_size),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVDVProfile)(unsafe.Pointer(t))
 	return
 }
@@ -98,9 +96,6 @@ func AvDvCodecProfile(width, height ffcommon.FInt, pix_fmt AVPixelFormat) (res *
 		uintptr(height),
 		uintptr(pix_fmt),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVDVProfile)(unsafe.Pointer(t))
 	return
 }
@@ -117,9 +112,6 @@ func AvDvCodecProfile2(width, height ffcommon.FInt, pix_fmt AVPixelFormat, frame
 		uintptr(pix_fmt),
 		uintptr(unsafe.Pointer(&frame_rate)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVDVProfile)(unsafe.Pointer(t))
 	return
 }

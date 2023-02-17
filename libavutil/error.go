@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -107,9 +108,6 @@ func AvStrerror(errnum ffcommon.FInt, errbuf ffcommon.FBuf, errbuf_size ffcommon
 		uintptr(unsafe.Pointer(errbuf)),
 		uintptr(errbuf_size),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -147,9 +145,6 @@ func AvErr2str(errnum ffcommon.FInt) (res ffcommon.FCharP) {
 	b := make([]byte, AV_ERROR_MAX_STRING_SIZE, AV_ERROR_MAX_STRING_SIZE)
 	AvStrerror(errnum, (*byte)(unsafe.Pointer(&b[0])), AV_ERROR_MAX_STRING_SIZE)
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_err2str").Call()
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }

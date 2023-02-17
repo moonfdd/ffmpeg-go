@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -64,9 +65,6 @@ func (q *AVRational) AvParseRatio(str ffcommon.FConstCharP, max,
 		uintptr(log_offset),
 		log_ctx,
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -96,9 +94,6 @@ func AvParseVideoSize(width_ptr, height_ptr *ffcommon.FInt, str ffcommon.FConstC
 		uintptr(unsafe.Pointer(height_ptr)),
 		ffcommon.UintPtrFromString(str),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -118,9 +113,6 @@ func (rate *AVRational) AvParseVideoRate(str ffcommon.FConstCharP) (res ffcommon
 		uintptr(unsafe.Pointer(rate)),
 		ffcommon.UintPtrFromString(str),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -153,9 +145,6 @@ func AvParseColor(rgba_color *ffcommon.FUint8T, color_string ffcommon.FConstChar
 		uintptr(slen),
 		log_ctx,
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -177,9 +166,6 @@ func AvGetKnownColorName(color_idx ffcommon.FInt, rgb **ffcommon.FUint8T) (res f
 		uintptr(color_idx),
 		uintptr(unsafe.Pointer(rgb)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -223,9 +209,6 @@ func AvParseTime(timeval *ffcommon.FInt64T, timestr ffcommon.FConstCharP, durati
 		ffcommon.UintPtrFromString(timestr),
 		uintptr(duration),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -244,9 +227,6 @@ func AvFindInfoTag(arg ffcommon.FConstCharP, arg_size ffcommon.FInt, tag1, info 
 		ffcommon.UintPtrFromString(tag1),
 		ffcommon.UintPtrFromString(info),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -288,9 +268,6 @@ func AvSmallStrptime(p, fmt0 ffcommon.FConstCharP, dt *Tm) (res ffcommon.FCharP)
 		ffcommon.UintPtrFromString(fmt0),
 		uintptr(unsafe.Pointer(dt)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -303,9 +280,6 @@ func (tm *Tm) AvTimegm() (res ffcommon.FTimeT) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_timegm").Call(
 		uintptr(unsafe.Pointer(tm)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FTimeT(t)
 	return
 }

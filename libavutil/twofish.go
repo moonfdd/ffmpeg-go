@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -51,9 +52,6 @@ type AVTWOFISH struct {
 //struct AVTWOFISH *av_twofish_alloc(void);
 func AvTwofishAlloc() (res *AVTWOFISH) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_twofish_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*AVTWOFISH)(unsafe.Pointer(t))
 	return
 }
@@ -72,9 +70,6 @@ func (ctx *AVTWOFISH) AvTwofishInit(key *ffcommon.FUint8T, key_bits ffcommon.FIn
 		uintptr(unsafe.Pointer(key)),
 		uintptr(key_bits),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -92,7 +87,7 @@ func (ctx *AVTWOFISH) AvTwofishInit(key *ffcommon.FUint8T, key_bits ffcommon.FIn
 //void av_twofish_crypt(struct AVTWOFISH *ctx, uint8_t *dst, const uint8_t *src, int count, uint8_t* iv, int decrypt);
 func (ctx *AVTWOFISH) AvTwofishCrypt(dst, src *ffcommon.FUint8T,
 	count ffcommon.FInt, iv *ffcommon.FUint8T, decrypt ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_twofish_crypt").Call(
+	ffcommon.GetAvutilDll().NewProc("av_twofish_crypt").Call(
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(src)),
@@ -100,10 +95,6 @@ func (ctx *AVTWOFISH) AvTwofishCrypt(dst, src *ffcommon.FUint8T,
 		uintptr(unsafe.Pointer(iv)),
 		uintptr(decrypt),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**

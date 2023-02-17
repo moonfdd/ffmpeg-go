@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -218,9 +219,6 @@ func (pixdesc *AVPixFmtDescriptor) AvGetBitsPerPixel() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_get_bits_per_pixel").Call(
 		uintptr(unsafe.Pointer(pixdesc)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -234,9 +232,6 @@ func (pixdesc *AVPixFmtDescriptor) AvGetPaddedBitsPerPixel() (res ffcommon.FInt)
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_get_padded_bits_per_pixel").Call(
 		uintptr(unsafe.Pointer(pixdesc)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -250,9 +245,6 @@ func AvPixFmtDescGet(pix_fmt AVPixelFormat) (res *AVPixFmtDescriptor) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_pix_fmt_desc_get").Call(
 		uintptr(pix_fmt),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVPixFmtDescriptor)(unsafe.Pointer(t))
 	return
 }
@@ -269,9 +261,6 @@ func (prev *AVPixFmtDescriptor) AvPixFmtDescNext() (res *AVPixFmtDescriptor) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_pix_fmt_desc_next").Call(
 		uintptr(unsafe.Pointer(prev)),
 	)
-	if t == 0 {
-
-	}
 	res = (*AVPixFmtDescriptor)(unsafe.Pointer(t))
 	return
 }
@@ -285,9 +274,6 @@ func (desc *AVPixFmtDescriptor) AvPixFmtDescGetId() (res AVPixelFormat) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_pix_fmt_desc_get_id").Call(
 		uintptr(unsafe.Pointer(desc)),
 	)
-	if t == 0 {
-
-	}
 	res = AVPixelFormat(t)
 	return
 }
@@ -310,9 +296,6 @@ func AvPixFmtGetChromaSubSample(pix_fmt AVPixelFormat, h_shift, v_shift *ffcommo
 		uintptr(unsafe.Pointer(h_shift)),
 		uintptr(unsafe.Pointer(v_shift)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -326,9 +309,6 @@ func AvPixFmtCountPlanes(pix_fmt AVPixelFormat) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_pix_fmt_count_planes").Call(
 		uintptr(pix_fmt),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -341,9 +321,6 @@ func AvColorRangeName(range0 AVColorRange) (res ffcommon.FConstCharP) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_color_range_name").Call(
 		uintptr(range0),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -356,9 +333,6 @@ func AvColorRangeFromName(name ffcommon.FConstCharP) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_color_range_from_name").Call(
 		ffcommon.UintPtrFromString(name),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -371,9 +345,6 @@ func AvColorPrimariesName(primaries AVColorPrimaries) (res ffcommon.FConstCharP)
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_color_primaries_name").Call(
 		uintptr(primaries),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -386,9 +357,6 @@ func AvColorPrimariesFromName(name ffcommon.FConstCharP) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_color_primaries_from_name").Call(
 		ffcommon.UintPtrFromString(name),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -401,9 +369,6 @@ func AvColorTransferName(transfer AVColorTransferCharacteristic) (res ffcommon.F
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_color_transfer_name").Call(
 		uintptr(transfer),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -416,9 +381,6 @@ func AvColorTransferFromName(name ffcommon.FConstCharP) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_color_transfer_from_name").Call(
 		ffcommon.UintPtrFromString(name),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -431,9 +393,6 @@ func AvColorSpaceName(space AVColorSpace) (res ffcommon.FConstCharP) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_color_space_name").Call(
 		uintptr(space),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -446,9 +405,6 @@ func AvColorSpaceFromName(name ffcommon.FConstCharP) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_color_space_from_name").Call(
 		ffcommon.UintPtrFromString(name),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -461,9 +417,6 @@ func AvChromaLocationName(location AVChromaLocation) (res ffcommon.FConstCharP) 
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_chroma_location_name").Call(
 		uintptr(location),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -476,9 +429,6 @@ func AvChromaLocationFromName(name ffcommon.FConstCharP) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_chroma_location_from_name").Call(
 		ffcommon.UintPtrFromString(name),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -499,9 +449,6 @@ func AvGetPixFmt(name ffcommon.FConstCharP) (res AVPixelFormat) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_get_pix_fmt").Call(
 		ffcommon.UintPtrFromString(name),
 	)
-	if t == 0 {
-
-	}
 	res = AVPixelFormat(t)
 	return
 }
@@ -517,9 +464,6 @@ func AvGetPixFmtName(pix_fmt AVPixelFormat) (res ffcommon.FConstCharP) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_get_pix_fmt_name").Call(
 		uintptr(pix_fmt),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -543,9 +487,6 @@ func AvGetPixFmtString(buf ffcommon.FCharP, buf_size ffcommon.FInt,
 		uintptr(buf_size),
 		uintptr(pix_fmt),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -575,7 +516,7 @@ func AvReadImageLine2(dst ffcommon.FVoidP, data [4]*ffcommon.FUint8T,
 	linesize [4]ffcommon.FInt, desc *AVPixFmtDescriptor,
 	x, y, c, w, read_pal_component,
 	dst_element_size ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_read_image_line2").Call(
+	ffcommon.GetAvutilDll().NewProc("av_read_image_line2").Call(
 		dst,
 		uintptr(unsafe.Pointer(&data)),
 		uintptr(unsafe.Pointer(&linesize)),
@@ -587,10 +528,6 @@ func AvReadImageLine2(dst ffcommon.FVoidP, data [4]*ffcommon.FUint8T,
 		uintptr(read_pal_component),
 		uintptr(dst_element_size),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //void av_read_image_line(uint16_t *dst, const uint8_t *data[4],
@@ -599,7 +536,7 @@ func AvReadImageLine2(dst ffcommon.FVoidP, data [4]*ffcommon.FUint8T,
 func AvReadImageLine(dst *ffcommon.FUint16T, data [4]*ffcommon.FUint8T,
 	linesize [4]*ffcommon.FInt, desc *AVPixFmtDescriptor,
 	x, y, c, w, read_pal_component ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_read_image_line").Call(
+	ffcommon.GetAvutilDll().NewProc("av_read_image_line").Call(
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(&data)),
 		uintptr(unsafe.Pointer(&linesize)),
@@ -610,10 +547,6 @@ func AvReadImageLine(dst *ffcommon.FUint16T, data [4]*ffcommon.FUint8T,
 		uintptr(w),
 		uintptr(read_pal_component),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -637,7 +570,7 @@ func AvReadImageLine(dst *ffcommon.FUint16T, data [4]*ffcommon.FUint8T,
 func AvWriteImageLine2(src ffcommon.FConstVoidP, data [4]*ffcommon.FUint8T,
 	linesize [4]ffcommon.FInt, desc *AVPixFmtDescriptor,
 	x, y, c, w, src_element_size ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_write_image_line2").Call(
+	ffcommon.GetAvutilDll().NewProc("av_write_image_line2").Call(
 		uintptr(unsafe.Pointer(src)),
 		uintptr(unsafe.Pointer(&data)),
 		uintptr(unsafe.Pointer(&linesize)),
@@ -648,10 +581,6 @@ func AvWriteImageLine2(src ffcommon.FConstVoidP, data [4]*ffcommon.FUint8T,
 		uintptr(w),
 		uintptr(src_element_size),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //void av_write_image_line(const uint16_t *src, uint8_t *data[4],
@@ -660,7 +589,7 @@ func AvWriteImageLine2(src ffcommon.FConstVoidP, data [4]*ffcommon.FUint8T,
 func AvWriteImageLine(src *ffcommon.FUint16T, data [4]*ffcommon.FUint8T,
 	linesize [4]ffcommon.FInt, desc *AVPixFmtDescriptor,
 	x, y, c, w ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_write_image_line").Call(
+	ffcommon.GetAvutilDll().NewProc("av_write_image_line").Call(
 		uintptr(unsafe.Pointer(src)),
 		uintptr(unsafe.Pointer(&data)),
 		uintptr(unsafe.Pointer(&linesize)),
@@ -670,10 +599,6 @@ func AvWriteImageLine(src *ffcommon.FUint16T, data [4]*ffcommon.FUint8T,
 		uintptr(c),
 		uintptr(w),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -689,9 +614,6 @@ func AvPixFmtSwapEndianness(pix_fmt AVPixelFormat) (res AVPixelFormat) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_pix_fmt_swap_endianness").Call(
 		uintptr(pix_fmt),
 	)
-	if t == 0 {
-
-	}
 	res = AVPixelFormat(t)
 	return
 }
@@ -732,9 +654,6 @@ func AvGetPixFmtLoss(dst_pix_fmt,
 		uintptr(src_pix_fmt),
 		uintptr(has_alpha),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -768,9 +687,6 @@ func AvFindBestPixFmtOf2(dst_pix_fmt1, dst_pix_fmt2,
 		uintptr(has_alpha),
 		uintptr(unsafe.Pointer(loss_ptr)),
 	)
-	if t == 0 {
-
-	}
 	res = AVPixelFormat(t)
 	return
 }

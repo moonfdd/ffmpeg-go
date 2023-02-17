@@ -1,9 +1,10 @@
 package libswscale
 
 import (
+	"unsafe"
+
 	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"github.com/moonfdd/ffmpeg-go/libavutil"
-	"unsafe"
 )
 
 /*
@@ -310,9 +311,6 @@ func SwsGetContext(srcW, srcH ffcommon.FInt, srcFormat AVPixelFormat,
 		uintptr(unsafe.Pointer(dstFilter)),
 		uintptr(unsafe.Pointer(param)),
 	)
-	if t == 0 {
-
-	}
 	res = (*SwsContext)(unsafe.Pointer(t))
 	return
 }
@@ -358,9 +356,6 @@ func (c *SwsContext) SwsScale(srcSlice **ffcommon.FUint8T,
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(dstStride)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -391,9 +386,6 @@ func (c *SwsContext) SwsSetColorspaceDetails(inv_table [4]*ffcommon.FInt,
 		uintptr(contrast),
 		uintptr(saturation),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -417,9 +409,6 @@ func (c *SwsContext) SwsGetColorspaceDetails(inv_table **ffcommon.FInt,
 		uintptr(unsafe.Pointer(contrast)),
 		uintptr(unsafe.Pointer(saturation)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -432,9 +421,6 @@ func SwsAllocVec(length ffcommon.FInt) (res *SwsVector) {
 	t, _, _ := ffcommon.GetAvswscaleDll().NewProc("sws_allocVec").Call(
 		uintptr(length),
 	)
-	if t == 0 {
-
-	}
 	res = (*SwsVector)(unsafe.Pointer(t))
 	return
 }
@@ -449,9 +435,6 @@ func SwsGetGaussianVec(variance, quality ffcommon.FDouble) (res *SwsVector) {
 		uintptr(unsafe.Pointer(&variance)),
 		uintptr(unsafe.Pointer(&quality)),
 	)
-	if t == 0 {
-
-	}
 	res = (*SwsVector)(unsafe.Pointer(t))
 	return
 }
@@ -461,14 +444,10 @@ func SwsGetGaussianVec(variance, quality ffcommon.FDouble) (res *SwsVector) {
  */
 //void sws_scaleVec(SwsVector *a, double scalar);
 func (a *SwsVector) SwsScaleVec(scalar ffcommon.FDouble) {
-	t, _, _ := ffcommon.GetAvswscaleDll().NewProc("sws_scaleVec").Call(
+	ffcommon.GetAvswscaleDll().NewProc("sws_scaleVec").Call(
 		uintptr(unsafe.Pointer(a)),
 		uintptr(unsafe.Pointer(&scalar)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -476,116 +455,87 @@ func (a *SwsVector) SwsScaleVec(scalar ffcommon.FDouble) {
  */
 //void sws_normalizeVec(SwsVector *a, double height);
 func (a *SwsVector) SwsNormalizeVec(height ffcommon.FDouble) {
-	t, _, _ := ffcommon.GetAvswscaleDll().NewProc("sws_normalizeVec").Call(
+	ffcommon.GetAvswscaleDll().NewProc("sws_normalizeVec").Call(
 		uintptr(unsafe.Pointer(a)),
 		uintptr(unsafe.Pointer(&height)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //#if FF_API_SWS_VECTOR
 //attribute_deprecated SwsVector *sws_getConstVec(double c, int length);
-//todo
-func sws_getConstVec() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvswscaleDll().NewProc("sws_getConstVec").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func SwsGetConstVec(c ffcommon.FDouble, length ffcommon.FInt) (res *SwsVector) {
+	t, _, _ := ffcommon.GetAvswscaleDll().NewProc("sws_getConstVec").Call(
+		uintptr(unsafe.Pointer(&c)),
+		uintptr(length),
+	)
+	res = (*SwsVector)(unsafe.Pointer(t))
 	return
 }
 
 //attribute_deprecated SwsVector *sws_getIdentityVec(void);
-//todo
-func sws_getIdentityVec() (res ffcommon.FCharP) {
+func SwsGetIdentityVec() (res *SwsVector) {
 	t, _, _ := ffcommon.GetAvswscaleDll().NewProc("sws_getIdentityVec").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+	res = (*SwsVector)(unsafe.Pointer(t))
 	return
 }
 
 //attribute_deprecated void sws_convVec(SwsVector *a, SwsVector *b);
-//todo
-func sws_convVec() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvswscaleDll().NewProc("sws_convVec").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (a *SwsVector) SwsConvVec(b *SwsVector) {
+	ffcommon.GetAvswscaleDll().NewProc("sws_convVec").Call(
+		uintptr(unsafe.Pointer(a)),
+		uintptr(unsafe.Pointer(b)),
+	)
 }
 
 //attribute_deprecated void sws_addVec(SwsVector *a, SwsVector *b);
-//todo
-func sws_addVec() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvswscaleDll().NewProc("sws_addVec").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (a *SwsVector) SwsAddVec(b *SwsVector) {
+	ffcommon.GetAvswscaleDll().NewProc("sws_addVec").Call(
+		uintptr(unsafe.Pointer(a)),
+		uintptr(unsafe.Pointer(b)),
+	)
 }
 
 //attribute_deprecated void sws_subVec(SwsVector *a, SwsVector *b);
-//todo
-func sws_subVec() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvswscaleDll().NewProc("sws_subVec").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (a *SwsVector) SwsSubVec(b *SwsVector) {
+	ffcommon.GetAvswscaleDll().NewProc("sws_subVec").Call(
+		uintptr(unsafe.Pointer(a)),
+		uintptr(unsafe.Pointer(b)),
+	)
 }
 
 //attribute_deprecated void sws_shiftVec(SwsVector *a, int shift);
-//todo
-func sws_shiftVec() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvswscaleDll().NewProc("sws_shiftVec").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (a *SwsVector) SwsShiftVec(shift ffcommon.FInt) {
+	ffcommon.GetAvswscaleDll().NewProc("sws_shiftVec").Call(
+		uintptr(unsafe.Pointer(a)),
+		uintptr(shift),
+	)
 }
 
 //attribute_deprecated SwsVector *sws_cloneVec(SwsVector *a);
-//todo
-func sws_cloneVec() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvswscaleDll().NewProc("sws_cloneVec").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
+func (a *SwsVector) SwsCloneVec() (res *SwsVector) {
+	t, _, _ := ffcommon.GetAvswscaleDll().NewProc("sws_cloneVec").Call(
+		uintptr(unsafe.Pointer(a)),
+	)
+	res = (*SwsVector)(unsafe.Pointer(t))
 	return
 }
 
 //attribute_deprecated void sws_printVec2(SwsVector *a, AVClass *log_ctx, int log_level);
-//todo
-func sws_printVec2() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvswscaleDll().NewProc("sws_printVec2").Call()
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
+func (a *SwsVector) SwsPrintVec2(log_ctx *AVClass, log_level ffcommon.FInt) {
+	ffcommon.GetAvswscaleDll().NewProc("sws_printVec2").Call(
+		uintptr(unsafe.Pointer(a)),
+		uintptr(unsafe.Pointer(log_ctx)),
+		uintptr(log_level),
+	)
 }
 
 //#endif
 
 //void sws_freeVec(SwsVector *a);
 func (a *SwsVector) SwsFreeVec() {
-	t, _, _ := ffcommon.GetAvswscaleDll().NewProc("sws_freeVec").Call(
+	ffcommon.GetAvswscaleDll().NewProc("sws_freeVec").Call(
 		uintptr(unsafe.Pointer(a)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //SwsFilter *sws_getDefaultFilter(float lumaGBlur, float chromaGBlur,
@@ -605,23 +555,15 @@ func SwsGetDefaultFilter(lumaGBlur, chromaGBlur,
 		uintptr(unsafe.Pointer(&chromaVShift)),
 		uintptr(verbose),
 	)
-	if t == 0 {
-
-	}
 	res = (*SwsFilter)(unsafe.Pointer(t))
 	return
 }
 
 //void sws_freeFilter(SwsFilter *filter);
-func (filter *SwsFilter) SwsFreeFilter() (res ffcommon.FCharP) {
-	t, _, _ := ffcommon.GetAvswscaleDll().NewProc("sws_freeFilter").Call(
+func (filter *SwsFilter) SwsFreeFilter() {
+	ffcommon.GetAvswscaleDll().NewProc("sws_freeFilter").Call(
 		uintptr(unsafe.Pointer(filter)),
 	)
-	if t == 0 {
-
-	}
-	res = ffcommon.StringFromPtr(t)
-	return
 }
 
 /**
@@ -658,9 +600,6 @@ func (context *SwsContext) SwsGetCachedContext(srcW, srcH ffcommon.FInt, srcForm
 		uintptr(unsafe.Pointer(dstFilter)),
 		uintptr(unsafe.Pointer(param)),
 	)
-	if t == 0 {
-
-	}
 	res = (*SwsContext)(unsafe.Pointer(t))
 	return
 }
@@ -677,16 +616,12 @@ func (context *SwsContext) SwsGetCachedContext(srcW, srcH ffcommon.FInt, srcForm
  */
 //void sws_convertPalette8ToPacked32(const uint8_t *src, uint8_t *dst, int num_pixels, const uint8_t *palette);
 func SwsConvertPalette8ToPacked32(src, dst *ffcommon.FUint8T, num_pixels ffcommon.FInt, palette *ffcommon.FUint8T) {
-	t, _, _ := ffcommon.GetAvswscaleDll().NewProc("sws_convertPalette8ToPacked32").Call(
+	ffcommon.GetAvswscaleDll().NewProc("sws_convertPalette8ToPacked32").Call(
 		uintptr(unsafe.Pointer(src)),
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(num_pixels),
 		uintptr(unsafe.Pointer(palette)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -701,16 +636,12 @@ func SwsConvertPalette8ToPacked32(src, dst *ffcommon.FUint8T, num_pixels ffcommo
  */
 //void sws_convertPalette8ToPacked24(const uint8_t *src, uint8_t *dst, int num_pixels, const uint8_t *palette);
 func SwsConvertPalette8ToPacked24(src, dst *ffcommon.FUint8T, num_pixels ffcommon.FInt, palette *ffcommon.FUint8T) {
-	t, _, _ := ffcommon.GetAvswscaleDll().NewProc("sws_convertPalette8ToPacked24").Call(
+	ffcommon.GetAvswscaleDll().NewProc("sws_convertPalette8ToPacked24").Call(
 		uintptr(unsafe.Pointer(src)),
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(num_pixels),
 		uintptr(unsafe.Pointer(palette)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -724,9 +655,6 @@ type AVClass = libavutil.AVClass
 
 func SwsGetClass() (res *AVClass) {
 	t, _, _ := ffcommon.GetAvswscaleDll().NewProc("sws_get_class").Call()
-	if t == 0 {
-
-	}
 	res = (*AVClass)(unsafe.Pointer(t))
 	return
 }

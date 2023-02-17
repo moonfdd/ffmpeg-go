@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -48,12 +49,8 @@ type AVBlowfish struct {
  * Allocate an AVBlowfish context.
  */
 //AVBlowfish *av_blowfish_alloc(void);
-//todo
 func AvBlowfishAlloc() (res *AVBlowfish) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_blowfish_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*AVBlowfish)(unsafe.Pointer(t))
 	return
 }
@@ -67,16 +64,11 @@ func AvBlowfishAlloc() (res *AVBlowfish) {
  */
 //void av_blowfish_init(struct AVBlowfish *ctx, const uint8_t *key, int key_len);
 func (ctx *AVBlowfish) AvBlowfishInit(key *ffcommon.FUint8T, key_len ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_blowfish_init").Call(
+	ffcommon.GetAvutilDll().NewProc("av_blowfish_init").Call(
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(key)),
 		uintptr(key_len),
 	)
-	if t == 0 {
-
-	}
-
-	return
 }
 
 /**
@@ -90,16 +82,12 @@ func (ctx *AVBlowfish) AvBlowfishInit(key *ffcommon.FUint8T, key_len ffcommon.FI
 //void av_blowfish_crypt_ecb(struct AVBlowfish *ctx, uint32_t *xl, uint32_t *xr,
 //int decrypt);
 func (ctx *AVBlowfish) AvBlowfishCryptEcb(xl, xr *ffcommon.FUint32T, decrypt ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_blowfish_crypt_ecb").Call(
+	ffcommon.GetAvutilDll().NewProc("av_blowfish_crypt_ecb").Call(
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(xl)),
 		uintptr(unsafe.Pointer(xr)),
 		uintptr(decrypt),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -116,7 +104,7 @@ func (ctx *AVBlowfish) AvBlowfishCryptEcb(xl, xr *ffcommon.FUint32T, decrypt ffc
 //int count, uint8_t *iv, int decrypt);
 func (ctx *AVBlowfish) AvBlowfishCrypt(dst, src *ffcommon.FUint8T,
 	count ffcommon.FInt, iv *ffcommon.FUint8T, decrypt ffcommon.FInt) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_blowfish_crypt").Call(
+	ffcommon.GetAvutilDll().NewProc("av_blowfish_crypt").Call(
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(src)),
@@ -124,10 +112,6 @@ func (ctx *AVBlowfish) AvBlowfishCrypt(dst, src *ffcommon.FUint8T,
 		uintptr(unsafe.Pointer(iv)),
 		uintptr(decrypt),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**

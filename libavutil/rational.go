@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -105,23 +106,23 @@ func AvMakeQ(num, den ffcommon.FInt) (res AVRational) {
 //else if(a.num && b.num) return (a.num>>31) - (b.num>>31);
 //else                    return INT_MIN;
 //}
-func AvCmpQ(a, b AVRational) (res ffcommon.FInt) {
-	tmp := a.Num*b.Den - b.Num*a.Den
-	//todo
-	//if(tmp) return (int)((tmp ^ a.den ^ b.den)>>63)|1;
-	//else if(b.den && a.den) return 0;
-	//else if(a.num && b.num) return (a.num>>31) - (b.num>>31);
-	//else                    return INT_MIN;
-	if tmp == 0 {
+// todo
+// func AvCmpQ(a, b AVRational) (res ffcommon.FInt) {
+// 	tmp := a.Num*b.Den - b.Num*a.Den
+// 	//if(tmp) return (int)((tmp ^ a.den ^ b.den)>>63)|1;
+// 	//else if(b.den && a.den) return 0;
+// 	//else if(a.num && b.num) return (a.num>>31) - (b.num>>31);
+// 	//else                    return INT_MIN;
+// 	if tmp == 0 {
 
-	}
-	//t, _, _ := ffcommon.GetAvutilDll().NewProc("av_cmp_q").Call()
-	//if t == 0 {
-	//
-	//}
-	//res = ffcommon.StringFromPtr(t)
-	return
-}
+// 	}
+// 	//t, _, _ := ffcommon.GetAvutilDll().NewProc("av_cmp_q").Call()
+// 	//if t == 0 {
+// 	//
+// 	//}
+// 	//res = ffcommon.StringFromPtr(t)
+// 	return
+// }
 
 /**
  * Convert an AVRational to a `double`.
@@ -133,7 +134,7 @@ func AvCmpQ(a, b AVRational) (res ffcommon.FInt) {
 //return a.num / (double) a.den;
 //}
 func AvQ2d(a AVRational) (res ffcommon.FDouble) {
-	res = float64(a.Num) / float64(a.Den)
+	res = ffcommon.FDouble(a.Num) / ffcommon.FDouble(a.Den)
 	return
 }
 
@@ -158,9 +159,6 @@ func AvReduce(dst_num, dst_den ffcommon.FInt, num, den, max ffcommon.FInt64T) (r
 		uintptr(den),
 		uintptr(max),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -177,9 +175,6 @@ func AvMulQ(b, c AVRational) (res AVRational) {
 		uintptr(unsafe.Pointer(&b)),
 		uintptr(unsafe.Pointer(&c)),
 	)
-	if t == 0 {
-
-	}
 	res = *(*AVRational)(unsafe.Pointer(&t))
 	return
 }
@@ -196,9 +191,6 @@ func AvDivQ(b, c AVRational) (res AVRational) {
 		uintptr(unsafe.Pointer(&b)),
 		uintptr(unsafe.Pointer(&c)),
 	)
-	if t == 0 {
-
-	}
 	res = *(*AVRational)(unsafe.Pointer(&t))
 	return
 }
@@ -215,9 +207,6 @@ func AvAddQ(b, c AVRational) (res AVRational) {
 		uintptr(unsafe.Pointer(&b)),
 		uintptr(unsafe.Pointer(&c)),
 	)
-	if t == 0 {
-
-	}
 	res = *(*AVRational)(unsafe.Pointer(&t))
 	return
 }
@@ -234,9 +223,6 @@ func AvSubQ(b, c AVRational) (res AVRational) {
 		uintptr(unsafe.Pointer(&b)),
 		uintptr(unsafe.Pointer(&c)),
 	)
-	if t == 0 {
-
-	}
 	res = *(*AVRational)(unsafe.Pointer(&t))
 	return
 }
@@ -273,9 +259,6 @@ func AvD2q(d ffcommon.FDouble, max ffcommon.FInt) (res AVRational) {
 		uintptr(unsafe.Pointer(&d)),
 		uintptr(max),
 	)
-	if t == 0 {
-
-	}
 	res = *(*AVRational)(unsafe.Pointer(&t))
 	return
 }
@@ -297,9 +280,6 @@ func AvNearerQ(q, q1, q2 AVRational) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(&q1)),
 		uintptr(unsafe.Pointer(&q2)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -317,9 +297,6 @@ func AvFindNearestQIdx(q AVRational, q_list *AVRational) (res ffcommon.FInt) {
 		uintptr(unsafe.Pointer(&q)),
 		uintptr(unsafe.Pointer(q_list)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FInt(t)
 	return
 }
@@ -338,9 +315,6 @@ func AvQ2intfloat(q AVRational) (res ffcommon.FUint32T) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_q2intfloat").Call(
 		uintptr(unsafe.Pointer(&q)),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.FUint32T(t)
 	return
 }
@@ -357,9 +331,6 @@ func AvGcdQ(a, b AVRational, max_den ffcommon.FInt, def AVRational) (res AVRatio
 		uintptr(max_den),
 		uintptr(unsafe.Pointer(&def)),
 	)
-	if t == 0 {
-
-	}
 	res = *(*AVRational)(unsafe.Pointer(&t))
 	return
 }

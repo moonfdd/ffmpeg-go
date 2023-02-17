@@ -1,8 +1,9 @@
 package libavutil
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -79,9 +80,6 @@ type AVMurMur3 struct {
 
 func AvMurmur3Alloc() (res *AVMurMur3) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_murmur3_alloc").Call()
-	if t == 0 {
-
-	}
 	res = (*AVMurMur3)(unsafe.Pointer(t))
 	return
 }
@@ -98,14 +96,10 @@ func AvMurmur3Alloc() (res *AVMurMur3) {
  */
 //void av_murmur3_init_seeded(struct AVMurMur3 *c, uint64_t seed);
 func (c *AVMurMur3) AvMurmur3InitSeeded(seed ffcommon.FUint64T) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_murmur3_init_seeded").Call(
+	ffcommon.GetAvutilDll().NewProc("av_murmur3_init_seeded").Call(
 		uintptr(unsafe.Pointer(c)),
 		uintptr(seed),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -121,13 +115,9 @@ func (c *AVMurMur3) AvMurmur3InitSeeded(seed ffcommon.FUint64T) {
  */
 //void av_murmur3_init(struct AVMurMur3 *c);
 func (c *AVMurMur3) AvMurmur3Init() {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_murmur3_init").Call(
+	ffcommon.GetAvutilDll().NewProc("av_murmur3_init").Call(
 		uintptr(unsafe.Pointer(c)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -148,9 +138,6 @@ func (c *AVMurMur3) AvMurmur3Update(src *ffcommon.FUint8T, len0 ffcommon.FIntOrS
 		uintptr(unsafe.Pointer(src)),
 		uintptr(len0),
 	)
-	if t == 0 {
-
-	}
 	res = ffcommon.StringFromPtr(t)
 	return
 }
@@ -163,14 +150,10 @@ func (c *AVMurMur3) AvMurmur3Update(src *ffcommon.FUint8T, len0 ffcommon.FIntOrS
  */
 //void av_murmur3_final(struct AVMurMur3 *c, uint8_t dst[16]);
 func (c *AVMurMur3) AvMurmur3Final(dst [16]ffcommon.FUint8T) {
-	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_murmur3_final").Call(
+	ffcommon.GetAvutilDll().NewProc("av_murmur3_final").Call(
 		uintptr(unsafe.Pointer(c)),
 		uintptr(unsafe.Pointer(&dst)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**

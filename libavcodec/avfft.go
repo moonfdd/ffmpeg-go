@@ -1,8 +1,9 @@
 package libavcodec
 
 import (
-	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
 )
 
 /*
@@ -60,9 +61,6 @@ func AvFftInit(nbits, inverse ffcommon.FInt) (res *FFTContext) {
 		uintptr(nbits),
 		uintptr(inverse),
 	)
-	if t == 0 {
-
-	}
 	res = (*FFTContext)(unsafe.Pointer(t))
 	return
 }
@@ -72,14 +70,10 @@ func AvFftInit(nbits, inverse ffcommon.FInt) (res *FFTContext) {
  */
 //void av_fft_permute(FFTContext *s, FFTComplex *z);
 func (s *FFTContext) AvFftPermute(z *FFTComplex) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_fft_permute").Call(
+	ffcommon.GetAvcodecDll().NewProc("av_fft_permute").Call(
 		uintptr(unsafe.Pointer(s)),
 		uintptr(unsafe.Pointer(z)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
@@ -88,25 +82,17 @@ func (s *FFTContext) AvFftPermute(z *FFTComplex) {
  */
 //void av_fft_calc(FFTContext *s, FFTComplex *z);
 func (s *FFTContext) AvFftCalc(z *FFTComplex) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_fft_calc").Call(
+	ffcommon.GetAvcodecDll().NewProc("av_fft_calc").Call(
 		uintptr(unsafe.Pointer(s)),
 		uintptr(unsafe.Pointer(z)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //void av_fft_end(FFTContext *s);
 func (s *FFTContext) AvFftEnd() {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_fft_end").Call(
+	ffcommon.GetAvcodecDll().NewProc("av_fft_end").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //FFTContext *av_mdct_init(int nbits, int inverse, double scale);
@@ -116,61 +102,42 @@ func AvMdctInit(nbits, inverse ffcommon.FInt, scale ffcommon.FDouble) (res *FFTC
 		uintptr(inverse),
 		uintptr(unsafe.Pointer(&scale)),
 	)
-	if t == 0 {
-
-	}
 	res = (*FFTContext)(unsafe.Pointer(t))
 	return
 }
 
 //void av_imdct_calc(FFTContext *s, FFTSample *output, const FFTSample *input);
 func (s *FFTContext) AvImdctCalc(output, input *ffcommon.FFTSample) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_imdct_calc").Call(
+	ffcommon.GetAvcodecDll().NewProc("av_imdct_calc").Call(
 		uintptr(unsafe.Pointer(s)),
 		uintptr(unsafe.Pointer(output)),
 		uintptr(unsafe.Pointer(input)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //void av_imdct_half(FFTContext *s, FFTSample *output, const FFTSample *input);
 func (s *FFTContext) AvImdctHalf(output, input *ffcommon.FFTSample) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_imdct_half").Call(
+	ffcommon.GetAvcodecDll().NewProc("av_imdct_half").Call(
 		uintptr(unsafe.Pointer(s)),
 		uintptr(unsafe.Pointer(output)),
 		uintptr(unsafe.Pointer(input)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //void av_mdct_calc(FFTContext *s, FFTSample *output, const FFTSample *input);
 func (s *FFTContext) AvMdctCalc(output, input *ffcommon.FFTSample) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_mdct_calc").Call(
+	ffcommon.GetAvcodecDll().NewProc("av_mdct_calc").Call(
 		uintptr(unsafe.Pointer(s)),
 		uintptr(unsafe.Pointer(output)),
 		uintptr(unsafe.Pointer(input)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //void av_mdct_end(FFTContext *s);
 func (s *FFTContext) AvMdctEnd(output, input *ffcommon.FFTSample) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_mdct_end").Call(
+	ffcommon.GetAvcodecDll().NewProc("av_mdct_end").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /* Real Discrete Fourier Transform */
@@ -198,34 +165,23 @@ func AvRdftInit(nbits ffcommon.FInt, trans RDFTransformType) (res *RDFTContext) 
 		uintptr(nbits),
 		uintptr(trans),
 	)
-	if t == 0 {
-
-	}
 	res = (*RDFTContext)(unsafe.Pointer(t))
 	return
 }
 
 //void av_rdft_calc(RDFTContext *s, FFTSample *data);
 func (s *RDFTContext) AvRdftCalc(data *ffcommon.FFTSample) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_rdft_calc").Call(
+	ffcommon.GetAvcodecDll().NewProc("av_rdft_calc").Call(
 		uintptr(unsafe.Pointer(s)),
 		uintptr(unsafe.Pointer(data)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //void av_rdft_end(RDFTContext *s);
 func (s *RDFTContext) AvRdftEnd() {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_rdft_end").Call(
+	ffcommon.GetAvcodecDll().NewProc("av_rdft_end").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /* Discrete Cosine Transform */
@@ -258,34 +214,23 @@ func AvDctInit(nbits ffcommon.FInt, type0 DCTTransformType) (res *DCTContext) {
 		uintptr(nbits),
 		uintptr(type0),
 	)
-	if t == 0 {
-
-	}
 	res = (*DCTContext)(unsafe.Pointer(t))
 	return
 }
 
 //void av_dct_calc(DCTContext *s, FFTSample *data);
 func (s *DCTContext) AvDctCalc(data *ffcommon.FFTSample) {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_dct_calc").Call(
+	ffcommon.GetAvcodecDll().NewProc("av_dct_calc").Call(
 		uintptr(unsafe.Pointer(s)),
 		uintptr(unsafe.Pointer(data)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 //void av_dct_end (DCTContext *s);
 func (s *DCTContext) AvDctEnd() {
-	t, _, _ := ffcommon.GetAvcodecDll().NewProc("av_dct_end").Call(
+	ffcommon.GetAvcodecDll().NewProc("av_dct_end").Call(
 		uintptr(unsafe.Pointer(s)),
 	)
-	if t == 0 {
-
-	}
-	return
 }
 
 /**
