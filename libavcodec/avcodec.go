@@ -3521,10 +3521,9 @@ func (avctx *AVCodecContext) AvcodecDecodeSubtitle2(sub *AVSubtitle,
 *      other errors: legitimate decoding errors
  */
 //int avcodec_send_packet(AVCodecContext *avctx, const AVPacket *avpkt);
-func (avctx *AVCodecContext) AvcodecSendPacket(sub *AVSubtitle, avpkt *AVPacket) (res ffcommon.FInt) {
+func (avctx *AVCodecContext) AvcodecSendPacket(avpkt *AVPacket) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvcodecDll().NewProc("avcodec_send_packet").Call(
 		uintptr(unsafe.Pointer(avctx)),
-		uintptr(unsafe.Pointer(sub)),
 		uintptr(unsafe.Pointer(avpkt)),
 	)
 	res = ffcommon.FInt(t)

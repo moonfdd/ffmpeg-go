@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/exec"
 
 	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"github.com/moonfdd/ffmpeg-go/libavformat"
@@ -35,4 +36,13 @@ func main() {
 	}
 
 	libavformat.AvformatCloseInput(&fmt_ctx) //关闭文件
+
+	fmt.Println("---------------------------------")
+	cmd := exec.Command("./lib/ffprobe", fileName)
+	data, err2 := cmd.CombinedOutput()
+	if err2 != nil {
+		fmt.Println("ffprobe err = ", err2)
+		return
+	}
+	fmt.Println(string(data))
 }

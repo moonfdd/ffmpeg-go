@@ -14,7 +14,7 @@ func main() {
 	ffcommon.SetAvcodecPath("./lib/avcodec-58.dll")
 	ffcommon.SetAvdevicePath("./lib/avdevice-56.dll")
 	ffcommon.SetAvfilterPath("./lib/avfilter-56.dll")
-	ffcommon.SetAvformatPath("./lib/avformat-56.dll")
+	ffcommon.SetAvformatPath("./lib/avformat-58.dll")
 	ffcommon.SetAvpostprocPath("./lib/postproc-55.dll")
 	ffcommon.SetAvswresamplePath("./lib/swresample-3.dll")
 	ffcommon.SetAvswscalePath("./lib/swscale-5.dll")

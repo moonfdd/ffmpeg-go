@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/exec"
+	"unsafe"
 
 	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"github.com/moonfdd/ffmpeg-go/libavcodec"
@@ -20,17 +22,26 @@ func main() {
 	ffcommon.SetAvpostprocPath("./lib/postproc-55.dll")
 	ffcommon.SetAvswresamplePath("./lib/swresample-3.dll")
 	ffcommon.SetAvswscalePath("./lib/swscale-5.dll")
+
+	genDir := "./out"
+	_, err := os.Stat(genDir)
+	if err != nil {
+		if os.IsNotExist(err) {
+			os.Mkdir(genDir, 0777) //  Everyone can read write and execute
+		}
+	}
+
 	filePath := "./resources/big_buck_bunny.mp4" //文件地址
 	videoStreamIndex := -1                       //视频流所在流序列中的索引
 	ret := int32(0)                              //默认返回值
 
 	//需要的变量名并初始化
 	var fmtCtx *libavformat.AVFormatContext
-	var pkt *libavcodec.AVPacket
+	var pkt *libavformat.AVPacket
 	var codecCtx *libavcodec.AVCodecContext
 	var avCodecPara *libavcodec.AVCodecParameters
 	var codec *libavcodec.AVCodec
-	libavformat.AvformatNetworkInit()
+	yuvFrame := libavutil.AvFrameAlloc()
 
 	for {
 		//=========================== 创建AVFormatContext结构体 ===============================//
@@ -49,6 +60,7 @@ func main() {
 			fmt.Printf("cannot retrive video info\n")
 			break
 		}
+
 		//循环查找视频中包含的流信息，直到找到视频类型的流
 		//便将其记录下来 保存到videoStreamIndex变量中
 		for i := uint32(0); i < fmtCtx.NbStreams; i++ {
@@ -89,24 +101,65 @@ func main() {
 			break
 		}
 
+		file, err := os.OpenFile("./out/result.yuv", os.O_CREATE|os.O_RDWR, 0777)
+		if err != nil {
+			fmt.Println("open file failed,err:", err)
+			return
+		}
+
+		w := codecCtx.Width
+		h := codecCtx.Height
+
 		//=========================== 分配AVPacket结构体 ===============================//
-		i := 0                                            //用于帧计数
+		i := 0
 		pkt = libavcodec.AvPacketAlloc()                  //分配一个packet
 		pkt.AvNewPacket(codecCtx.Width * codecCtx.Height) //调整packet的数据
 
 		//===========================  读取视频信息 ===============================//
 		for fmtCtx.AvReadFrame(pkt) >= 0 { //读取的是一帧视频  数据存入一个AVPacket的结构中
 			if pkt.StreamIndex == uint32(videoStreamIndex) {
-				i++ //只计算视频帧
+				if codecCtx.AvcodecSendPacket(pkt) == 0 {
+					for codecCtx.AvcodecReceiveFrame(yuvFrame) == 0 {
+						i++
+						bytes := []byte{}
+						//y
+						ptr := uintptr(unsafe.Pointer(yuvFrame.Data[0]))
+						for j := int32(0); j < w*h; j++ {
+							bytes = append(bytes, *(*byte)(unsafe.Pointer(ptr)))
+							ptr++
+						}
+						//u
+						ptr = uintptr(unsafe.Pointer(yuvFrame.Data[1]))
+						for j := int32(0); j < w*h/4; j++ {
+							bytes = append(bytes, *(*byte)(unsafe.Pointer(ptr)))
+							ptr++
+						}
+						//v
+						ptr = uintptr(unsafe.Pointer(yuvFrame.Data[2]))
+						for j := int32(0); j < w*h/4; j++ {
+							bytes = append(bytes, *(*byte)(unsafe.Pointer(ptr)))
+							ptr++
+						}
+						//写文件
+						file.Write(bytes)
+					}
+				}
 			}
 			pkt.AvPacketUnref() //重置pkt的内容
 		}
 		fmt.Printf("There are %d frames int total.\n", i)
+		file.Close()
 		break
 	}
-	//===========================释放所有指针===============================//
+	// //===========================释放所有指针===============================//
 	libavcodec.AvPacketFree(&pkt)
 	codecCtx.AvcodecClose()
 	libavformat.AvformatCloseInput(&fmtCtx)
 	fmtCtx.AvformatFreeContext()
+	libavutil.AvFrameFree(&yuvFrame)
+
+	_, err = exec.Command("./lib/ffplay.exe", "-pixel_format", "yuv420p", "-video_size", "640x360", "./out/result.yuv").Output()
+	if err != nil {
+		fmt.Println("play err = ", err)
+	}
 }
