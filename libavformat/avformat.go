@@ -2533,10 +2533,14 @@ func (s *AVFormatContext) AvNewProgram(id ffcommon.FInt) (res *AVProgram) {
 //const char *format_name, const char *filename);
 func AvformatAllocOutputContext2(ctx **AVFormatContext, oformat *AVOutputFormat,
 	format_name, filename ffcommon.FConstCharP) (res ffcommon.FInt) {
+	formatptr := uintptr(0)
+	if format_name != "" {
+		formatptr = ffcommon.UintPtrFromString(format_name)
+	}
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avformat_alloc_output_context2").Call(
 		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(oformat)),
-		ffcommon.UintPtrFromString(format_name),
+		formatptr,
 		ffcommon.UintPtrFromString(filename),
 	)
 	res = ffcommon.FInt(t)

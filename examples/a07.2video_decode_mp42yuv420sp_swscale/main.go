@@ -112,6 +112,7 @@ func main() {
 		numBytes := libavutil.AvImageGetBufferSize(libavutil.AV_PIX_FMT_RGB32, codecCtx.Width, codecCtx.Height, 1)
 		out_buffer := libavutil.AvMalloc(uint64(numBytes))
 
+		os.Remove("./out/result.yuv")
 		file, err := os.OpenFile("./out/result.yuv", os.O_CREATE|os.O_RDWR, 0777)
 		if err != nil {
 			fmt.Println("open file failed,err:", err)

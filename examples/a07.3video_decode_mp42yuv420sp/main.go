@@ -101,6 +101,7 @@ func main() {
 			break
 		}
 
+		os.Remove("./out/result.yuv")
 		file, err := os.OpenFile("./out/result.yuv", os.O_CREATE|os.O_RDWR, 0777)
 		if err != nil {
 			fmt.Println("open file failed,err:", err)

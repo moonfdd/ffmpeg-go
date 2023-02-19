@@ -293,7 +293,7 @@ const FF_QUALITY_SCALE = FF_LAMBDA_SCALE //FIXME maybe remove
  */
 
 //const AV_NOPTS_VALUE    =      ((int64_t)UINT64_C(0x8000000000000000))
-const AV_NOPTS_VALUE = 0x8000000000000000
+const AV_NOPTS_VALUE = -9223372036854775808 //0x8000000000000000
 
 /**
  * Internal time base represented as integer
