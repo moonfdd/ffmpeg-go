@@ -189,9 +189,10 @@ func AvRescaleRnd(a, b, c ffcommon.FInt64T, rnd AVRounding) (res ffcommon.FInt64
 func AvRescaleQ(a ffcommon.FInt64T, bq, cq AVRational) (res ffcommon.FInt64T) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_rescale_q").Call(
 		uintptr(a),
-		uintptr(unsafe.Pointer(&bq)),
-		uintptr(unsafe.Pointer(&cq)),
+		*(*uintptr)(unsafe.Pointer(&bq)), // 特殊处理，不然返回结果是错误的
+		*(*uintptr)(unsafe.Pointer(&cq)), // 特殊处理，不然返回结果是错误的
 	)
+
 	res = ffcommon.FInt64T(t)
 	return
 }
@@ -208,8 +209,8 @@ func AvRescaleQ(a ffcommon.FInt64T, bq, cq AVRational) (res ffcommon.FInt64T) {
 func AvRescaleQRnd(a ffcommon.FInt64T, bq, cq AVRational, rnd AVRounding) (res ffcommon.FInt64T) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_rescale_q_rnd").Call(
 		uintptr(a),
-		uintptr(unsafe.Pointer(&bq)),
-		uintptr(unsafe.Pointer(&cq)),
+		*(*uintptr)(unsafe.Pointer(&bq)), // 特殊处理，不然返回结果是错误的
+		*(*uintptr)(unsafe.Pointer(&cq)), // 特殊处理，不然返回结果是错误的
 		uintptr(rnd),
 	)
 	res = ffcommon.FInt64T(t)

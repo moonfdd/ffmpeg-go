@@ -2557,8 +2557,12 @@ func AvformatAllocOutputContext2(ctx **AVFormatContext, oformat *AVOutputFormat,
  */
 //ff_const59 AVInputFormat *av_find_input_format(const char *short_name);
 func AvFindInputFormat(short_name ffcommon.FConstCharP) (res *AVInputFormat) {
+	ptr := uintptr(0)
+	if short_name != "" {
+		ptr = ffcommon.UintPtrFromString(short_name)
+	}
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_find_input_format").Call(
-		ffcommon.UintPtrFromString(short_name),
+		ptr,
 	)
 	res = (*AVInputFormat)(unsafe.Pointer(t))
 	return
@@ -2697,9 +2701,13 @@ func (pb *AVIOContext) AvProbeInputBuffer(fmt0 AVInputFormat,
  */
 //int avformat_open_input(AVFormatContext **ps, const char *url, ff_const59 AVInputFormat *fmt, AVDictionary **options);
 func AvformatOpenInput(ps **AVFormatContext, url ffcommon.FConstCharP, fmt0 *AVInputFormat, options **AVDictionary) (res ffcommon.FInt) {
+	urlptr := uintptr(0)
+	if url != "" {
+		urlptr = ffcommon.UintPtrFromString(url)
+	}
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avformat_open_input").Call(
 		uintptr(unsafe.Pointer(ps)),
-		ffcommon.UintPtrFromString(url),
+		urlptr,
 		uintptr(unsafe.Pointer(fmt0)),
 		uintptr(unsafe.Pointer(options)),
 	)
