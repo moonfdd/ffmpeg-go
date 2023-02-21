@@ -1,0 +1,265 @@
+package main
+
+import (
+	"fmt"
+	"os"
+	"os/exec"
+	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
+	"github.com/moonfdd/ffmpeg-go/libavcodec"
+	"github.com/moonfdd/ffmpeg-go/libavformat"
+	"github.com/moonfdd/ffmpeg-go/libavutil"
+	"github.com/moonfdd/ffmpeg-go/libswresample"
+)
+
+func main() {
+	os.Setenv("Path", os.Getenv("Path")+";./lib")
+	ffcommon.SetAvutilPath("./lib/avutil-56.dll")
+	ffcommon.SetAvcodecPath("./lib/avcodec-58.dll")
+	ffcommon.SetAvdevicePath("./lib/avdevice-58.dll")
+	ffcommon.SetAvfilterPath("./lib/avfilter-56.dll")
+	ffcommon.SetAvformatPath("./lib/avformat-58.dll")
+	ffcommon.SetAvpostprocPath("./lib/postproc-55.dll")
+	ffcommon.SetAvswresamplePath("./lib/swresample-3.dll")
+	ffcommon.SetAvswscalePath("./lib/swscale-5.dll")
+
+	genDir := "./out"
+	_, err := os.Stat(genDir)
+	if err != nil {
+		if os.IsNotExist(err) {
+			os.Mkdir(genDir, 0777) //  Everyone can read write and execute
+		}
+	}
+
+	//./lib/ffmpeg -i .\resources\big_buck_bunny.mp4 -f s16le -ar 44100 -ac 2 -acodec pcm_s16le -vn ./out/s16le.pcm
+	// ./lib/ffmpeg -y -f s16le -ac 2 -ar 44100 -acodec pcm_s16le -vn -i ./out/s16le.pcm ./out/s16le.mp3
+	inFileName := "./out/s16le.pcm"
+	// inFileName := "./out/test16.pcm"
+	outFileName := "./out/output19.mp3"
+
+	// ./lib/ffmpeg -i ./resources/big_buck_bunny.mp4 -acodec libmp3lame -vn ./out/test.mp3
+	//是否存在mp3文件
+	// _, err = os.Stat(inVFileName)
+	// if err != nil {
+	// 	if os.IsNotExist(err) {
+	// 		fmt.Println("create mp3 file")
+	// 		exec.Command("./lib/ffmpeg", "-i", "./resources/big_buck_bunny.mp4", "-acodec", "libmp3lame", "-vn", inVFileName, "-y").CombinedOutput()
+	// 	}
+	// }
+
+	// os.Remove(outFileName)
+	// f, err := os.OpenFile(outFileName, os.O_CREATE|os.O_RDWR, 0777)
+	// if err != nil {
+	// 	fmt.Println("open file failed,err:", err)
+	// 	return
+	// }
+
+	var fmtCtx *libavformat.AVFormatContext
+	var codecCtx *libavcodec.AVCodecContext
+	var codec *libavcodec.AVCodec
+	var pkt *libavcodec.AVPacket
+	var frame *libavutil.AVFrame
+
+	fmtCtx = libavformat.AvformatAllocContext()
+	frame = libavutil.AvFrameAlloc()
+	pkt = libavcodec.AvPacketAlloc()
+	pkt.Data = nil
+	pkt.Size = 0
+
+	ret := int32(0)
+
+	for {
+		//==========Output information============
+
+		if libavformat.AvformatAllocOutputContext2(&fmtCtx, nil, "", outFileName) < 0 {
+			fmt.Printf("Cannot alloc output file context.\n")
+			return
+		}
+		outFmt := fmtCtx.Oformat
+
+		if libavformat.AvioOpen(&fmtCtx.Pb, outFileName, libavformat.AVIO_FLAG_READ_WRITE) < 0 {
+			fmt.Printf("Cannot open output file.\n")
+			return
+		}
+
+		outStream := fmtCtx.AvformatNewStream(nil)
+		if outStream == nil {
+			fmt.Printf("Cannot create a new stream to output file.\n")
+			return
+		}
+
+		//设置参数
+		codecPara := fmtCtx.GetStream(uint32(outStream.Index)).Codecpar
+		codecPara.CodecType = libavutil.AVMEDIA_TYPE_AUDIO
+		codecPara.CodecId = outFmt.AudioCodec
+		codecPara.SampleRate = 44100
+		codecPara.ChannelLayout = libavutil.AV_CH_LAYOUT_STEREO
+		codecPara.BitRate = 128000
+		codecPara.Format = libavutil.AV_SAMPLE_FMT_FLTP
+		codecPara.Channels = libavutil.AvGetChannelLayoutNbChannels(codecPara.ChannelLayout)
+
+		//查找编码器
+		codec = libavcodec.AvcodecFindEncoder(outFmt.AudioCodec)
+		if codec == nil {
+			fmt.Printf("Cannot find audio encoder.\n")
+			return
+		}
+
+		codecCtx = codec.AvcodecAllocContext3()
+		codecCtx.AvcodecParametersToContext(codecPara)
+		if codecCtx == nil {
+			fmt.Printf("Cannot alloc codec ctx from para.\n")
+			return
+		}
+
+		//打开编码器
+		if codecCtx.AvcodecOpen2(codec, nil) < 0 {
+			fmt.Printf("Cannot open encoder.\n")
+			return
+		}
+
+		fmtCtx.AvDumpFormat(0, outFileName, 1)
+
+		//===========
+		frame.NbSamples = codecCtx.FrameSize
+		frame.Format = int32(codecCtx.SampleFmt)
+		frame.Channels = 2
+
+		// PCM重采样
+		var swr_ctx *libswresample.SwrContext
+		swr_ctx = swr_ctx.SwrAllocSetOpts(libavutil.AvGetDefaultChannelLayout(codecCtx.Channels),
+			codecCtx.SampleFmt,
+			codecCtx.SampleRate,
+			libavutil.AvGetDefaultChannelLayout(frame.Channels),
+			libavutil.AV_SAMPLE_FMT_S16, // PCM源文件的采样格式
+			44100,
+			0, uintptr(0))
+		swr_ctx.SwrInit()
+
+		/* 分配空间 */
+		// uint8_t **convert_data = (uint8_t**)calloc(codecCtx->channels,sizeof(*convert_data));
+		convert_data := (**byte)(unsafe.Pointer(libavutil.AvCalloc(uint64(codecCtx.Channels), 8)))
+		libavutil.AvSamplesAlloc(convert_data, nil, codecCtx.Channels, codecCtx.FrameSize,
+			codecCtx.SampleFmt, 0)
+
+		size := libavutil.AvSamplesGetBufferSize(nil, codecCtx.Channels,
+			codecCtx.FrameSize, codecCtx.SampleFmt, 1)
+		frameBuf := libavutil.AvMalloc(uint64(size))
+		libavcodec.AvcodecFillAudioFrame(frame, codecCtx.Channels, codecCtx.SampleFmt,
+			(*byte)(unsafe.Pointer(frameBuf)), size, 1)
+
+		//写帧头
+		ret = fmtCtx.AvformatWriteHeader(nil)
+		if ret == 0 {
+
+		}
+		inFile, err := os.Open(inFileName)
+		if err != nil {
+			fmt.Printf("annot open input file.\n")
+			return
+		}
+
+		for i := 0; ; i++ {
+			//输入一帧数据的长度
+			length := frame.NbSamples * libavutil.AvGetBytesPerSample(libavutil.AV_SAMPLE_FMT_S16) * frame.Channels
+			//读PCM：特意注意读取的长度，否则可能出现转码之后声音变快或者变慢
+			buf := make([]byte, length)
+			n, err := inFile.Read(buf)
+			if err != nil {
+				fmt.Println("read end")
+				break
+			}
+			if n <= 0 {
+				break
+			}
+
+			for j := 0; j < n; j++ {
+				*(*byte)(unsafe.Pointer(frameBuf + uintptr(j))) = buf[j]
+			}
+
+			swr_ctx.SwrConvert(convert_data, codecCtx.FrameSize,
+				(**byte)(unsafe.Pointer(&frame.Data)),
+				frame.NbSamples)
+
+			//输出一帧数据的长度
+			length = codecCtx.FrameSize * libavutil.AvGetBytesPerSample(codecCtx.SampleFmt)
+			//双通道赋值（输出的AAC为双通道）
+			// memcpy(frame->data[0],convert_data[0],length);
+			// memcpy(frame->data[1],convert_data[1],length);
+			c := *(*[2]uintptr)(unsafe.Pointer(convert_data))
+			fd0 := uintptr(unsafe.Pointer(frame.Data[0]))
+			cd0 := uintptr(unsafe.Pointer(c[0]))
+			fd1 := uintptr(unsafe.Pointer(frame.Data[1]))
+			cd1 := uintptr(unsafe.Pointer(c[1]))
+			for j := int32(0); j < length; j++ {
+				*(*byte)(unsafe.Pointer(fd0)) = *(*byte)(unsafe.Pointer(cd0))
+				*(*byte)(unsafe.Pointer(fd1)) = *(*byte)(unsafe.Pointer(cd1))
+				fd0++
+				cd0++
+				fd1++
+				cd1++
+			}
+
+			frame.Pts = int64(i * 100)
+			if codecCtx.AvcodecSendFrame(frame) < 0 {
+				for codecCtx.AvcodecReceivePacket(pkt) >= 0 {
+					pkt.StreamIndex = uint32(outStream.Index)
+					fmt.Printf("write %4d frame, size=%d, length=%d\n", i, size, length)
+					fmtCtx.AvWriteFrame(pkt)
+				}
+			}
+			pkt.AvPacketUnref()
+		}
+
+		// flush encoder
+		if flush_encoder(fmtCtx, codecCtx, int(outStream.Index)) < 0 {
+			fmt.Printf("Cannot flush encoder.\n")
+			return
+		}
+
+		// write trailer
+		fmtCtx.AvWriteTrailer()
+
+		inFile.Close()
+		libavutil.AvFree(frameBuf)
+		break
+	}
+
+	codecCtx.AvcodecClose()
+	libavutil.AvFree(uintptr(unsafe.Pointer(frame)))
+	fmtCtx.Pb.AvioClose()
+	fmtCtx.AvformatFreeContext()
+	return
+	fmt.Println("-----------------------------------------")
+	// ./lib/ffplay -ar 44100 -ac 2 -f s16le -i ./out/test.pcm
+	_, err = exec.Command("./lib/ffplay.exe", "-ar", "44100", "-ac", "2", "-f", "s16le", "-i", "./out/test16.pcm").Output()
+	if err != nil {
+		fmt.Println("play err = ", err)
+	}
+}
+func flush_encoder(fmtCtx *libavformat.AVFormatContext, codecCtx *libavcodec.AVCodecContext, aStreamIndex int) int32 {
+	ret := int32(0)
+	enc_pkt := libavcodec.AvPacketAlloc()
+	enc_pkt.Data = nil
+	enc_pkt.Size = 0
+
+	if codecCtx.Codec.Capabilities&libavcodec.AV_CODEC_CAP_DELAY == 0 {
+		return 0
+	}
+
+	fmt.Printf("Flushing stream #%d encoder\n", aStreamIndex)
+	ret = codecCtx.AvcodecSendFrame(nil)
+	if ret >= 0 {
+		for codecCtx.AvcodecReceivePacket(enc_pkt) >= 0 {
+			fmt.Printf("success encoder 1 frame.\n")
+			/* mux encoded frame */
+			ret = fmtCtx.AvWriteFrame(enc_pkt)
+			if ret < 0 {
+				break
+			}
+		}
+	}
+
+	return ret
+}

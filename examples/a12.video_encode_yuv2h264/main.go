@@ -177,7 +177,7 @@ func main() {
 				break
 			}
 
-			for i := 0; i < len(buf); i++ {
+			for i := 0; i < n; i++ {
 				*(*byte)(unsafe.Pointer(picture_buf + uintptr(i))) = buf[i]
 			}
 

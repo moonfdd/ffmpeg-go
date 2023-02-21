@@ -229,7 +229,6 @@ func main() {
 					ret = inCodecCtx.AvcodecReceiveFrame(srcFrame)
 					for ret >= 0 {
 						if ret == -libavutil.EAGAIN || ret == libavutil.AVERROR_EOF {
-							fmt.Println("哈哈")
 							break
 						} else if ret < 0 {
 							fmt.Printf("Error during decoding\n")
@@ -283,10 +282,9 @@ func main() {
 	libavcodec.AvcodecFreeContext(&outCodecCtx)
 	outCodecCtx.AvcodecClose()
 	libavformat.AvformatCloseInput(&outFmtCtx)
-	return
 
 	fmt.Println("-----------------------------------------")
-	_, err = exec.Command("./lib/ffplay.exe", "./out/result.mp4").Output()
+	_, err = exec.Command("./lib/ffplay.exe", "./out/result14.h264").Output()
 	if err != nil {
 		fmt.Println("play err = ", err)
 	}
