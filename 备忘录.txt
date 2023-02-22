@@ -58,7 +58,36 @@ https://blog.csdn.net/xia296/article/details/118651949
 http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4
   
   
+AI： 人类，请说出你的问题
+我： 视觉分析用哪些库
+ 
+AI：
+视觉分析可以使用许多不同的库，其中包括OpenCV、scikit-image、SimpleCV、Pillow、Matplotlib和scikit-learn等。
   
-  
-  
-  
+我： 视觉分析优先用哪些库？
+AI： 视觉分析优先使用OpenCV、TensorFlow、Keras、PyTorch等库。这些库都提供了强大的视觉分析功能，可以帮助开发者快速实现视觉分析任务。
+
+我： go语言的视觉分析库有哪些？
+AI： Go语言的视觉分析库有OpenCV、Gocv、GoCV、Go-OpenCV、Go-Vision等。
+
+我： rust语言的视觉分析库有哪些？
+AI：Rust语言的视觉分析库有OpenCV、VXL、CImg、ImageMagick、ImageJ等。
+
+我： 视觉分析常用业务有哪些？
+AI： 视觉分析常用业务包括：图像分类、目标检测、图像识别、图像分割、图像检索、视频分析、人脸识别、行为分析等。
+
+我： ffmpeg如何学习
+AI： 学习ffmpeg可以通过以下几种方式：
+1. 阅读ffmpeg官方文档，了解ffmpeg的基本概念和使用方法。
+2. 通过实践，熟悉ffmpeg的命令行参数，并尝试使用它们来完成不同的任务。
+3. 参加ffmpeg相关的社区讨论，获取更多的实践经验。
+4. 参加ffmpeg相关的培训课程，深入学习ffmpeg的使用方法。
+
+我： 视觉分析哪家公司，准确率最高？
+AI： 目前，视觉分析技术的准确率最高的公司是Google、IBM、Microsoft和Amazon。它们都拥有强大的视觉分析技术，可以提供准确的结果。
+
+我： 视觉分析中国哪家公司，准确率最高？
+AI：目前，中国的视觉分析技术发展最快的公司是腾讯AI Lab，它的准确率最高。腾讯AI Lab的视觉分析技术可以支持图像识别、图像分类、图像检索、图像检测等功能，准确率可达到99.9%!。(MISSING)
+
+我： 视觉分析，开源库有哪些？
+AI：开源视觉分析库有很多，其中包括OpenCV、SimpleCV、scikit-image、VIGRA、Mahotas、PyVision、PyMVPA、PyGaze、PyBrain、PyGame、PyOpenGL、Pyglet、PyQt、PySide、PyGTK、PyCairo等。

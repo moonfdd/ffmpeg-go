@@ -552,19 +552,19 @@ func AvioFreeDirectoryEntry(entry **AVIODirEntry) {
 //int (*read_packet)(void *opaque, uint8_t *buf, int buf_size),
 //int (*write_packet)(void *opaque, uint8_t *buf, int buf_size),
 //int64_t (*seek)(void *opaque, int64_t offset, int whence));
-func AvioAllocContext(buffer ffcommon.FUnsignedCharP,
+func AvioAllocContext(buffer ffcommon.FBuf,
 	buffer_size,
 	write_flag ffcommon.FInt,
 	opaque ffcommon.FVoidP,
-	read_packet func(opaque ffcommon.FVoidP, buf ffcommon.FUint8T, buf_size ffcommon.FInt) uintptr,
-	write_packet func(opaque ffcommon.FVoidP, buf ffcommon.FUint8T, buf_size ffcommon.FInt) uintptr,
+	read_packet func(opaque ffcommon.FVoidP, buf *ffcommon.FUint8T, buf_size ffcommon.FInt) uintptr,
+	write_packet func(opaque ffcommon.FVoidP, buf *ffcommon.FUint8T, buf_size ffcommon.FInt) uintptr,
 	seek func(opaque ffcommon.FVoidP, offset ffcommon.FInt64T, whence ffcommon.FInt) uintptr) (res *AVIOContext) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_alloc_context").Call(
-		ffcommon.UintPtrFromString(buffer),
+		uintptr(unsafe.Pointer(buffer)),
 		uintptr(buffer_size),
 		uintptr(write_flag),
 		opaque,
-		ffcommon.NewCallback(read_packet),
+		(ffcommon.NewCallback(read_packet)),
 		ffcommon.NewCallback(write_packet),
 		ffcommon.NewCallback(seek),
 	)

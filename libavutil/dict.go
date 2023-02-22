@@ -87,8 +87,8 @@ const AV_DICT_APPEND = 32         /**< If the entry already exists, append to it
 const AV_DICT_MULTIKEY = 64 /**< Allow to store several equal keys in the dictionary */
 
 type AVDictionaryEntry struct {
-	key   ffcommon.FCharPStruct
-	value ffcommon.FCharPStruct
+	Key   ffcommon.FCharPStruct
+	Value ffcommon.FCharPStruct
 }
 
 //typedef struct AVDictionary AVDictionary;
