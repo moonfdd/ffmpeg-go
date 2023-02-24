@@ -50,3 +50,24 @@ func NewCallback(fn interface{}) uintptr {
 	u := syscall.NewCallback(fn)
 	return u
 }
+
+func ByteSliceFromByteP(data *byte, len0 int) []byte {
+	if data == nil {
+		return nil
+	}
+	if len0 == 0 {
+		return []byte{}
+	}
+
+	var sliceHeader sliceHeader
+	sliceHeader.Data = data
+	sliceHeader.Len = len0
+	sliceHeader.Cap = len0
+	return *(*[]byte)(unsafe.Pointer(&sliceHeader))
+}
+
+type sliceHeader struct {
+	Data *byte
+	Len  int
+	Cap  int
+}

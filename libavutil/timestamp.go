@@ -1,5 +1,11 @@
 package libavutil
 
+import (
+	"fmt"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
+)
+
 /*
  * This file is part of FFmpeg.
  *
@@ -49,7 +55,7 @@ const AV_TS_MAX_STRING_SIZE = 32
 //return buf;
 //}
 //todo
-// func av_ts_make_string() (res ffcommon.FCharP) {
+// func AvTsMakeString(buf ffcommon.FBuf, ts ffcommon.FInt64T) (res ffcommon.FCharP) {
 // 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_ts_make_string").Call()
 // 	if t == 0 {
 
@@ -63,15 +69,14 @@ const AV_TS_MAX_STRING_SIZE = 32
  * function arguments but never stand-alone.
  */
 //#define av_ts2str(ts) av_ts_make_string((char[AV_TS_MAX_STRING_SIZE]){0}, ts)
-//todo
-// func av_ts2str() (res ffcommon.FCharP) {
-// 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_ts2str").Call()
-// 	if t == 0 {
-
-// 	}
-// 	res = ffcommon.StringFromPtr(t)
-// 	return
-// }
+func AvTs2str(ts ffcommon.FInt64T) (res ffcommon.FCharP) {
+	if ts == AV_NOPTS_VALUE {
+		res = "NOPTS"
+	} else {
+		res = fmt.Sprint(ts)
+	}
+	return
+}
 
 /**
  * Fill the provided buffer with a string containing a timestamp time
@@ -89,7 +94,7 @@ const AV_TS_MAX_STRING_SIZE = 32
 //return buf;
 //}
 //todo
-// func av_ts_make_time_string() (res ffcommon.FCharP) {
+// func AvTsMakeTimeString() (res ffcommon.FCharP) {
 // 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_ts_make_time_string").Call()
 // 	if t == 0 {
 
@@ -103,14 +108,13 @@ const AV_TS_MAX_STRING_SIZE = 32
  * function arguments but never stand-alone.
  */
 //#define av_ts2timestr(ts, tb) av_ts_make_time_string((char[AV_TS_MAX_STRING_SIZE]){0}, ts, tb)
-//todo
-// func av_ts2timestr() (res ffcommon.FCharP) {
-// 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_ts2timestr").Call()
-// 	if t == 0 {
-
-// 	}
-// 	res = ffcommon.StringFromPtr(t)
-// 	return
-// }
+func AvTs2timestr(ts ffcommon.FInt64T, tb *AVRational) (res ffcommon.FCharP) {
+	if ts == AV_NOPTS_VALUE {
+		res = "NOPTS"
+	} else {
+		res = fmt.Sprintf("%.6g", AvQ2d(*tb)*float64(ts))
+	}
+	return
+}
 
 //#endif /* AVUTIL_TIMESTAMP_H */

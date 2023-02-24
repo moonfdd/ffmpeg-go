@@ -233,9 +233,9 @@ func AvRescaleQRnd(a ffcommon.FInt64T, bq, cq AVRational, rnd AVRounding) (res f
 func AvCompareTs(ts_a ffcommon.FInt64T, tb_a AVRational, ts_b ffcommon.FInt64T, tb_b AVRational) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_compare_ts").Call(
 		uintptr(ts_a),
-		uintptr(unsafe.Pointer(&tb_a)),
+		*(*uintptr)(unsafe.Pointer(&tb_a)),
 		uintptr(ts_b),
-		uintptr(unsafe.Pointer(&tb_b)),
+		*(*uintptr)(unsafe.Pointer(&tb_b)),
 	)
 	res = ffcommon.FInt(t)
 	return

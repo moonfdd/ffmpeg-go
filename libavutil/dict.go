@@ -226,7 +226,7 @@ func AvDictParseString(pm **AVDictionary, str, key_val_sep, pairs_sep ffcommon.F
  *           by this function, callers should free the associated memory.
  */
 //int av_dict_copy(AVDictionary **dst, const AVDictionary *src, int flags);
-func AvDictCopy(dst, src **AVDictionary, flags ffcommon.FInt) (res ffcommon.FInt) {
+func AvDictCopy(dst **AVDictionary, src *AVDictionary, flags ffcommon.FInt) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_dict_copy").Call(
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(src)),

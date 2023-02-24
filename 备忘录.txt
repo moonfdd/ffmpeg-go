@@ -56,6 +56,11 @@ libavcodec
 
 https://blog.csdn.net/xia296/article/details/118651949
 http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4
+
+https://wenku.baidu.com/view/5c89a1322179168884868762caaedd3383c4b52d.html?_wkts_=1677139619849&bdQuery=ffmpeg+decode_video.c  ffmepg示例
+./lib/ffmpeg -i D:/俄罗斯.mp4 -acodec mp2 -vn test3.mp2
+
+./lib/ffmpeg.exe -i .\resources\big_buck_bunny.mp4 -vcodec mpeg1video -acodec aac ./out/mpeg1video.mkv
   
   
 AI： 人类，请说出你的问题

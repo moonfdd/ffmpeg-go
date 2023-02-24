@@ -391,6 +391,28 @@ type AVCodec struct {
 	CodecTags *ffcommon.FUint32T
 }
 
+func (this *AVCodec) GetSampleFmt(index ffcommon.FUnsignedInt) (res libavutil.AVSampleFormat) {
+	t := uintptr(unsafe.Pointer(this.SampleFmts)) + 4*uintptr(index)
+	t = *(*uintptr)(unsafe.Pointer(t))
+	// res = *(*libavutil.AVSampleFormat)(unsafe.Pointer(t))
+	res = libavutil.AVSampleFormat(t)
+	return
+}
+
+func (this *AVCodec) GetSupportedSamplerate(index ffcommon.FUnsignedInt) (res ffcommon.FInt) {
+	t := uintptr(unsafe.Pointer(this.SupportedSamplerates)) + 4*uintptr(index)
+	t = *(*uintptr)(unsafe.Pointer(t))
+	res = ffcommon.FInt(t)
+	return
+}
+
+func (this *AVCodec) GetChannelLayout(index ffcommon.FUnsignedInt) (res ffcommon.FUint64T) {
+	t := uintptr(unsafe.Pointer(this.ChannelLayouts)) + 8*uintptr(index)
+	t = *(*uintptr)(unsafe.Pointer(t))
+	res = ffcommon.FUint64T(t)
+	return
+}
+
 /**
  * Iterate over all registered codecs.
  *
