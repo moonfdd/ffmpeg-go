@@ -123,9 +123,8 @@ func (ctx *AVMD5) AvMd5Final(dst *ffcommon.FUint8T) {
 //#else
 //void av_md5_sum(uint8_t *dst, const uint8_t *src, size_t len);
 //#endif
-func (ctx *AVMD5) AvMd5Sum(dst, src *ffcommon.FUint8T, len0 ffcommon.FUnsignedIntOrSizeT) {
+func AvMd5Sum(dst, src *ffcommon.FUint8T, len0 ffcommon.FUnsignedIntOrSizeT) {
 	ffcommon.GetAvutilDll().NewProc("av_md5_sum").Call(
-		uintptr(unsafe.Pointer(ctx)),
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(unsafe.Pointer(src)),
 		uintptr(len0),

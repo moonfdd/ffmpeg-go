@@ -347,13 +347,13 @@ func AvImageGetBufferSize(pix_fmt AVPixelFormat, width, height, align ffcommon.F
 //const uint8_t * const src_data[4], const int src_linesize[4],
 //enum AVPixelFormat pix_fmt, int width, int height, int align);
 func AvImageCopyToBuffer(dst *ffcommon.FUint8T, dst_size ffcommon.FInt,
-	src_data [4]*ffcommon.FUint8T, src_linesize [4]ffcommon.FInt,
+	src_data *[4]*ffcommon.FUint8T, src_linesize *[4]ffcommon.FInt,
 	pix_fmt AVPixelFormat, width, height, align ffcommon.FInt) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_image_copy_to_buffer").Call(
 		uintptr(unsafe.Pointer(dst)),
 		uintptr(dst_size),
-		uintptr(unsafe.Pointer(&src_data)),
-		uintptr(unsafe.Pointer(&src_linesize)),
+		uintptr(unsafe.Pointer(src_data)),
+		uintptr(unsafe.Pointer(src_linesize)),
 		uintptr(pix_fmt),
 		uintptr(width),
 		uintptr(height),

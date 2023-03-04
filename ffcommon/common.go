@@ -11,6 +11,9 @@ func BytePtrFromString(str string) (res *byte) {
 }
 
 func UintPtrFromString(str string) uintptr {
+	if str == "" {
+		return uintptr(0)
+	}
 	return uintptr(unsafe.Pointer(BytePtrFromString(str)))
 }
 

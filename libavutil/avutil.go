@@ -292,7 +292,7 @@ const FF_QUALITY_SCALE = FF_LAMBDA_SCALE //FIXME maybe remove
  * either pts or dts.
  */
 
-//const AV_NOPTS_VALUE    =      ((int64_t)UINT64_C(0x8000000000000000))
+// const AV_NOPTS_VALUE    =      ((int64_t)UINT64_C(0x8000000000000000))
 const AV_NOPTS_VALUE = -9223372036854775808 //0x8000000000000000
 
 /**
@@ -305,7 +305,7 @@ const AV_TIME_BASE = 1000000
  * Internal time base represented as fractional value
  */
 
-//const AV_TIME_BASE_Q     =     (AVRational){1, AV_TIME_BASE}
+// const AV_TIME_BASE_Q     =     (AVRational){1, AV_TIME_BASE}
 var AV_TIME_BASE_Q = AVRational{Num: 1, Den: AV_TIME_BASE}
 
 //tudo
@@ -405,13 +405,9 @@ func AvIntListLengthForSize(elsize ffcommon.FUnsigned, list0 ffcommon.FConstVoid
  */
 //#define av_int_list_length(list, term) \
 //av_int_list_length_for_size(sizeof(*(list)), list, term)
-//todo
-// func av_int_list_length() (res ffcommon.FCharP) {
-// 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_int_list_length").Call()
-// 	if t == 0 {
-
-// 	}
-// 	res = ffcommon.StringFromPtr(t)
+// func AvIntListLength(list0 ffcommon.FConstVoidP, term ffcommon.FUint64T) (res ffcommon.FUnsigned) {
+// 	a := unsafe.Sizeof(uintptr(0))
+// 	res = AvIntListLengthForSize(uint32(a), list0, term)
 // 	return
 // }
 

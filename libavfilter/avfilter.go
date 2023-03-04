@@ -88,19 +88,19 @@ func AvfilterLicense() (res ffcommon.FConstCharP) {
 	return
 }
 
-//typedef struct AVFilterContext AVFilterContext;
-//typedef struct AVFilterLink    AVFilterLink;
-//typedef struct AVFilterPad     AVFilterPad;
+// typedef struct AVFilterContext AVFilterContext;
+// typedef struct AVFilterLink    AVFilterLink;
+// typedef struct AVFilterPad     AVFilterPad;
 type AVFrame = libavutil.AVFrame
 type AVMediaType = libavutil.AVMediaType
 type AVFilterPad struct {
 }
 
-//typedef struct AVFilterFormats AVFilterFormats;
+// typedef struct AVFilterFormats AVFilterFormats;
 type AVFilterFormats struct {
 }
 
-//typedef struct AVFilterChannelLayouts AVFilterChannelLayouts;
+// typedef struct AVFilterChannelLayouts AVFilterChannelLayouts;
 type AVFilterChannelLayouts struct {
 }
 
@@ -493,16 +493,29 @@ type AVFilterContext struct {
 	ExtraHwFrames ffcommon.FInt
 }
 
-/**
- * Lists of formats / etc. supported by an end of a link.
- *
- * This structure is directly part of AVFilterLink, in two copies:
- * one for the source filter, one for the destination filter.
+func (this *AVFilterContext) GetInput(index ffcommon.FUnsignedInt) (res *AVFilterLink) {
+	t := uintptr(unsafe.Pointer(this.Inputs)) + 8*uintptr(index)
+	t = *(*uintptr)(unsafe.Pointer(t))
+	res = (*AVFilterLink)(unsafe.Pointer(t))
+	return
+}
 
- * These lists are used for negotiating the format to actually be used,
- * which will be loaded into the format and channel_layout members of
- * AVFilterLink, when chosen.
- */
+/*
+*
+
+  - Lists of formats / etc. supported by an end of a link.
+    *
+
+  - This structure is directly part of AVFilterLink, in two copies:
+
+  - one for the source filter, one for the destination filter.
+
+  - These lists are used for negotiating the format to actually be used,
+
+  - which will be loaded into the format and channel_layout members of
+
+  - AVFilterLink, when chosen.
+*/
 type AVFilterFormatsConfig struct {
 
 	/**
@@ -740,7 +753,7 @@ type AVFilterLink struct {
  */
 //int avfilter_link(AVFilterContext *src, unsigned srcpad,
 //AVFilterContext *dst, unsigned dstpad);
-func AvfilterLink(src *AVFilterContext, srcpad ffcommon.FUnsigned, dst *AVFilterContext, dstpad ffcommon.FUnsigned) (res ffcommon.FInt) {
+func (src *AVFilterContext) AvfilterLink(srcpad ffcommon.FUnsigned, dst *AVFilterContext, dstpad ffcommon.FUnsigned) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("avfilter_link").Call(
 		uintptr(unsafe.Pointer(src)),
 		uintptr(srcpad),
@@ -920,9 +933,13 @@ func AvfilterGetByName(name ffcommon.FConstCharP) (res *AVFilter) {
  */
 //int avfilter_init_str(AVFilterContext *ctx, const char *args);
 func (ctx *AVFilterContext) AvfilterInitStr(args ffcommon.FConstCharP) (res ffcommon.FInt) {
+	argsPtr := uintptr(0)
+	if args != "" {
+		argsPtr = ffcommon.UintPtrFromString(args)
+	}
 	t, _, _ := ffcommon.GetAvfilterDll().NewProc("avfilter_init_str").Call(
 		uintptr(unsafe.Pointer(ctx)),
-		ffcommon.UintPtrFromString(args),
+		argsPtr,
 	)
 	res = ffcommon.FInt(t)
 	return
@@ -1008,7 +1025,7 @@ func AvfilterGetClass() (res *AVClass) {
 	return
 }
 
-//typedef struct AVFilterGraphInternal AVFilterGraphInternal;
+// typedef struct AVFilterGraphInternal AVFilterGraphInternal;
 type AVFilterGraphInternal struct {
 }
 
@@ -1266,16 +1283,16 @@ func AvfilterGraphFree(graphctx **AVFilterGraph) {
 type AVFilterInOut struct {
 
 	/** unique name for this input/output in the list */
-	name ffcommon.FCharPStruct
+	Name ffcommon.FCharPStruct
 
 	/** filter context associated to this input/output */
-	filter_ctx *AVFilterContext
+	FilterCtx *AVFilterContext
 
 	/** index of the filt_ctx pad to use for linking */
-	pad_idx ffcommon.FInt
+	PadIdx ffcommon.FInt
 
 	/** next input/input in the list, NULL if this is the last */
-	next *AVFilterInOut
+	Next *AVFilterInOut
 }
 
 /**

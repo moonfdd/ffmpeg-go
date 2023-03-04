@@ -564,7 +564,7 @@ func AvioAllocContext(buffer ffcommon.FBuf,
 		uintptr(buffer_size),
 		uintptr(write_flag),
 		opaque,
-		(ffcommon.NewCallback(read_packet)),
+		ffcommon.NewCallback(read_packet),
 		ffcommon.NewCallback(write_packet),
 		ffcommon.NewCallback(seek),
 	)
@@ -585,7 +585,7 @@ func AvioContextFree(s **AVIOContext) {
 	)
 }
 
-//void avio_w8(AVIOContext *s, int b);
+// void avio_w8(AVIOContext *s, int b);
 func (s *AVIOContext) AvioW8(b ffcommon.FInt) {
 	ffcommon.GetAvformatDll().NewProc("avio_w8").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -593,7 +593,7 @@ func (s *AVIOContext) AvioW8(b ffcommon.FInt) {
 	)
 }
 
-//void avio_write(AVIOContext *s, const unsigned char *buf, int size);
+// void avio_write(AVIOContext *s, const unsigned char *buf, int size);
 func (s *AVIOContext) AvioWrite(buf ffcommon.FUnsignedCharP, size ffcommon.FInt) {
 	ffcommon.GetAvformatDll().NewProc("avio_write").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -602,7 +602,7 @@ func (s *AVIOContext) AvioWrite(buf ffcommon.FUnsignedCharP, size ffcommon.FInt)
 	)
 }
 
-//void avio_wl64(AVIOContext *s, uint64_t val);
+// void avio_wl64(AVIOContext *s, uint64_t val);
 func (s *AVIOContext) AvioWl64(val ffcommon.FUint64T) {
 	ffcommon.GetAvformatDll().NewProc("avio_wl64").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -610,7 +610,7 @@ func (s *AVIOContext) AvioWl64(val ffcommon.FUint64T) {
 	)
 }
 
-//void avio_wb64(AVIOContext *s, uint64_t val);
+// void avio_wb64(AVIOContext *s, uint64_t val);
 func (s *AVIOContext) AvioWb64(val ffcommon.FUint64T) {
 	ffcommon.GetAvformatDll().NewProc("avio_wb64").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -618,7 +618,7 @@ func (s *AVIOContext) AvioWb64(val ffcommon.FUint64T) {
 	)
 }
 
-//void avio_wl32(AVIOContext *s, unsigned int val);
+// void avio_wl32(AVIOContext *s, unsigned int val);
 func (s *AVIOContext) AvioWl32(val ffcommon.FUnsignedInt) {
 	ffcommon.GetAvformatDll().NewProc("avio_wl32").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -626,7 +626,7 @@ func (s *AVIOContext) AvioWl32(val ffcommon.FUnsignedInt) {
 	)
 }
 
-//void avio_wb32(AVIOContext *s, unsigned int val);
+// void avio_wb32(AVIOContext *s, unsigned int val);
 func (s *AVIOContext) AvioWb32(val ffcommon.FUnsignedInt) {
 	ffcommon.GetAvformatDll().NewProc("avio_wb32").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -634,7 +634,7 @@ func (s *AVIOContext) AvioWb32(val ffcommon.FUnsignedInt) {
 	)
 }
 
-//void avio_wl24(AVIOContext *s, unsigned int val);
+// void avio_wl24(AVIOContext *s, unsigned int val);
 func (s *AVIOContext) AvioWl24(val ffcommon.FUnsignedInt) {
 	ffcommon.GetAvformatDll().NewProc("avio_wl24").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -642,7 +642,7 @@ func (s *AVIOContext) AvioWl24(val ffcommon.FUnsignedInt) {
 	)
 }
 
-//void avio_wb24(AVIOContext *s, unsigned int val);
+// void avio_wb24(AVIOContext *s, unsigned int val);
 func (s *AVIOContext) AvioWb24(val ffcommon.FUnsignedInt) {
 	ffcommon.GetAvformatDll().NewProc("avio_wb24").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -650,7 +650,7 @@ func (s *AVIOContext) AvioWb24(val ffcommon.FUnsignedInt) {
 	)
 }
 
-//void avio_wl16(AVIOContext *s, unsigned int val);
+// void avio_wl16(AVIOContext *s, unsigned int val);
 func (s *AVIOContext) AvioWl16(val ffcommon.FUnsignedInt) {
 	ffcommon.GetAvformatDll().NewProc("avio_wl16").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -658,7 +658,7 @@ func (s *AVIOContext) AvioWl16(val ffcommon.FUnsignedInt) {
 	)
 }
 
-//void avio_wb16(AVIOContext *s, unsigned int val);
+// void avio_wb16(AVIOContext *s, unsigned int val);
 func (s *AVIOContext) AvioWb16(val ffcommon.FUnsignedInt) {
 	ffcommon.GetAvformatDll().NewProc("avio_wb16").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -925,7 +925,7 @@ func (s *AVIOContext) AvioR8() (res ffcommon.FInt) {
 	return
 }
 
-//unsigned int avio_rl16(AVIOContext *s);
+// unsigned int avio_rl16(AVIOContext *s);
 func (s *AVIOContext) AvioRl16() (res ffcommon.FUnsignedInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_rl16").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -934,7 +934,7 @@ func (s *AVIOContext) AvioRl16() (res ffcommon.FUnsignedInt) {
 	return
 }
 
-//unsigned int avio_rl24(AVIOContext *s);
+// unsigned int avio_rl24(AVIOContext *s);
 func (s *AVIOContext) AvioRl24() (res ffcommon.FUnsignedInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_rl24").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -943,7 +943,7 @@ func (s *AVIOContext) AvioRl24() (res ffcommon.FUnsignedInt) {
 	return
 }
 
-//unsigned int avio_rl32(AVIOContext *s);
+// unsigned int avio_rl32(AVIOContext *s);
 func (s *AVIOContext) AvioRl32() (res ffcommon.FUnsignedInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_rl32").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -952,7 +952,7 @@ func (s *AVIOContext) AvioRl32() (res ffcommon.FUnsignedInt) {
 	return
 }
 
-//uint64_t     avio_rl64(AVIOContext *s);
+// uint64_t     avio_rl64(AVIOContext *s);
 func (s *AVIOContext) AvioRl64() (res ffcommon.FUint64T) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_rl64").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -961,7 +961,7 @@ func (s *AVIOContext) AvioRl64() (res ffcommon.FUint64T) {
 	return
 }
 
-//unsigned int avio_rb16(AVIOContext *s);
+// unsigned int avio_rb16(AVIOContext *s);
 func (s *AVIOContext) AvioRb16() (res ffcommon.FUnsignedInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_rb16").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -970,7 +970,7 @@ func (s *AVIOContext) AvioRb16() (res ffcommon.FUnsignedInt) {
 	return
 }
 
-//unsigned int avio_rb24(AVIOContext *s);
+// unsigned int avio_rb24(AVIOContext *s);
 func (s *AVIOContext) AvioRb24() (res ffcommon.FUnsignedInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_rb24").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -979,7 +979,7 @@ func (s *AVIOContext) AvioRb24() (res ffcommon.FUnsignedInt) {
 	return
 }
 
-//unsigned int avio_rb32(AVIOContext *s);
+// unsigned int avio_rb32(AVIOContext *s);
 func (s *AVIOContext) AvioRb32() (res ffcommon.FUnsignedInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_rb32").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -988,7 +988,7 @@ func (s *AVIOContext) AvioRb32() (res ffcommon.FUnsignedInt) {
 	return
 }
 
-//uint64_t     avio_rb64(AVIOContext *s);
+// uint64_t     avio_rb64(AVIOContext *s);
 func (s *AVIOContext) AvioRb64() (res ffcommon.FUint64T) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_rb64").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -1043,7 +1043,7 @@ func (pb *AVIOContext) AvioGetStr16le(maxlen ffcommon.FInt, buf ffcommon.FCharP,
 	return
 }
 
-//int avio_get_str16be(AVIOContext *pb, int maxlen, char *buf, int buflen);
+// int avio_get_str16be(AVIOContext *pb, int maxlen, char *buf, int buflen);
 func (pb *AVIOContext) AvioGetStr16be(maxlen ffcommon.FInt, buf ffcommon.FCharP, buflen ffcommon.FInt) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avio_get_str16be").Call(
 		uintptr(unsafe.Pointer(pb)),

@@ -139,7 +139,7 @@ const AV_CODEC_CAP_PARAM_CHANGE = (1 << 14)
  */
 const AV_CODEC_CAP_OTHER_THREADS = (1 << 15)
 
-//#if FF_API_AUTO_THREADS
+// #if FF_API_AUTO_THREADS
 const AV_CODEC_CAP_AUTO_THREADS = AV_CODEC_CAP_OTHER_THREADS
 
 //#endif
@@ -208,7 +208,7 @@ type AVProfile struct {
 	Name    ffcommon.FCharPStruct ///< short name for the profile
 }
 
-//typedef struct AVCodecDefault AVCodecDefault;
+// typedef struct AVCodecDefault AVCodecDefault;
 type AVCodecDefault struct {
 }
 
@@ -217,8 +217,8 @@ type AVCodecDefault struct {
 //type AVSubtitle struct {
 //}
 
-//type AVPacket struct {
-//}
+// type AVPacket struct {
+// }
 type AVClass = libavutil.AVClass
 type AVRational = libavutil.AVRational
 type AVPixelFormat = libavutil.AVPixelFormat
@@ -564,19 +564,19 @@ type AVCodecHWConfig struct {
 	 * accept.  If set to AV_PIX_FMT_NONE, this applies to all pixel
 	 * formats supported by the codec.
 	 */
-	pix_fmt AVPixelFormat
+	PixFmt AVPixelFormat
 	/**
 	 * Bit set of AV_CODEC_HW_CONFIG_METHOD_* flags, describing the possible
 	 * setup methods which can be used with this configuration.
 	 */
-	methods ffcommon.FInt
+	Methods ffcommon.FInt
 	/**
 	 * The device type associated with the configuration.
 	 *
 	 * Must be set for AV_CODEC_HW_CONFIG_METHOD_HW_DEVICE_CTX and
 	 * AV_CODEC_HW_CONFIG_METHOD_HW_FRAMES_CTX, otherwise unused.
 	 */
-	device_type AVHWDeviceType
+	DeviceType AVHWDeviceType
 }
 type AVHWDeviceType = libavutil.AVHWDeviceType
 

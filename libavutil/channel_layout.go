@@ -195,9 +195,9 @@ func AvGetExtendedChannelLayout(name ffcommon.FConstCharP, channel_layout *ffcom
  * @param buf_size size in bytes of the buffer
  */
 //void av_get_channel_layout_string(char *buf, int buf_size, int nb_channels, uint64_t channel_layout);
-func AvGetChannelLayoutString(buf ffcommon.FCharP, buf_size, nb_channels ffcommon.FInt, channel_layout ffcommon.FUint64T) {
+func AvGetChannelLayoutString(buf ffcommon.FBuf, buf_size, nb_channels ffcommon.FInt, channel_layout ffcommon.FUint64T) {
 	ffcommon.GetAvutilDll().NewProc("av_get_channel_layout_string").Call(
-		ffcommon.UintPtrFromString(buf),
+		uintptr(unsafe.Pointer(buf)),
 		uintptr(buf_size),
 		uintptr(nb_channels),
 		uintptr(channel_layout),

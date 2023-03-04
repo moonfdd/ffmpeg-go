@@ -1,6 +1,7 @@
 package libavutil
 
 import (
+	"math"
 	"unsafe"
 
 	"github.com/moonfdd/ffmpeg-go/ffcommon"
@@ -663,7 +664,7 @@ func AvOptEvalFlags(obj ffcommon.FVoidP, o *AVOption, val ffcommon.FConstCharP, 
 	return
 }
 
-//int av_opt_eval_int   (void *obj, const AVOption *o, const char *val, int        *int_out);
+// int av_opt_eval_int   (void *obj, const AVOption *o, const char *val, int        *int_out);
 func AvOptEvalInt(obj ffcommon.FVoidP, o *AVOption, val ffcommon.FConstCharP, int_out *ffcommon.FInt) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_eval_int").Call(
 		obj,
@@ -675,7 +676,7 @@ func AvOptEvalInt(obj ffcommon.FVoidP, o *AVOption, val ffcommon.FConstCharP, in
 	return
 }
 
-//int av_opt_eval_int64 (void *obj, const AVOption *o, const char *val, int64_t    *int64_out);
+// int av_opt_eval_int64 (void *obj, const AVOption *o, const char *val, int64_t    *int64_out);
 func AvOptEvalInt64(obj ffcommon.FVoidP, o *AVOption, val ffcommon.FConstCharP, int64_out *ffcommon.FInt64T) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_eval_int64").Call(
 		obj,
@@ -687,7 +688,7 @@ func AvOptEvalInt64(obj ffcommon.FVoidP, o *AVOption, val ffcommon.FConstCharP, 
 	return
 }
 
-//int av_opt_eval_float (void *obj, const AVOption *o, const char *val, float      *float_out);
+// int av_opt_eval_float (void *obj, const AVOption *o, const char *val, float      *float_out);
 func AvOptEvalFloat(obj ffcommon.FVoidP, o *AVOption, val ffcommon.FConstCharP, float_out *ffcommon.FFloat) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_eval_float").Call(
 		obj,
@@ -699,7 +700,7 @@ func AvOptEvalFloat(obj ffcommon.FVoidP, o *AVOption, val ffcommon.FConstCharP, 
 	return
 }
 
-//int av_opt_eval_double(void *obj, const AVOption *o, const char *val, double     *double_out);
+// int av_opt_eval_double(void *obj, const AVOption *o, const char *val, double     *double_out);
 func AvOptEvalDouble(obj ffcommon.FVoidP, o *AVOption, val ffcommon.FConstCharP, double_out *ffcommon.FDouble) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_eval_double").Call(
 		obj,
@@ -711,7 +712,7 @@ func AvOptEvalDouble(obj ffcommon.FVoidP, o *AVOption, val ffcommon.FConstCharP,
 	return
 }
 
-//int av_opt_eval_q     (void *obj, const AVOption *o, const char *val, AVRational *q_out);
+// int av_opt_eval_q     (void *obj, const AVOption *o, const char *val, AVRational *q_out);
 func AvOptEvalQ(obj ffcommon.FVoidP, o *AVOption, val ffcommon.FConstCharP, q_out *AVRational) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_eval_q").Call(
 		obj,
@@ -938,7 +939,7 @@ func AvOptSet(obj ffcommon.FVoidP, name, val ffcommon.FConstCharP, search_flags 
 	return
 }
 
-//int av_opt_set_int     (void *obj, const char *name, int64_t     val, int search_flags);
+// int av_opt_set_int     (void *obj, const char *name, int64_t     val, int search_flags);
 func AvOptSetInt(obj ffcommon.FVoidP, name ffcommon.FConstCharP, val ffcommon.FInt64T, search_flags ffcommon.FInt) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_set_int").Call(
 		obj,
@@ -950,7 +951,7 @@ func AvOptSetInt(obj ffcommon.FVoidP, name ffcommon.FConstCharP, val ffcommon.FI
 	return
 }
 
-//int av_opt_set_double  (void *obj, const char *name, double      val, int search_flags);
+// int av_opt_set_double  (void *obj, const char *name, double      val, int search_flags);
 func AvOptSetDouble(obj ffcommon.FVoidP, name ffcommon.FConstCharP, val ffcommon.FDouble, search_flags ffcommon.FInt) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_set_double").Call(
 		obj,
@@ -962,31 +963,32 @@ func AvOptSetDouble(obj ffcommon.FVoidP, name ffcommon.FConstCharP, val ffcommon
 	return
 }
 
-//int av_opt_set_q       (void *obj, const char *name, AVRational  val, int search_flags);
+// int av_opt_set_q       (void *obj, const char *name, AVRational  val, int search_flags);
 func AvOptSetQ(obj ffcommon.FVoidP, name ffcommon.FConstCharP, val AVRational, search_flags ffcommon.FInt) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_set_q").Call(
 		obj,
 		ffcommon.UintPtrFromString(name),
-		uintptr(unsafe.Pointer(&val)),
+		*(*uintptr)(unsafe.Pointer(&val)),
 		uintptr(search_flags),
 	)
 	res = ffcommon.FInt(t)
 	return
 }
 
-//int av_opt_set_bin     (void *obj, const char *name, const uint8_t *val, int size, int search_flags);
-func AvOptSetBin(obj ffcommon.FVoidP, name ffcommon.FConstCharP, val *ffcommon.FUint8T, search_flags ffcommon.FInt) (res ffcommon.FInt) {
+// int av_opt_set_bin     (void *obj, const char *name, const uint8_t *val, int size, int search_flags);
+func AvOptSetBin(obj ffcommon.FVoidP, name ffcommon.FConstCharP, val *ffcommon.FUint8T, size ffcommon.FInt, search_flags ffcommon.FInt) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_set_bin").Call(
 		obj,
 		ffcommon.UintPtrFromString(name),
 		uintptr(unsafe.Pointer(val)),
+		uintptr(size),
 		uintptr(search_flags),
 	)
 	res = ffcommon.FInt(t)
 	return
 }
 
-//int av_opt_set_image_size(void *obj, const char *name, int w, int h, int search_flags);
+// int av_opt_set_image_size(void *obj, const char *name, int w, int h, int search_flags);
 func AvOptSetImageSize(obj ffcommon.FVoidP, name ffcommon.FConstCharP, w, h ffcommon.FInt, search_flags ffcommon.FInt) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_set_image_size").Call(
 		obj,
@@ -999,7 +1001,7 @@ func AvOptSetImageSize(obj ffcommon.FVoidP, name ffcommon.FConstCharP, w, h ffco
 	return
 }
 
-//int av_opt_set_pixel_fmt (void *obj, const char *name, enum AVPixelFormat fmt, int search_flags);
+// int av_opt_set_pixel_fmt (void *obj, const char *name, enum AVPixelFormat fmt, int search_flags);
 func AvOptSetPixelFmt(obj ffcommon.FVoidP, name ffcommon.FConstCharP, fmt0 AVPixelFormat, search_flags ffcommon.FInt) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_set_pixel_fmt").Call(
 		obj,
@@ -1011,7 +1013,7 @@ func AvOptSetPixelFmt(obj ffcommon.FVoidP, name ffcommon.FConstCharP, fmt0 AVPix
 	return
 }
 
-//int av_opt_set_sample_fmt(void *obj, const char *name, enum AVSampleFormat fmt, int search_flags);
+// int av_opt_set_sample_fmt(void *obj, const char *name, enum AVSampleFormat fmt, int search_flags);
 func AvOptSetSampleFmt(obj ffcommon.FVoidP, name ffcommon.FConstCharP, fmt0 AVSampleFormat, search_flags ffcommon.FInt) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_set_sample_fmt").Call(
 		obj,
@@ -1023,7 +1025,7 @@ func AvOptSetSampleFmt(obj ffcommon.FVoidP, name ffcommon.FConstCharP, fmt0 AVSa
 	return
 }
 
-//int av_opt_set_video_rate(void *obj, const char *name, AVRational val, int search_flags);
+// int av_opt_set_video_rate(void *obj, const char *name, AVRational val, int search_flags);
 func AvOptSetVideoRate(obj ffcommon.FVoidP, name ffcommon.FConstCharP, val AVRational, search_flags ffcommon.FInt) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_set_video_rate").Call(
 		obj,
@@ -1035,7 +1037,7 @@ func AvOptSetVideoRate(obj ffcommon.FVoidP, name ffcommon.FConstCharP, val AVRat
 	return
 }
 
-//int av_opt_set_channel_layout(void *obj, const char *name, int64_t ch_layout, int search_flags);
+// int av_opt_set_channel_layout(void *obj, const char *name, int64_t ch_layout, int search_flags);
 func AvOptSetChannelLayout(obj ffcommon.FVoidP, name ffcommon.FConstCharP, ch_layout ffcommon.FInt64T, search_flags ffcommon.FInt) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_set_channel_layout").Call(
 		obj,
@@ -1078,6 +1080,17 @@ func AvOptSetDictVal(obj ffcommon.FVoidP, name ffcommon.FConstCharP, val *AVDict
 //AVERROR(EINVAL) : \
 //av_opt_set_bin(obj, name, (const uint8_t *)(val), \
 //av_int_list_length(val, term) * sizeof(*(val)), flags))
+//todo可能有问题，暂时别用
+func AvOptSetIntList(obj ffcommon.FVoidP, name ffcommon.FConstCharP, val uintptr, size ffcommon.FInt /*sizeof(*(val))*/, term ffcommon.FUint64T, flags ffcommon.FInt) (res ffcommon.FInt) {
+	//a := AvIntListLength(val, term)
+	a := AvIntListLengthForSize(uint32(size), val, term)
+	if a > uint32(math.MaxInt32/size) {
+		res = -EINVAL
+	} else {
+		res = AvOptSetBin(obj, name, (*byte)(unsafe.Pointer(val)), size, flags)
+	}
+	return
+}
 
 /**
  * @}
@@ -1115,7 +1128,7 @@ func AvOptGet(obj ffcommon.FVoidP, name ffcommon.FConstCharP, search_flags ffcom
 	return
 }
 
-//int av_opt_get_int     (void *obj, const char *name, int search_flags, int64_t    *out_val);
+// int av_opt_get_int     (void *obj, const char *name, int search_flags, int64_t    *out_val);
 func AvOptGetInt(obj ffcommon.FVoidP, name ffcommon.FConstCharP, search_flags ffcommon.FInt, out_val *ffcommon.FInt64T) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_get_int").Call(
 		obj,
@@ -1127,7 +1140,7 @@ func AvOptGetInt(obj ffcommon.FVoidP, name ffcommon.FConstCharP, search_flags ff
 	return
 }
 
-//int av_opt_get_double  (void *obj, const char *name, int search_flags, double     *out_val);
+// int av_opt_get_double  (void *obj, const char *name, int search_flags, double     *out_val);
 func av_opt_get_double(obj ffcommon.FVoidP, name ffcommon.FConstCharP, search_flags ffcommon.FInt, out_val *ffcommon.FDouble) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_get_double").Call(
 		obj,
@@ -1139,7 +1152,7 @@ func av_opt_get_double(obj ffcommon.FVoidP, name ffcommon.FConstCharP, search_fl
 	return
 }
 
-//int av_opt_get_q       (void *obj, const char *name, int search_flags, AVRational *out_val);
+// int av_opt_get_q       (void *obj, const char *name, int search_flags, AVRational *out_val);
 func AvOptGetQ(obj ffcommon.FVoidP, name ffcommon.FConstCharP, search_flags ffcommon.FInt, out_val *AVRational) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_get_q").Call(
 		obj,
@@ -1151,7 +1164,7 @@ func AvOptGetQ(obj ffcommon.FVoidP, name ffcommon.FConstCharP, search_flags ffco
 	return
 }
 
-//int av_opt_get_image_size(void *obj, const char *name, int search_flags, int *w_out, int *h_out);
+// int av_opt_get_image_size(void *obj, const char *name, int search_flags, int *w_out, int *h_out);
 func AvOptGetImageSize(obj ffcommon.FVoidP, name ffcommon.FConstCharP, search_flags ffcommon.FInt, w_out, h_out *ffcommon.FInt) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_get_image_size").Call(
 		obj,
@@ -1164,7 +1177,7 @@ func AvOptGetImageSize(obj ffcommon.FVoidP, name ffcommon.FConstCharP, search_fl
 	return
 }
 
-//int av_opt_get_pixel_fmt (void *obj, const char *name, int search_flags, enum AVPixelFormat *out_fmt);
+// int av_opt_get_pixel_fmt (void *obj, const char *name, int search_flags, enum AVPixelFormat *out_fmt);
 func AvOptGetPixelFmt(obj ffcommon.FVoidP, name ffcommon.FConstCharP, search_flags ffcommon.FInt, out_fmt *AVPixelFormat) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_get_pixel_fmt").Call(
 		obj,
@@ -1176,7 +1189,7 @@ func AvOptGetPixelFmt(obj ffcommon.FVoidP, name ffcommon.FConstCharP, search_fla
 	return
 }
 
-//int av_opt_get_sample_fmt(void *obj, const char *name, int search_flags, enum AVSampleFormat *out_fmt);
+// int av_opt_get_sample_fmt(void *obj, const char *name, int search_flags, enum AVSampleFormat *out_fmt);
 func AvOptGetSampleFmt(obj ffcommon.FVoidP, name ffcommon.FConstCharP, search_flags ffcommon.FInt, out_fmt *AVSampleFormat) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_get_sample_fmt").Call(
 		obj,
@@ -1188,7 +1201,7 @@ func AvOptGetSampleFmt(obj ffcommon.FVoidP, name ffcommon.FConstCharP, search_fl
 	return
 }
 
-//int av_opt_get_video_rate(void *obj, const char *name, int search_flags, AVRational *out_val);
+// int av_opt_get_video_rate(void *obj, const char *name, int search_flags, AVRational *out_val);
 func AvOptGetVideoRate(obj ffcommon.FVoidP, name ffcommon.FConstCharP, search_flags ffcommon.FInt, out_fmt *AVRational) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_get_video_rate").Call(
 		obj,
@@ -1200,7 +1213,7 @@ func AvOptGetVideoRate(obj ffcommon.FVoidP, name ffcommon.FConstCharP, search_fl
 	return
 }
 
-//int av_opt_get_channel_layout(void *obj, const char *name, int search_flags, int64_t *ch_layout);
+// int av_opt_get_channel_layout(void *obj, const char *name, int search_flags, int64_t *ch_layout);
 func AvOptGetChannelLayout(obj ffcommon.FVoidP, name ffcommon.FConstCharP, search_flags ffcommon.FInt, ch_layout *ffcommon.FInt64T) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_opt_get_channel_layout").Call(
 		obj,

@@ -61,6 +61,8 @@ https://wenku.baidu.com/view/5c89a1322179168884868762caaedd3383c4b52d.html?_wkts
 ./lib/ffmpeg -i D:/俄罗斯.mp4 -acodec mp2 -vn test3.mp2
 
 ./lib/ffmpeg.exe -i .\resources\big_buck_bunny.mp4 -vcodec mpeg1video -acodec aac ./out/mpeg1video.mkv
+
+https://www.jianshu.com/p/cc5288d925a4  简书
   
   
 AI： 人类，请说出你的问题

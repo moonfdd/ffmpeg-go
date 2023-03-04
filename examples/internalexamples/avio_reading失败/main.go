@@ -49,53 +49,51 @@ func main0() (ret ffcommon.FInt) {
 	}
 	input_filename = os.Args[1]
 
-	for {
-		/* slurp file content into buffer */
-		ret = libavutil.AvFileMap(input_filename, &buffer, &buffer_size, 0, uintptr(0))
-		if ret < 0 {
-			break
-		}
-
-		/* fill opaque structure used by the AVIOContext read callback */
-		bd.ptr = buffer
-		bd.size = buffer_size
-
-		fmt_ctx = libavformat.AvformatAllocContext()
-		if fmt_ctx == nil {
-			ret = -libavutil.ENOMEM
-			return
-		}
-
-		avio_ctx_buffer = (*byte)(unsafe.Pointer(libavutil.AvMalloc(avio_ctx_buffer_size)))
-		if avio_ctx_buffer == nil {
-			ret = -libavutil.ENOMEM
-			break
-		}
-
-		avio_ctx = libavformat.AvioAllocContext(avio_ctx_buffer, int32(avio_ctx_buffer_size),
-			0, uintptr(unsafe.Pointer(bd)), read_packet, nil, nil)
-		if avio_ctx == nil {
-			ret = -libavutil.ENOMEM
-			break
-		}
-		fmt_ctx.Pb = avio_ctx
-
-		ret = libavformat.AvformatOpenInput(&fmt_ctx, "", nil, nil)
-		if ret < 0 {
-			fmt.Printf("Could not open input\n")
-			break
-		}
-
-		ret = fmt_ctx.AvformatFindStreamInfo(nil)
-		if ret < 0 {
-			fmt.Printf("Could not find stream information\n")
-			break
-		}
-
-		fmt_ctx.AvDumpFormat(0, input_filename, 0)
-		break
+	/* slurp file content into buffer */
+	ret = libavutil.AvFileMap(input_filename, &buffer, &buffer_size, 0, uintptr(0))
+	if ret < 0 {
+		goto end
 	}
-	// end:
+
+	/* fill opaque structure used by the AVIOContext read callback */
+	bd.Ptr = buffer
+	bd.Size = buffer_size
+
+	fmt_ctx = libavformat.AvformatAllocContext()
+	if fmt_ctx == nil {
+		ret = -libavutil.ENOMEM
+		goto end
+	}
+
+	avio_ctx_buffer = (*byte)(unsafe.Pointer(libavutil.AvMalloc(avio_ctx_buffer_size)))
+	if avio_ctx_buffer == nil {
+		ret = -libavutil.ENOMEM
+		goto end
+	}
+
+	avio_ctx = libavformat.AvioAllocContext(avio_ctx_buffer, int32(avio_ctx_buffer_size),
+		0, uintptr(unsafe.Pointer(bd)), read_packet, nil, nil)
+	if avio_ctx == nil {
+		ret = -libavutil.ENOMEM
+		goto end
+	}
+
+	fmt_ctx.Pb = avio_ctx
+
+	ret = libavformat.AvformatOpenInput(&fmt_ctx, "", nil, nil)
+	if ret < 0 {
+		fmt.Printf("Could not open input\n")
+		goto end
+	}
+	ret = fmt_ctx.AvformatFindStreamInfo(nil)
+	if ret < 0 {
+		fmt.Printf("Could not find stream information\n")
+		goto end
+	}
+
+	fmt_ctx.AvDumpFormat(0, input_filename, 0)
+
+end:
 	libavformat.AvformatCloseInput(&fmt_ctx)
 
 	/* note: the internal buffer could have changed, and be != avio_ctx_buffer */
@@ -115,32 +113,33 @@ func main0() (ret ffcommon.FInt) {
 }
 
 type buffer_data struct {
-	ptr  *byte
-	size ffcommon.FSizeT ///< size left in the buffer
+	Ptr  *byte
+	Size ffcommon.FSizeT ///< size left in the buffer
 }
 
 func read_packet(opaque uintptr, buf *byte, buf_size int32) uintptr {
 	bd := (*buffer_data)(unsafe.Pointer(opaque))
-	if buf_size > int32(bd.size) {
-		buf_size = int32(bd.size)
+	if buf_size > int32(bd.Size) {
+		buf_size = int32(bd.Size)
 	}
 	if buf_size == 0 {
 		r := int32(libavutil.AVERROR_EOF)
 		return uintptr(r)
 	}
-	fmt.Printf("ptr:%d size:%d buf_size=%d\n", bd.ptr, bd.size, buf_size)
-	fmt.Println("buf = ", uintptr(unsafe.Pointer(buf)))
+	fmt.Printf("ptr:%d size:%d buf_size=%d\n", bd.Ptr, bd.Size, buf_size)
+	// fmt.Println("buf = ", uintptr(unsafe.Pointer(buf)))
+	copy(ffcommon.ByteSliceFromByteP(buf, int(buf_size)), ffcommon.ByteSliceFromByteP(bd.Ptr, int(buf_size)))
 
 	// /* copy internal buffer data to buf */
-	// memcpy(buf, bd->ptr, buf_size);
-	for i := buf_size - 1; i >= 0; i-- {
-		*(*byte)(unsafe.Pointer(uintptr(unsafe.Pointer(buf)) + uintptr(i))) = *(*byte)(unsafe.Pointer(uintptr(unsafe.Pointer(bd.ptr)) + uintptr(i)))
-	}
-
 	// for i := int32(0); i < buf_size; i++ {
 	// 	*(*byte)(unsafe.Pointer(uintptr(unsafe.Pointer(buf)) + uintptr(i))) = *(*byte)(unsafe.Pointer(uintptr(unsafe.Pointer(bd.ptr)) + uintptr(i)))
 	// }
-	bd.ptr = (*byte)(unsafe.Pointer(uintptr(unsafe.Pointer(bd.ptr)) + uintptr(buf_size)))
-	bd.size -= ffcommon.FSizeT(buf_size)
+	bd.Ptr = (*byte)(unsafe.Pointer(uintptr(unsafe.Pointer(bd.Ptr)) + uintptr(buf_size)))
+	bd.Size -= ffcommon.FSizeT(buf_size)
+	return uintptr(buf_size)
+}
+
+func write_packet(opaque uintptr, buf *byte, buf_size int32) uintptr {
+	fmt.Println("write_packet = ", buf_size)
 	return uintptr(buf_size)
 }
