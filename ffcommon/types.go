@@ -47,3 +47,5 @@ type FUnsignedCharPStruct = uintptr
 type FIntOrInt64 = int32
 
 type FUnsignedIntOrSizeT = int32
+
+type FEnum = int32
