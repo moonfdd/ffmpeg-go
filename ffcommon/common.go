@@ -49,10 +49,6 @@ func CBool(val bool) uintptr {
 	}
 	return 0
 }
-func NewCallback(fn interface{}) uintptr {
-	u := syscall.NewCallback(fn)
-	return u
-}
 
 func ByteSliceFromByteP(data *byte, len0 int) []byte {
 	if data == nil {

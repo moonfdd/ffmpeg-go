@@ -34,6 +34,7 @@ func main() {
 }
 
 func main0() (ret ffcommon.FInt) {
+	libavformat.AvRegisterAll()
 	var fmt_ctx *libavformat.AVFormatContext
 	var avio_ctx *libavformat.AVIOContext
 	var buffer *byte

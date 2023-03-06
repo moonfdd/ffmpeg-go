@@ -1,17 +1,19 @@
-// https://github.com/leixiaohua1020/simplest_ffmpeg_streamer/blob/master/simplest_ffmpeg_streamer/simplest_ffmpeg_streamer.cpp
+// https://github.com/leixiaohua1020/simplest_ffmpeg_streamer/blob/master/simplest_ffmpeg_receiver/simplest_ffmpeg_receiver.cpp
 package main
 
 import (
 	"fmt"
 	"os"
-	"os/exec"
-	"time"
+	"unsafe"
 
 	"github.com/moonfdd/ffmpeg-go/ffcommon"
 	"github.com/moonfdd/ffmpeg-go/libavcodec"
 	"github.com/moonfdd/ffmpeg-go/libavformat"
 	"github.com/moonfdd/ffmpeg-go/libavutil"
 )
+
+// '1': Use H.264 Bitstream Filter
+const USE_H264BSF = 0
 
 func main0() (ret ffcommon.FInt) {
 	var ofmt *libavformat.AVOutputFormat
@@ -22,25 +24,12 @@ func main0() (ret ffcommon.FInt) {
 	var i ffcommon.FInt
 	var videoindex ffcommon.FInt = -1
 	var frame_index ffcommon.FInt = 0
-	var start_time ffcommon.FInt64T = 0
-	var err error
-	//in_filename  = "cuc_ieschool.mov";
-	//in_filename  = "cuc_ieschool.mkv";
-	//in_filename  = "cuc_ieschool.ts";
-	//in_filename  = "cuc_ieschool.mp4";
-	//in_filename  = "cuc_ieschool.h264";
-	in_filename = "./out/cuc_ieschool.flv" //输入URL（Input file URL）
-	//in_filename  = "shanghai03_p.h264";
-	_, err = os.Stat(in_filename)
-	if err != nil {
-		if os.IsNotExist(err) {
-			fmt.Println("create flv file")
-			exec.Command("./lib/ffmpeg", "-i", "./resources/big_buck_bunny.mp4", "-vcodec", "copy", "-acodec", "copy", in_filename).Output()
-		}
-	}
-
-	out_filename = "rtmp://localhost/publishlive/livestream" //输出 URL（Output URL）[RTMP]
-	//out_filename = "rtp://233.233.233.233:6666";//输出 URL（Output URL）[UDP]
+	var h264bsfc *libavcodec.AVBitStreamFilterContext
+	in_filename = "rtmp://localhost/publishlive/livestream"
+	//in_filename  = "rtp://233.233.233.233:6666";
+	//out_filename = "receive.ts";
+	//out_filename = "receive.mkv";
+	out_filename = "./out/receive.flv"
 
 	libavformat.AvRegisterAll()
 	//Network
@@ -67,9 +56,7 @@ func main0() (ret ffcommon.FInt) {
 	ifmt_ctx.AvDumpFormat(0, in_filename, 0)
 
 	//Output
-
-	libavformat.AvformatAllocOutputContext2(&ofmt_ctx, nil, "flv", out_filename) //RTMP
-	//avformat_alloc_output_context2(&ofmt_ctx, NULL, "mpegts", out_filename);//UDP
+	libavformat.AvformatAllocOutputContext2(&ofmt_ctx, nil, "", out_filename) //RTMP
 
 	if ofmt_ctx == nil {
 		fmt.Printf("Could not create output context\n")
@@ -114,36 +101,16 @@ func main0() (ret ffcommon.FInt) {
 		goto end
 	}
 
-	start_time = libavutil.AvGettime()
+	if USE_H264BSF != 0 {
+		h264bsfc = libavcodec.AvBitstreamFilterInit("h264_mp4toannexb")
+	}
+
 	for {
 		var in_stream, out_stream *libavformat.AVStream
 		//Get an AVPacket
 		ret = ifmt_ctx.AvReadFrame(&pkt)
 		if ret < 0 {
 			break
-		}
-		//FIX：No PTS (Example: Raw H.264)
-		//Simple Write PTS
-		if pkt.Pts == libavutil.AV_NOPTS_VALUE {
-			//Write PTS
-			time_base1 := ifmt_ctx.GetStream(uint32(videoindex)).TimeBase
-			//Duration between 2 frames (us)
-			calc_duration := int64(libavutil.AV_TIME_BASE / libavutil.AvQ2d(ifmt_ctx.GetStream(uint32(videoindex)).RFrameRate))
-			//Parameters
-			pkt.Pts = int64(float64(frame_index) * float64(calc_duration) / (libavutil.AvQ2d(time_base1) * libavutil.AV_TIME_BASE))
-			pkt.Dts = pkt.Pts
-			pkt.Duration = int64(float64(calc_duration) / (libavutil.AvQ2d(time_base1) * libavutil.AV_TIME_BASE))
-		}
-		//Important:Delay
-		if pkt.StreamIndex == uint32(videoindex) {
-			time_base := ifmt_ctx.GetStream(uint32(videoindex)).TimeBase
-			time_base_q := libavutil.AVRational{1, libavutil.AV_TIME_BASE}
-			pts_time := libavutil.AvRescaleQ(pkt.Dts, time_base, time_base_q)
-			now_time := libavutil.AvGettime() - start_time
-			if pts_time > now_time {
-				libavutil.AvUsleep(uint32(pts_time - now_time))
-			}
-
 		}
 
 		in_stream = ifmt_ctx.GetStream(pkt.StreamIndex)
@@ -156,8 +123,12 @@ func main0() (ret ffcommon.FInt) {
 		pkt.Pos = -1
 		//Print to Screen
 		if pkt.StreamIndex == uint32(videoindex) {
-			fmt.Printf("Send %8d video frames to output URL\n", frame_index)
+			fmt.Printf("Receive %8d video frames from input URL\n", frame_index)
 			frame_index++
+
+			if USE_H264BSF != 0 {
+				h264bsfc.AvBitstreamFilterFilter(in_stream.Codec, "", &pkt.Data, (*int32)(unsafe.Pointer(&pkt.Size)), pkt.Data, int32(pkt.Size), 0)
+			}
 		}
 		//ret = av_write_frame(ofmt_ctx, &pkt);
 		ret = ofmt_ctx.AvInterleavedWriteFrame(&pkt)
@@ -170,6 +141,11 @@ func main0() (ret ffcommon.FInt) {
 		pkt.AvFreePacket()
 
 	}
+
+	if USE_H264BSF != 0 {
+		h264bsfc.AvBitstreamFilterClose()
+	}
+
 	//Write file trailer
 	ofmt_ctx.AvWriteTrailer()
 end:
@@ -206,13 +182,13 @@ func main() {
 		}
 	}
 
-	go func() {
-		time.Sleep(1000)
-		exec.Command("./lib/ffplay.exe", "rtmp://localhost/publishlive/livestream").Output()
-		if err != nil {
-			fmt.Println("play err = ", err)
-		}
-	}()
+	// go func() {
+	// 	time.Sleep(1000)
+	// 	exec.Command("./lib/ffplay.exe", "rtmp://localhost/publishlive/livestream").Output()
+	// 	if err != nil {
+	// 		fmt.Println("play err = ", err)
+	// 	}
+	// }()
 
 	main0()
 }
