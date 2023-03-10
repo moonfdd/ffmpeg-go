@@ -1,0 +1,79 @@
+// https://chat.forchange.cn/
+// YUV420P像素数据编码为JPEG图片，请用go语言实现。
+
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"image"
+	"image/color"
+	"image/jpeg"
+	"os"
+)
+
+func main() {
+	// 将YUV420P像素数据读入内存
+	yuvFile, err := os.Open("./out/pic.yuv")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer yuvFile.Close()
+	width := 640
+	height := 360
+	yuvData := make([]byte, width*height*3/2)
+	yuvReader := bufio.NewReader(yuvFile)
+	_, err = yuvReader.Read(yuvData)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	// 将YUV420P像素数据转换为RGB格式的图像
+	img := image.NewRGBA(image.Rect(0, 0, width, height))
+	for y2 := 0; y2 < height; y2++ {
+		for x := 0; x < width; x++ {
+			// 从YUV420P像素数据中获取Y、U、V值
+			yIndex := y2*width + x
+			uIndex := width*height + (y2/2)*(width/2) + x/2
+			vIndex := width*height*5/4 + (y2/2)*(width/2) + x/2
+			y3 := float64(yuvData[yIndex])
+			u := float64(yuvData[uIndex]) - 128.0
+			v := float64(yuvData[vIndex]) - 128.0
+			// 将YUV值转换为RGB值
+			r := y3 + 1.402*v
+			g := y3 - 0.344*u - 0.714*v
+			b := y3 + 1.772*u
+			// 将RGB值限制在0-255范围内
+			r = limit(r, 0, 255)
+			g = limit(g, 0, 255)
+			b = limit(b, 0, 255)
+			// 将RGB值保存到图像中
+			img.Set(x, y2, color.RGBA{uint8(r), uint8(g), uint8(b), 255})
+		}
+	}
+	// 将图像编码为JPEG图片并保存到文件中
+	jpegFile, err := os.Create("./out/pic2.jpg")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer jpegFile.Close()
+	err = jpeg.Encode(jpegFile, img, nil)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println("JPEG image saved to ./out/pic2.jpg")
+}
+
+// 将value限制在min和max之间
+func limit(value, min, max float64) float64 {
+	if value < min {
+		return min
+	}
+	if value > max {
+		return max
+	}
+	return value
+}
