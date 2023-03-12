@@ -42,6 +42,7 @@ type FFTSample = float32
 type FIntOrSizeT = int32
 
 type FCharPStruct = uintptr
+type FConstCharPStruct = uintptr
 type FChar = byte
 type FUnsignedCharPStruct = uintptr
 type FIntOrInt64 = int32

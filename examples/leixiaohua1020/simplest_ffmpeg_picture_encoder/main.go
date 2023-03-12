@@ -1,92 +1,182 @@
-// https://chatgpt.zcorky.com/ 第一次失败，第二次成功
-// YUV420P像素数据编码为JPEG图片，请用go语言实现。不要用第三方库
+// https://github.com/leixiaohua1020/simplest_ffmpeg_picture_encoder/blob/master/simplest_ffmpeg_picture_encoder/simplest_ffmpeg_picture_encoder.cpp
 package main
 
 import (
-	"bufio"
-	"bytes"
 	"fmt"
-	"image"
-	"image/color"
-	"image/jpeg"
 	"os"
+	"os/exec"
+	"unsafe"
+
+	"github.com/moonfdd/ffmpeg-go/ffcommon"
+	"github.com/moonfdd/ffmpeg-go/libavcodec"
+	"github.com/moonfdd/ffmpeg-go/libavformat"
+	"github.com/moonfdd/ffmpeg-go/libavutil"
 )
 
+func main0() (ret ffcommon.FInt) {
+	var pFormatCtx *libavformat.AVFormatContext
+	var fmt0 *libavformat.AVOutputFormat
+	var video_st *libavformat.AVStream
+	var pCodecCtx *libavcodec.AVCodecContext
+	var pCodec *libavcodec.AVCodec
+
+	var picture_buf *ffcommon.FUint8T
+	var picture *libavutil.AVFrame
+	var pkt libavcodec.AVPacket
+	var y_size ffcommon.FInt
+	var got_picture ffcommon.FInt = 0
+	var size ffcommon.FInt
+
+	var in_file *os.File                    //YUV source
+	var in_w, in_h ffcommon.FInt = 640, 360 //YUV's width and height
+	var out_file = "./out/pic.jpg"          //Output file
+	in := "./out/pic.yuv"
+
+	//是否存在yuv文件
+	_, err := os.Stat(in)
+	if err != nil {
+		if os.IsNotExist(err) {
+			fmt.Println("create yuv file")
+			exec.Command("./lib/ffmpeg", "-i", "./resources/big_buck_bunny.mp4", "-pix_fmt", "yuv420p", in, "-y").CombinedOutput()
+		}
+	}
+
+	in_file, _ = os.Open(in)
+	if in_file == nil {
+		return -1
+	}
+
+	libavformat.AvRegisterAll()
+
+	//Method 1
+	pFormatCtx = libavformat.AvformatAllocContext()
+	//Guess format
+	fmt0 = libavformat.AvGuessFormat("mjpeg", "", "")
+	pFormatCtx.Oformat = fmt0
+	//Output URL
+	if libavformat.AvioOpen(&pFormatCtx.Pb, out_file, libavformat.AVIO_FLAG_READ_WRITE) < 0 {
+		fmt.Printf("Couldn't open output file.")
+		return -1
+	}
+
+	//Method 2. More simple
+	//avformat_alloc_output_context2(&pFormatCtx, NULL, NULL, out_file);
+	//fmt = pFormatCtx->oformat;
+
+	video_st = pFormatCtx.AvformatNewStream(nil)
+	if video_st == nil {
+		return -1
+	}
+	pCodecCtx = video_st.Codec
+	pCodecCtx.CodecId = fmt0.VideoCodec
+	pCodecCtx.CodecType = libavutil.AVMEDIA_TYPE_VIDEO
+	pCodecCtx.PixFmt = libavutil.AV_PIX_FMT_YUVJ420P
+
+	pCodecCtx.Width = in_w
+	pCodecCtx.Height = in_h
+
+	pCodecCtx.TimeBase.Num = 1
+	pCodecCtx.TimeBase.Den = 25
+	//Output some information
+	pFormatCtx.AvDumpFormat(0, out_file, 1)
+
+	pCodec = libavcodec.AvcodecFindEncoder(pCodecCtx.CodecId)
+	if pCodec == nil {
+		fmt.Printf("Codec not found.")
+		return -1
+	}
+	if pCodecCtx.AvcodecOpen2(pCodec, nil) < 0 {
+		fmt.Printf("Could not open codec.")
+		return -1
+	}
+	picture = libavutil.AvFrameAlloc()
+	picture.Width = pCodecCtx.Width
+	picture.Height = pCodecCtx.Height
+	picture.Format = pCodecCtx.PixFmt
+	size = libavcodec.AvpictureGetSize(pCodecCtx.PixFmt, pCodecCtx.Width, pCodecCtx.Height)
+	picture_buf = (*byte)(unsafe.Pointer(libavutil.AvMalloc(uint64(size))))
+	if picture_buf == nil {
+		return -1
+	}
+	((*libavcodec.AVPicture)(unsafe.Pointer(picture))).AvpictureFill(picture_buf, pCodecCtx.PixFmt, pCodecCtx.Width, pCodecCtx.Height)
+
+	//Write Header
+	pFormatCtx.AvformatWriteHeader(nil)
+
+	y_size = pCodecCtx.Width * pCodecCtx.Height
+	pkt.AvNewPacket(y_size * 3)
+	//Read YUV
+	_, err = in_file.Read(ffcommon.ByteSliceFromByteP(picture_buf, int(y_size*3/2)))
+	if err != nil {
+		fmt.Printf("Could not read input file.%s", err)
+		return -1
+	}
+	picture.Data[0] = picture_buf                                                                         // Y
+	picture.Data[1] = (*byte)(unsafe.Pointer(uintptr(unsafe.Pointer(picture_buf)) + uintptr(y_size)))     // U
+	picture.Data[2] = (*byte)(unsafe.Pointer(uintptr(unsafe.Pointer(picture_buf)) + uintptr(y_size*5/4))) // V
+
+	//Encode
+	ret = pCodecCtx.AvcodecEncodeVideo2(&pkt, picture, &got_picture)
+	if ret < 0 {
+		fmt.Printf("Encode Error.\n")
+		return -1
+	}
+	if got_picture == 1 {
+		pkt.StreamIndex = uint32(video_st.Index)
+		ret = pFormatCtx.AvWriteFrame(&pkt)
+	}
+
+	pkt.AvFreePacket()
+	//Write Trailer
+	pFormatCtx.AvWriteTrailer()
+
+	fmt.Printf("Encode Successful.\n")
+
+	if video_st != nil {
+		video_st.Codec.AvcodecClose()
+		libavutil.AvFree(uintptr(unsafe.Pointer(picture)))
+		libavutil.AvFree(uintptr(unsafe.Pointer(picture_buf)))
+	}
+	pFormatCtx.Pb.AvioClose()
+	pFormatCtx.AvformatFreeContext()
+
+	in_file.Close()
+
+	exec.Command("./lib/ffplay.exe", out_file).Output()
+	if err != nil {
+		fmt.Println("play err = ", err)
+	}
+
+	return 0
+}
+
 func main() {
-	// 将YUV420P像素数据读入内存
-	yuvFile, err := os.Open("./out/pic.yuv")
+
+	os.Setenv("Path", os.Getenv("Path")+";./lib")
+	ffcommon.SetAvutilPath("./lib/avutil-56.dll")
+	ffcommon.SetAvcodecPath("./lib/avcodec-58.dll")
+	ffcommon.SetAvdevicePath("./lib/avdevice-58.dll")
+	ffcommon.SetAvfilterPath("./lib/avfilter-56.dll")
+	ffcommon.SetAvformatPath("./lib/avformat-58.dll")
+	ffcommon.SetAvpostprocPath("./lib/postproc-55.dll")
+	ffcommon.SetAvswresamplePath("./lib/swresample-3.dll")
+	ffcommon.SetAvswscalePath("./lib/swscale-5.dll")
+
+	genDir := "./out"
+	_, err := os.Stat(genDir)
 	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	defer yuvFile.Close()
-	width := 640
-	height := 360
-	yuvData := make([]byte, width*height*3/2)
-	yuvReader := bufio.NewReader(yuvFile)
-	_, err = yuvReader.Read(yuvData)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	// 假设您已经读取了 YUV420P 格式的像素数据，并将其存储在 data 变量中
-	var yuv []byte = yuvData // YUV420P 数据
-
-	// 创建一个新的 RGBA 图像
-	rgbaImg := image.NewRGBA(image.Rect(0, 0, width, height))
-
-	// 将 YUV420P 数据转换为 RGBA 数据
-	for i := 0; i < width*height; i++ {
-		yi := int(yuv[i])
-		ui := int(yuv[width*height+(i/4)])
-		vi := int(yuv[width*height+(width*height/4)+(i/4)])
-
-		r := float64(yi) + 1.4065*(float64(vi)-128)
-		g := float64(yi) - 0.3455*(float64(ui)-128) - 0.7169*(float64(vi)-128)
-		b := float64(yi) + 1.7790*(float64(ui)-128)
-
-		if r < 0 {
-			r = 0
-		} else if r > 255 {
-			r = 255
+		if os.IsNotExist(err) {
+			os.Mkdir(genDir, 0777) //  Everyone can read write and execute
 		}
-
-		if g < 0 {
-			g = 0
-		} else if g > 255 {
-			g = 255
-		}
-
-		if b < 0 {
-			b = 0
-		} else if b > 255 {
-			b = 255
-		}
-
-		rgbaImg.SetRGBA(i%width, i/width, color.RGBA{
-			R: uint8(r),
-			G: uint8(g),
-			B: uint8(b),
-			A: 255,
-		})
 	}
 
-	// 创建 JPEG 图像文件
-	jpgFile, err := os.Create("./out/pic3.jpg")
-	if err != nil {
-		panic(err)
-	}
-	defer jpgFile.Close()
+	// go func() {
+	// 	time.Sleep(1000)
+	// 	exec.Command("./lib/ffplay.exe", "rtmp://localhost/publishlive/livestream").Output()
+	// 	if err != nil {
+	// 		fmt.Println("play err = ", err)
+	// 	}
+	// }()
 
-	// 使用 image/jpeg 包来编码 JPEG 图像
-	buf := new(bytes.Buffer)
-	if err := jpeg.Encode(buf, rgbaImg, &jpeg.Options{Quality: 80}); err != nil {
-		panic(err)
-	}
-
-	_, err = jpgFile.Write(buf.Bytes())
-	if err != nil {
-		panic(err)
-	}
+	main0()
 }
