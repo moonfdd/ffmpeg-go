@@ -1,3 +1,4 @@
+// https://feater.top/ffmpeg/ffmpeg-audio-decode-mp3-to-pcm-with-cpu
 package main
 
 import (
@@ -11,12 +12,6 @@ import (
 	"github.com/moonfdd/ffmpeg-go/libavformat"
 	"github.com/moonfdd/ffmpeg-go/libavutil"
 )
-
-type S struct {
-	AA int32
-	BB int32
-	CC int
-}
 
 func main() {
 	os.Setenv("Path", os.Getenv("Path")+";./lib")

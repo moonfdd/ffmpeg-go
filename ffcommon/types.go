@@ -26,6 +26,7 @@ type FUnsignedCharP = string
 type FUnsignedInt = uint32
 type FSizeT = uint64
 type FUnsignedLong = uint32
+type FLong = int32
 
 type FAVAdler = uint32
 type FFileP = uintptr
