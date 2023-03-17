@@ -330,7 +330,7 @@ import (
 //struct AVDeviceInfoList;
 // type AVDeviceInfoList = libavdevice.AVDeviceInfoList
 
-//struct AVDeviceCapabilitiesQuery;
+// struct AVDeviceCapabilitiesQuery;
 // type AVDeviceCapabilitiesQuery = libavdevice.AVDeviceCapabilitiesQuery
 type AVCodecID = libavcodec.AVCodecID
 type AVCodecContext = libavcodec.AVCodecContext
@@ -465,7 +465,7 @@ func (s *AVIOContext) AvAppendPacket(pkt *AVPacket, size ffcommon.FInt) (res ffc
 /*************************************************/
 /* input/output formats */
 
-//struct AVCodecTag;
+// struct AVCodecTag;
 type AVCodecTag struct {
 }
 
@@ -488,7 +488,7 @@ const AVPROBE_SCORE_MAX = 100      ///< maximum score
 
 const AVPROBE_PADDING_SIZE = 32 ///< extra allocated bytes at the end of the probe buffer
 
-/// Demuxer will use avio_open, no opened file should be provided by the caller.
+// / Demuxer will use avio_open, no opened file should be provided by the caller.
 const AVFMT_NOFILE = 0x0001
 const AVFMT_NEEDNUMBER = 0x0002    /**< Needs '%d' in filename. */
 const AVFMT_SHOW_IDS = 0x0008      /**< Show format stream IDs numbers. */
@@ -1197,8 +1197,8 @@ func (s *AVStream) AvStreamGetRFrameRate() (res AVRational) {
 	return
 }
 
-//attribute_deprecated
-//void       av_stream_set_r_frame_rate(AVStream *s, AVRational r);
+// attribute_deprecated
+// void       av_stream_set_r_frame_rate(AVStream *s, AVRational r);
 func (s *AVStream) AvStreamSetRFrameRate(r AVRational) {
 	ffcommon.GetAvformatDll().NewProc("av_stream_set_r_frame_rate").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -1206,9 +1206,9 @@ func (s *AVStream) AvStreamSetRFrameRate(r AVRational) {
 	)
 }
 
-//#if FF_API_LAVF_FFSERVER
-//attribute_deprecated
-//char* av_stream_get_recommended_encoder_configuration(const AVStream *s);
+// #if FF_API_LAVF_FFSERVER
+// attribute_deprecated
+// char* av_stream_get_recommended_encoder_configuration(const AVStream *s);
 func (s *AVStream) AvStreamGetRecommendedEncoderConfiguration() (res ffcommon.FCharP) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_stream_get_recommended_encoder_configuration").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -1217,8 +1217,8 @@ func (s *AVStream) AvStreamGetRecommendedEncoderConfiguration() (res ffcommon.FC
 	return
 }
 
-//attribute_deprecated
-//void  av_stream_set_recommended_encoder_configuration(AVStream *s, char *configuration);
+// attribute_deprecated
+// void  av_stream_set_recommended_encoder_configuration(AVStream *s, char *configuration);
 func (s *AVStream) AvStreamSetRecommendedEncoderConfiguration(configuration ffcommon.FCharP) {
 	ffcommon.GetAvformatDll().NewProc("av_stream_set_recommended_encoder_configuration").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -1229,7 +1229,7 @@ func (s *AVStream) AvStreamSetRecommendedEncoderConfiguration(configuration ffco
 //#endif
 //#endif
 
-//struct AVCodecParserContext *av_stream_get_parser(const AVStream *s);
+// struct AVCodecParserContext *av_stream_get_parser(const AVStream *s);
 func (s *AVStream) AvStreamGetParser() (res *AVCodecParserContext) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_stream_get_parser").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -1315,8 +1315,8 @@ type AVChapter struct {
 //void *data, size_t data_size);
 type AvFormatControlMessage = func(s AVFormatContext, type0 ffcommon.FInt, data ffcommon.FVoidP, data_size ffcommon.FSizeT) uintptr
 
-//typedef int (*AVOpenCallback)(struct AVFormatContext *s, AVIOContext **pb, const char *url, int flags,
-//const AVIOInterruptCB *int_cb, AVDictionary **options);
+// typedef int (*AVOpenCallback)(struct AVFormatContext *s, AVIOContext **pb, const char *url, int flags,
+// const AVIOInterruptCB *int_cb, AVDictionary **options);
 type AVOpenCallback = func(s *AVFormatContext, pb **AVIOContext, url ffcommon.FCharPStruct, flags ffcommon.FInt, int_cb *AVIOInterruptCB, options **AVDictionary) uintptr
 
 /**
@@ -1331,7 +1331,7 @@ const (
 	AVFMT_DURATION_FROM_BITRATE        ///< Duration estimated from bitrate (less accurate)
 )
 
-//typedef struct AVFormatInternal AVFormatInternal;
+// typedef struct AVFormatInternal AVFormatInternal;
 type AVFormatInternal struct {
 }
 
@@ -2010,8 +2010,8 @@ func (s *AVFormatContext) AvFormatGetProbeScore() (res ffcommon.FInt) {
 	return
 }
 
-//attribute_deprecated
-//AVCodec * av_format_get_video_codec(const AVFormatContext *s);
+// attribute_deprecated
+// AVCodec * av_format_get_video_codec(const AVFormatContext *s);
 func (s *AVFormatContext) AvFormatGetVideoCodec() (res *AVCodec) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_get_video_codec").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -2020,8 +2020,8 @@ func (s *AVFormatContext) AvFormatGetVideoCodec() (res *AVCodec) {
 	return
 }
 
-//attribute_deprecated
-//void      av_format_set_video_codec(AVFormatContext *s, AVCodec *c);
+// attribute_deprecated
+// void      av_format_set_video_codec(AVFormatContext *s, AVCodec *c);
 func (s *AVFormatContext) AvFormatSetVideoCodec(c *AVCodec) {
 	ffcommon.GetAvformatDll().NewProc("av_format_set_video_codec").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -2029,8 +2029,8 @@ func (s *AVFormatContext) AvFormatSetVideoCodec(c *AVCodec) {
 	)
 }
 
-//attribute_deprecated
-//AVCodec * av_format_get_audio_codec(const AVFormatContext *s);
+// attribute_deprecated
+// AVCodec * av_format_get_audio_codec(const AVFormatContext *s);
 func (s *AVFormatContext) AvFormatGetAudioCodec() (res *AVCodec) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_get_audio_codec").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -2039,8 +2039,8 @@ func (s *AVFormatContext) AvFormatGetAudioCodec() (res *AVCodec) {
 	return
 }
 
-//attribute_deprecated
-//void      av_format_set_audio_codec(AVFormatContext *s, AVCodec *c);
+// attribute_deprecated
+// void      av_format_set_audio_codec(AVFormatContext *s, AVCodec *c);
 func (s *AVFormatContext) AvFormatSetAudioCodec(c *AVCodec) {
 	ffcommon.GetAvformatDll().NewProc("av_format_set_audio_codec").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -2048,8 +2048,8 @@ func (s *AVFormatContext) AvFormatSetAudioCodec(c *AVCodec) {
 	)
 }
 
-//attribute_deprecated
-//AVCodec * av_format_get_subtitle_codec(const AVFormatContext *s);
+// attribute_deprecated
+// AVCodec * av_format_get_subtitle_codec(const AVFormatContext *s);
 func (s *AVFormatContext) AvFormatGetSubtitleCodec() (res *AVCodec) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_get_subtitle_codec").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -2058,8 +2058,8 @@ func (s *AVFormatContext) AvFormatGetSubtitleCodec() (res *AVCodec) {
 	return
 }
 
-//attribute_deprecated
-//void      av_format_set_subtitle_codec(AVFormatContext *s, AVCodec *c);
+// attribute_deprecated
+// void      av_format_set_subtitle_codec(AVFormatContext *s, AVCodec *c);
 func (s *AVFormatContext) AvFormatSetSubtitleCodec(c *AVCodec) {
 	ffcommon.GetAvformatDll().NewProc("av_format_set_subtitle_codec").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -2067,8 +2067,8 @@ func (s *AVFormatContext) AvFormatSetSubtitleCodec(c *AVCodec) {
 	)
 }
 
-//attribute_deprecated
-//AVCodec * av_format_get_data_codec(const AVFormatContext *s);
+// attribute_deprecated
+// AVCodec * av_format_get_data_codec(const AVFormatContext *s);
 func (s *AVFormatContext) AvFormatGetDataCodec() (res *AVCodec) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_get_data_codec").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -2077,8 +2077,8 @@ func (s *AVFormatContext) AvFormatGetDataCodec() (res *AVCodec) {
 	return
 }
 
-//attribute_deprecated
-//void      av_format_set_data_codec(AVFormatContext *s, AVCodec *c);
+// attribute_deprecated
+// void      av_format_set_data_codec(AVFormatContext *s, AVCodec *c);
 func (s *AVFormatContext) AvFormatSetDataCodec(c *AVCodec) {
 	ffcommon.GetAvformatDll().NewProc("av_format_set_data_codec").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -2086,8 +2086,8 @@ func (s *AVFormatContext) AvFormatSetDataCodec(c *AVCodec) {
 	)
 }
 
-//attribute_deprecated
-//int       av_format_get_metadata_header_padding(const AVFormatContext *s);
+// attribute_deprecated
+// int       av_format_get_metadata_header_padding(const AVFormatContext *s);
 func (s *AVFormatContext) AvFormatGetMetadataHeaderPadding() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_get_metadata_header_padding").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -2096,8 +2096,8 @@ func (s *AVFormatContext) AvFormatGetMetadataHeaderPadding() (res ffcommon.FInt)
 	return
 }
 
-//attribute_deprecated
-//void      av_format_set_metadata_header_padding(AVFormatContext *s, int c);
+// attribute_deprecated
+// void      av_format_set_metadata_header_padding(AVFormatContext *s, int c);
 func (s *AVFormatContext) AvFormatSetMetadataHeaderPadding(c ffcommon.FInt) {
 	ffcommon.GetAvformatDll().NewProc("av_format_set_metadata_header_padding").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -2105,8 +2105,8 @@ func (s *AVFormatContext) AvFormatSetMetadataHeaderPadding(c ffcommon.FInt) {
 	)
 }
 
-//attribute_deprecated
-//void *    av_format_get_opaque(const AVFormatContext *s);
+// attribute_deprecated
+// void *    av_format_get_opaque(const AVFormatContext *s);
 func (s *AVFormatContext) AvFormatGetOpaque() (res ffcommon.FVoidP) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_get_opaque").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -2115,8 +2115,8 @@ func (s *AVFormatContext) AvFormatGetOpaque() (res ffcommon.FVoidP) {
 	return
 }
 
-//attribute_deprecated
-//void      av_format_set_opaque(AVFormatContext *s, void *opaque);
+// attribute_deprecated
+// void      av_format_set_opaque(AVFormatContext *s, void *opaque);
 func (s *AVFormatContext) AvFormatSetOpaque(opaque ffcommon.FVoidP) {
 	ffcommon.GetAvformatDll().NewProc("av_format_set_opaque").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -2124,8 +2124,8 @@ func (s *AVFormatContext) AvFormatSetOpaque(opaque ffcommon.FVoidP) {
 	)
 }
 
-//attribute_deprecated
-//av_format_control_message av_format_get_control_message_cb(const AVFormatContext *s);
+// attribute_deprecated
+// av_format_control_message av_format_get_control_message_cb(const AVFormatContext *s);
 func (s *AVFormatContext) AvFormatGetControlMessageCb() (res uintptr) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_get_control_message_cb").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -2134,8 +2134,8 @@ func (s *AVFormatContext) AvFormatGetControlMessageCb() (res uintptr) {
 	return
 }
 
-//attribute_deprecated
-//void      av_format_set_control_message_cb(AVFormatContext *s, av_format_control_message callback);
+// attribute_deprecated
+// void      av_format_set_control_message_cb(AVFormatContext *s, av_format_control_message callback);
 func (s *AVFormatContext) AvFormatSetControlMessageCb(callback uintptr) {
 	ffcommon.GetAvformatDll().NewProc("av_format_set_control_message_cb").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -2143,8 +2143,8 @@ func (s *AVFormatContext) AvFormatSetControlMessageCb(callback uintptr) {
 	)
 }
 
-//#if FF_API_OLD_OPEN_CALLBACKS
-//attribute_deprecated AVOpenCallback av_format_get_open_cb(const AVFormatContext *s);
+// #if FF_API_OLD_OPEN_CALLBACKS
+// attribute_deprecated AVOpenCallback av_format_get_open_cb(const AVFormatContext *s);
 func (s *AVFormatContext) AvFormatGetOpenCb() (res uintptr) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_format_get_open_cb").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -2153,7 +2153,7 @@ func (s *AVFormatContext) AvFormatGetOpenCb() (res uintptr) {
 	return
 }
 
-//attribute_deprecated void av_format_set_open_cb(AVFormatContext *s, AVOpenCallback callback);
+// attribute_deprecated void av_format_set_open_cb(AVFormatContext *s, AVOpenCallback callback);
 func (s *AVFormatContext) AvFormatSetOpenCb(callback AVOpenCallback) {
 	ffcommon.GetAvformatDll().NewProc("av_format_set_open_cb").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -2243,16 +2243,16 @@ func AvRegisterAll() {
 	ffcommon.GetAvformatDll().NewProc("av_register_all").Call()
 }
 
-//attribute_deprecated
-//void av_register_input_format(AVInputFormat *format);
+// attribute_deprecated
+// void av_register_input_format(AVInputFormat *format);
 func (format *AVInputFormat) AvRegisterInputFormat() {
 	ffcommon.GetAvformatDll().NewProc("av_register_input_format").Call(
 		uintptr(unsafe.Pointer(format)),
 	)
 }
 
-//attribute_deprecated
-//void av_register_output_format(AVOutputFormat *format);
+// attribute_deprecated
+// void av_register_output_format(AVOutputFormat *format);
 func (format *AVOutputFormat) AvRegisterOutputFormat() {
 	ffcommon.GetAvformatDll().NewProc("av_register_output_format").Call(
 		uintptr(unsafe.Pointer(format)),
@@ -2499,7 +2499,7 @@ func (stream *AVStream) AvStreamGetSideData(type0 AVPacketSideDataType, size ffc
 	return
 }
 
-//AVProgram *av_new_program(AVFormatContext *s, int id);
+// AVProgram *av_new_program(AVFormatContext *s, int id);
 func (s *AVFormatContext) AvNewProgram(id ffcommon.FInt) (res *AVProgram) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_new_program").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -2782,7 +2782,7 @@ func (ic *AVFormatContext) AvFindProgramFromStream(last *AVProgram, s ffcommon.F
 	return
 }
 
-//void av_program_add_stream_index(AVFormatContext *ac, int progid, unsigned int idx);
+// void av_program_add_stream_index(AVFormatContext *ac, int progid, unsigned int idx);
 func (ac *AVFormatContext) AvProgramAddStreamIndex(progid ffcommon.FInt, idx ffcommon.FUnsignedInt) {
 	ffcommon.GetAvformatDll().NewProc("av_program_add_stream_index").Call(
 		uintptr(unsafe.Pointer(ac)),
@@ -3486,7 +3486,7 @@ func AvCodecGetTag2(tags **AVCodecTag, id AVCodecID, tag *ffcommon.FUnsignedInt)
 	return
 }
 
-//int av_find_default_stream_index(AVFormatContext *s);
+// int av_find_default_stream_index(AVFormatContext *s);
 func (s *AVFormatContext) AvFindDefaultStreamIndex() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_find_default_stream_index").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -3636,8 +3636,8 @@ func AvGetFrameFilename2(buf ffcommon.FCharP, buf_size ffcommon.FInt,
 	return
 }
 
-//int av_get_frame_filename(char *buf, int buf_size,
-//const char *path, int number);
+// int av_get_frame_filename(char *buf, int buf_size,
+// const char *path, int number);
 func AvGetFrameFilename(buf ffcommon.FCharP, buf_size ffcommon.FInt,
 	path0 ffcommon.FCharP, number ffcommon.FInt) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("av_get_frame_filename").Call(
@@ -3861,7 +3861,7 @@ func (s *AVFormatContext) AvformatMatchStreamSpecifier(st *AVStream, spec ffcomm
 	return
 }
 
-//int avformat_queue_attached_pictures(AVFormatContext *s);
+// int avformat_queue_attached_pictures(AVFormatContext *s);
 func (s *AVFormatContext) AvformatQueueAttachedPictures() (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvformatDll().NewProc("avformat_queue_attached_pictures").Call(
 		uintptr(unsafe.Pointer(s)),
@@ -3895,7 +3895,7 @@ func AvApplyBitstreamFilters(codec *AVCodecContext, pkt *AVPacket, bsfc *libavco
 	return
 }
 
-//#endif
+// #endif
 type AVTimebaseSource int32
 
 const (
@@ -3905,7 +3905,7 @@ const (
 	//#if FF_API_R_FRAME_RATE
 	AVFMT_TBCF_R_FRAMERATE
 
-//#endif
+// #endif
 )
 
 /**

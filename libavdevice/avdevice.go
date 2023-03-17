@@ -499,7 +499,7 @@ type AVRational = libavcodec.AVRational
 type AVDeviceCapabilitiesQuery struct {
 	AvClass       *AVClass
 	DeviceContext uintptr //*AVFormatContext //todo
-	codec         AVCodecID
+	Codec         AVCodecID
 	SampleFormat  AVSampleFormat
 	PixelFormat   AVPixelFormat
 	SampleRate    ffcommon.FInt
@@ -650,8 +650,8 @@ func AvdeviceListInputSources(device *AVInputFormat, device_name ffcommon.FConst
 	return
 }
 
-//int avdevice_list_output_sinks(struct AVOutputFormat *device, const char *device_name,
-//AVDictionary *device_options, AVDeviceInfoList **device_list);
+// int avdevice_list_output_sinks(struct AVOutputFormat *device, const char *device_name,
+// AVDictionary *device_options, AVDeviceInfoList **device_list);
 func AvdeviceListOutputSinks(device *AVOutputFormat, device_name ffcommon.FConstCharP,
 	device_options *AVDictionary, device_list **AVDeviceInfoList) (res ffcommon.FInt) {
 	t, _, _ := ffcommon.GetAvdeviceDll().NewProc("avdevice_list_output_sinks").Call(

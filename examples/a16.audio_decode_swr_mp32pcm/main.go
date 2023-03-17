@@ -1,3 +1,4 @@
+// https://feater.top/ffmpeg/ffmpeg-audio-resample-decode-mp3-to-pcm-with-cpu
 package main
 
 import (
@@ -12,12 +13,6 @@ import (
 	"github.com/moonfdd/ffmpeg-go/libavutil"
 	"github.com/moonfdd/ffmpeg-go/libswresample"
 )
-
-type S struct {
-	AA int32
-	BB int32
-	CC int
-}
 
 const MAX_AUDIO_FRAME_SIZE = 192000
 

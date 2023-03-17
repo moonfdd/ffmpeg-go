@@ -129,6 +129,7 @@ func read_packet(opaque uintptr, buf *byte, buf_size int32) uintptr {
 	}
 	fmt.Printf("ptr:%d size:%d buf_size=%d\n", bd.Ptr, bd.Size, buf_size)
 	// fmt.Println("buf = ", uintptr(unsafe.Pointer(buf)))
+
 	copy(ffcommon.ByteSliceFromByteP(buf, int(buf_size)), ffcommon.ByteSliceFromByteP(bd.Ptr, int(buf_size)))
 
 	// /* copy internal buffer data to buf */
