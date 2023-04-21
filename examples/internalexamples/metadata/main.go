@@ -51,7 +51,6 @@ func main0() (ret ffcommon.FInt) {
 	}
 
 	tag = fmt_ctx.Metadata.AvDictGet("", tag, libavutil.AV_DICT_IGNORE_SUFFIX)
-
 	for tag != nil {
 		fmt.Printf("%s=%s\n", ffcommon.StringFromPtr(tag.Key), ffcommon.StringFromPtr(tag.Value))
 		tag = fmt_ctx.Metadata.AvDictGet("", tag, libavutil.AV_DICT_IGNORE_SUFFIX)

@@ -10,6 +10,9 @@ import (
 	"github.com/moonfdd/ffmpeg-go/libavutil"
 )
 
+// go run ./examples/internalexamples/encode_video/main.go ./out/encode_video.mp4 mpeg2video
+// ./lib/ffplay  ./out/encode_video.mp4
+
 func main0() (ret ffcommon.FInt) {
 	var filename, codec_name string
 	var codec *libavcodec.AVCodec

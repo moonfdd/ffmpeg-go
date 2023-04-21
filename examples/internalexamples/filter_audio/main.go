@@ -345,6 +345,7 @@ func get_input(frame *libavutil.AVFrame, frame_num ffcommon.FInt) ffcommon.FInt 
 }
 
 func main() {
+	// go run ./examples/internalexamples/filter_audio/main.go 1
 	os.Setenv("Path", os.Getenv("Path")+";./lib")
 	ffcommon.SetAvutilPath("./lib/avutil-56.dll")
 	ffcommon.SetAvcodecPath("./lib/avcodec-58.dll")

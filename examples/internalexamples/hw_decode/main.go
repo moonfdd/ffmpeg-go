@@ -237,7 +237,7 @@ func decode_write(avctx *libavcodec.AVCodecContext, packet *libavcodec.AVPacket)
 }
 
 func main() {
-	// go run .\examples\internalexamples\hw_decode\main.go cuda .\resources\big_buck_bunny.mp4 ./out/hw.yuv
+	// go run ./examples/internalexamples/hw_decode/main.go cuda ./resources/big_buck_bunny.mp4 ./out/hw.yuv
 	// ./lib/ffplay -pixel_format yuv420p -video_size 640x360 ./out/hw.yuv
 
 	os.Setenv("Path", os.Getenv("Path")+";./lib")

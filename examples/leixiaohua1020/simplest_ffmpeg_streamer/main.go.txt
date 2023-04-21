@@ -23,21 +23,25 @@ func main0() (ret ffcommon.FInt) {
 	var videoindex ffcommon.FInt = -1
 	var frame_index ffcommon.FInt = 0
 	var start_time ffcommon.FInt64T = 0
-	var err error
+	// var err error
+
 	//in_filename  = "cuc_ieschool.mov";
 	//in_filename  = "cuc_ieschool.mkv";
 	//in_filename  = "cuc_ieschool.ts";
 	//in_filename  = "cuc_ieschool.mp4";
 	//in_filename  = "cuc_ieschool.h264";
-	//in_filename = "./out/cuc_ieschool.flv"
-	in_filename = "./out/cuc_ieschool.mp4" //输入URL（Input file URL）
-	_, err = os.Stat(in_filename)
-	if err != nil {
-		if os.IsNotExist(err) {
-			fmt.Println("create flv file")
-			exec.Command("./lib/ffmpeg", "-i", "./resources/big_buck_bunny.mp4", "-vcodec", "copy", "-acodec", "copy", in_filename).Output()
-		}
-	}
+	in_filename = "./out/cuc_ieschool.flv" //输入URL（Input file URL）
+	in_filename = "./resources/big_buck_bunny.mp4"
+	in_filename = "D:/俄罗斯.mp4"
+	//in_filename  = "shanghai03_p.h264";
+
+	// _, err = os.Stat(in_filename)
+	// if err != nil {
+	// 	if os.IsNotExist(err) {
+	// 		fmt.Println("create flv file")
+	// 		exec.Command("./lib/ffmpeg", "-i", "./resources/big_buck_bunny.mp4", "-vcodec", "copy", "-acodec", "copy", in_filename).Output()
+	// 	}
+	// }
 
 	out_filename = "rtmp://localhost/publishlive/livestream" //输出 URL（Output URL）[RTMP]
 	//out_filename = "rtp://233.233.233.233:6666";//输出 URL（Output URL）[UDP]
@@ -45,6 +49,7 @@ func main0() (ret ffcommon.FInt) {
 	libavformat.AvRegisterAll()
 	//Network
 	libavformat.AvformatNetworkInit()
+	libavcodec.AvcodecRegisterAll()
 	//Input
 	ret = libavformat.AvformatOpenInput(&ifmt_ctx, in_filename, nil, nil)
 	if ret < 0 {
@@ -58,7 +63,7 @@ func main0() (ret ffcommon.FInt) {
 	}
 
 	for i = 0; i < int32(ifmt_ctx.NbStreams); i++ {
-		if ifmt_ctx.GetStream(uint32(i)).Codec.CodecType == libavutil.AVMEDIA_TYPE_VIDEO {
+		if ifmt_ctx.GetStream(uint32(i)).Codecpar.CodecType == libavutil.AVMEDIA_TYPE_VIDEO {
 			videoindex = i
 			break
 		}
@@ -66,9 +71,22 @@ func main0() (ret ffcommon.FInt) {
 
 	ifmt_ctx.AvDumpFormat(0, in_filename, 0)
 
+	//AVCodecParameters *codecpar = in_fmt_ctx->streams[video_stream_index]->codecpar;
+	//codecpar := ifmt_ctx.GetStream(uint32(i)).Codecpar
+	// fmt.Println("哈哈0")
+	// out_fmt := libavformat.AvGuessFormat("mp4", "", "")
+	// fmt.Println("哈哈1")
+	// if out_fmt == nil {
+	// 	fmt.Printf("无法猜测输出格式\n")
+	// 	return -1
+	// }
 	//Output
 
-	libavformat.AvformatAllocOutputContext2(&ofmt_ctx, nil, "flv", out_filename) //RTMP
+	//libavformat.AvformatAllocOutputContext2(&ofmt_ctx, nil, "flv", out_filename) //RTMP
+
+	libavformat.AvformatAllocOutputContext2(&ofmt_ctx, nil, "flv", out_filename)
+	//libavformat.AvformatAllocOutputContext2(&ofmt_ctx, out_fmt, "", out_filename)
+
 	//avformat_alloc_output_context2(&ofmt_ctx, NULL, "mpegts", out_filename);//UDP
 
 	if ofmt_ctx == nil {
@@ -150,6 +168,8 @@ func main0() (ret ffcommon.FInt) {
 		out_stream = ofmt_ctx.GetStream(pkt.StreamIndex)
 		/* copy packet */
 		//Convert PTS/DTS
+		// pkt.Pts = libavutil.AvRescaleQ(pkt.Pts, in_stream.TimeBase, out_stream.TimeBase)
+		// pkt.Dts = libavutil.AvRescaleQ(pkt.Dts, in_stream.TimeBase, out_stream.TimeBase)
 		pkt.Pts = libavutil.AvRescaleQRnd(pkt.Pts, in_stream.TimeBase, out_stream.TimeBase, libavutil.AV_ROUND_NEAR_INF|libavutil.AV_ROUND_PASS_MINMAX)
 		pkt.Dts = libavutil.AvRescaleQRnd(pkt.Dts, in_stream.TimeBase, out_stream.TimeBase, libavutil.AV_ROUND_NEAR_INF|libavutil.AV_ROUND_PASS_MINMAX)
 		pkt.Duration = libavutil.AvRescaleQ(pkt.Duration, in_stream.TimeBase, out_stream.TimeBase)
@@ -163,9 +183,16 @@ func main0() (ret ffcommon.FInt) {
 		ret = ofmt_ctx.AvInterleavedWriteFrame(&pkt)
 
 		if ret < 0 {
-			fmt.Printf("Error muxing packet\n")
+			fmt.Println(pkt.Pts)
+			fmt.Println(pkt.Dts)
+			fmt.Println(pkt.Duration)
+			fmt.Printf("Error muxing packet,ret = %d\n", ret)
 			break
 		}
+		fmt.Println(pkt.Pts)
+		fmt.Println(pkt.Dts)
+		fmt.Println(pkt.Duration)
+		fmt.Println("成功")
 
 		pkt.AvFreePacket()
 
@@ -215,4 +242,5 @@ func main() {
 	}()
 
 	main0()
+	time.Sleep(time.Hour)
 }

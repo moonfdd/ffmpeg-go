@@ -91,7 +91,7 @@ type AVDictionaryEntry struct {
 	Value ffcommon.FCharPStruct
 }
 
-//typedef struct AVDictionary AVDictionary;
+// typedef struct AVDictionary AVDictionary;
 type AVDictionary struct {
 }
 
@@ -115,7 +115,7 @@ type AVDictionary struct {
 func (m *AVDictionary) AvDictGet(key ffcommon.FConstCharP, prev *AVDictionaryEntry, flags ffcommon.FInt) (res *AVDictionaryEntry) {
 	t, _, _ := ffcommon.GetAvutilDll().NewProc("av_dict_get").Call(
 		uintptr(unsafe.Pointer(m)),
-		ffcommon.UintPtrFromString(key),
+		ffcommon.UintPtrFromContainsEmptyString(key),
 		uintptr(unsafe.Pointer(prev)),
 		uintptr(flags),
 	)

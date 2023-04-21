@@ -17,6 +17,10 @@ func UintPtrFromString(str string) uintptr {
 	return uintptr(unsafe.Pointer(BytePtrFromString(str)))
 }
 
+func UintPtrFromContainsEmptyString(str string) uintptr {
+	return uintptr(unsafe.Pointer(BytePtrFromString(str)))
+}
+
 //func BoolFromUintptr(ptr uintptr) bool {
 //	if ptr == 0 {
 //		return false

@@ -11,6 +11,10 @@ import (
 )
 
 func main0() (ret ffcommon.FInt) {
+	// ./lib/ffmpeg -i ./resources/big_buck_bunny.mp4 -c:a mp2 ./out/big_buck_bunny.mp2
+	// go run ./examples/internalexamples/decode_audio/main.go ./out/big_buck_bunny.mp2 ./out/big_buck_bunny.pcm
+	// ./lib/ffplay -f s16le -ac 2 -ar 22050 ./out/big_buck_bunny.pcm
+
 	var outfilename, filename string
 	var codec *libavcodec.AVCodec
 	var c *libavcodec.AVCodecContext
@@ -27,7 +31,7 @@ func main0() (ret ffcommon.FInt) {
 	var fmt0 string
 
 	if len(os.Args) <= 2 {
-		fmt.Errorf("Usage: %s <input file> <output file>\n", os.Args[0])
+		fmt.Printf("Usage: %s <input file> <output file>\n", os.Args[0])
 		os.Exit(0)
 	}
 	filename = os.Args[1]
@@ -38,32 +42,32 @@ func main0() (ret ffcommon.FInt) {
 	/* find the MPEG audio decoder */
 	codec = libavcodec.AvcodecFindDecoder(libavcodec.AV_CODEC_ID_MP2)
 	if codec == nil {
-		fmt.Errorf("Codec not found\n")
+		fmt.Printf("Codec not found\n")
 		os.Exit(1)
 	}
 
 	parser = libavcodec.AvParserInit(int32(codec.Id))
 	if parser == nil {
-		fmt.Errorf("Parser not found\n")
+		fmt.Printf("Parser not found\n")
 		os.Exit(1)
 	}
 
 	c = codec.AvcodecAllocContext3()
 	if c == nil {
-		fmt.Errorf("Could not allocate audio codec context\n")
+		fmt.Printf("Could not allocate audio codec context\n")
 		os.Exit(1)
 	}
 
 	/* open it */
 	if c.AvcodecOpen2(codec, nil) < 0 {
-		fmt.Errorf("Could not open codec\n")
+		fmt.Printf("Could not open codec\n")
 		os.Exit(1)
 	}
 
 	var err error
 	f, err = os.Open(filename)
 	if err != nil {
-		fmt.Errorf("Could not open %s\n", filename)
+		fmt.Printf("Could not open %s\n", filename)
 		os.Exit(1)
 	}
 
@@ -83,7 +87,7 @@ func main0() (ret ffcommon.FInt) {
 		if decoded_frame == nil {
 			decoded_frame = libavutil.AvFrameAlloc()
 			if decoded_frame == nil {
-				fmt.Errorf("Could not allocate audio frame\n")
+				fmt.Printf("Could not allocate audio frame\n")
 				os.Exit(1)
 			}
 		}
@@ -92,7 +96,7 @@ func main0() (ret ffcommon.FInt) {
 			data, int32(data_size),
 			libavutil.AV_NOPTS_VALUE, libavutil.AV_NOPTS_VALUE, 0)
 		if ret < 0 {
-			fmt.Errorf("Error while parsing\n")
+			fmt.Printf("Error while parsing\n")
 			os.Exit(1)
 		}
 		data = (*byte)(unsafe.Pointer(uintptr(unsafe.Pointer(data)) + uintptr(ret)))

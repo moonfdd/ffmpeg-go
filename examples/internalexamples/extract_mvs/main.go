@@ -15,7 +15,7 @@ func main0() (ret ffcommon.FInt) {
 	var pkt libavformat.AVPacket
 
 	if len(os.Args) != 2 {
-		fmt.Printf("Usage: %s <video>\n", os.Args[0])
+		fmt.Printf("Usage: %s <input video>\n", os.Args[0])
 		os.Exit(1)
 	}
 	src_filename = os.Args[1]

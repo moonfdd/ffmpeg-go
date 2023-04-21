@@ -41,22 +41,14 @@ func main() {
 	// inFileName := "./out/test16.pcm"
 	outFileName := "./out/out19.mp3"
 
-	// ./lib/ffmpeg -i ./resources/big_buck_bunny.mp4 -acodec libmp3lame -vn ./out/test.mp3
-	//是否存在mp3文件
-	// _, err = os.Stat(inVFileName)
-	// if err != nil {
-	// 	if os.IsNotExist(err) {
-	// 		fmt.Println("create mp3 file")
-	// 		exec.Command("./lib/ffmpeg", "-i", "./resources/big_buck_bunny.mp4", "-acodec", "libmp3lame", "-vn", inVFileName, "-y").CombinedOutput()
-	// 	}
-	// }
-
-	// os.Remove(outFileName)
-	// f, err := os.OpenFile(outFileName, os.O_CREATE|os.O_RDWR, 0777)
-	// if err != nil {
-	// 	fmt.Println("open file failed,err:", err)
-	// 	return
-	// }
+	//是否存在pcm文件
+	_, err = os.Stat(inFileName)
+	if err != nil {
+		if os.IsNotExist(err) {
+			fmt.Println("create pcm file")
+			exec.Command("./lib/ffmpeg", "-i", "./resources/big_buck_bunny.mp4", "-f", "s16le", "-ar", "44100", "-ac", "2", "-acodec", "pcm_s16le", "-vn", inFileName, "-y").CombinedOutput()
+		}
+	}
 
 	var pFormatCtx *libavformat.AVFormatContext
 	var pCodecCtx *libavcodec.AVCodecContext
@@ -197,12 +189,6 @@ func main() {
 			if pCodecCtx.AvcodecSendFrame(pFrame) < 0 {
 				fmt.Printf("can't send frame for encoding\n")
 				break
-
-				// for codecCtx.AvcodecReceivePacket(pkt) >= 0 {
-				// 	pkt.StreamIndex = uint32(outStream.Index)
-				// 	fmt.Printf("write %4d frame, size=%d, length=%d\n", i, size, length)
-				// 	fmtCtx.AvWriteFrame(pkt)
-				// }
 			}
 			if pCodecCtx.AvcodecReceivePacket(&pkt) >= 0 {
 				pkt.StreamIndex = uint32(stream.Index)
@@ -214,10 +200,6 @@ func main() {
 		}
 
 		// flush encoder
-		// if flush_encoder(fmtCtx, codecCtx, int(outStream.Index)) < 0 {
-		// 	fmt.Printf("Cannot flush encoder.\n")
-		// 	return
-		// }
 		if flush_encoder(pFormatCtx, 0) < 0 {
 			fmt.Printf("flushing encoder failed\n")
 			return
@@ -239,10 +221,10 @@ func main() {
 	// libavutil.AvFree(uintptr(unsafe.Pointer(frame)))
 	// fmtCtx.Pb.AvioClose()
 	// fmtCtx.AvformatFreeContext()
-	return
 	fmt.Println("-----------------------------------------")
 	// ./lib/ffplay -ar 44100 -ac 2 -f s16le -i ./out/test.pcm
-	_, err = exec.Command("./lib/ffplay.exe", "-ar", "44100", "-ac", "2", "-f", "s16le", "-i", "./out/test16.pcm").Output()
+	//_, err = exec.Command("./lib/ffplay.exe", "-ar", "44100", "-ac", "2", "-f", "s16le", "-i", "./out/test16.pcm").Output()
+	_, err = exec.Command("./lib/ffplay.exe", outFileName).Output()
 	if err != nil {
 		fmt.Println("play err = ", err)
 	}
@@ -275,19 +257,6 @@ func flush_encoder(fmt_ctx *libavformat.AVFormatContext, stream_index int) int32
 			break
 		}
 	}
-
-	// fmt.Printf("Flushing stream #%d encoder\n", aStreamIndex)
-	// ret = codecCtx.AvcodecSendFrame(nil)
-	// if ret >= 0 {
-	// 	for codecCtx.AvcodecReceivePacket(enc_pkt) >= 0 {
-	// 		fmt.Printf("success encoder 1 frame.\n")
-	// 		/* mux encoded frame */
-	// 		ret = fmtCtx.AvWriteFrame(enc_pkt)
-	// 		if ret < 0 {
-	// 			break
-	// 		}
-	// 	}
-	// }
 
 	return ret
 }

@@ -11,6 +11,9 @@ import (
 )
 
 func main0() (ret ffcommon.FInt) {
+	// ./lib/ffmpeg -i ./resources/big_buck_bunny.mp4 -c:v mpeg1video ./out/big_buck_bunny.mpg
+	// go run ./examples/internalexamples/decode_video/main.go ./out/big_buck_bunny.mpg ./out/ppm/big_buck_bunny.yuv
+	// ./lib/ffplay  ./out/ppm/big_buck_bunny.yuv-113.ppm
 	var filename, outfilename string
 	var codec *libavcodec.AVCodec
 	var parser *libavcodec.AVCodecParserContext

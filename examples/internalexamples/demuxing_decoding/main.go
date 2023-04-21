@@ -11,6 +11,10 @@ import (
 	"github.com/moonfdd/ffmpeg-go/libavutil"
 )
 
+// go run ./examples/internalexamples/demuxing_decoding/main.go ./resources/big_buck_bunny.mp4 ./out/big_buck_bunny.yuv ./out/big_buck_bunny.pcm
+// ./lib/ffplay -f rawvideo -pix_fmt yuv420p -video_size 640x360 ./out/big_buck_bunny.yuv
+// ./lib/ffplay -f f32le -ac 1 -ar 22050 .\out\big_buck_bunny.pcm
+
 func main0() (ret ffcommon.FInt) {
 
 	if len(os.Args) != 4 {
