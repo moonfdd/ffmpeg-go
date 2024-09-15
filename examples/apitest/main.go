@@ -19,6 +19,11 @@ func main() {
 	ffcommon.SetAvswresamplePath("./lib/swresample-3.dll")
 	ffcommon.SetAvswscalePath("./lib/swscale-5.dll")
 	if true {
+		a := [...]int32{1, 2, 3, 4, 5, 6, 7, 8, 9}
+		libavutil.AvDisplayRotationGet(&a)
+		return
+	}
+	if false {
 		ret := libavutil.AvFrameAlloc()
 		fmt.Println(ret)
 		fmt.Println(libavutil.AV_NUM_DATA_POINTERS)

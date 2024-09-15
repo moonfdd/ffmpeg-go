@@ -12,6 +12,8 @@ import (
 )
 
 func main0() (ret ffcommon.FInt) {
+	// go run ./examples/internalexamples/remuxing/main.go ./resources/big_buck_bunny.mp4 ./out/remuxing.flv
+	// ./lib/ffplay ./out/remuxing.flv
 	var ofmt *libavformat.AVOutputFormat
 	var ifmt_ctx, ofmt_ctx *libavformat.AVFormatContext
 	var pkt libavcodec.AVPacket

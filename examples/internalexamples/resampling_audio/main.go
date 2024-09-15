@@ -12,6 +12,8 @@ import (
 )
 
 func main0() (ret ffcommon.FInt) {
+	// go run ./examples/internalexamples/resampling_audio/main.go ./out/res.aac
+	// ./lib/ffplay -f s16le -channel_layout 7 -channels 3 -ar 44100 ./out/res.aac
 	var src_ch_layout ffcommon.FInt64T = libavutil.AV_CH_LAYOUT_STEREO
 	var dst_ch_layout ffcommon.FInt64T = libavutil.AV_CH_LAYOUT_SURROUND
 	var src_rate ffcommon.FInt = 48000

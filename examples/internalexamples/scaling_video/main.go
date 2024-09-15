@@ -11,6 +11,8 @@ import (
 )
 
 func main0() (ret ffcommon.FInt) {
+	// go run ./examples/internalexamples/scaling_video/main.go ./out/big_buck_bunny.mp4 640*480
+	// ./lib/ffplay -f rawvideo -pix_fmt rgb24 -video_size 640x480 ./out/big_buck_bunny.mp4
 	var src_data, dst_data [4]*ffcommon.FUint8T
 	var src_linesize, dst_linesize [4]ffcommon.FInt
 	var src_w ffcommon.FInt = 320

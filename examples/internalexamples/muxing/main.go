@@ -15,6 +15,8 @@ import (
 )
 
 func main() {
+	// go run ./examples/internalexamples/muxing/main.go ./out/muxing.mp4
+	// ./lib/ffplay ./out/muxing.mp4
 	// 示例本程序会生成一个合成的音频和视频流，并将它们编码和封装输出到输出文件，输出格式是根据文件扩展名自动猜测的。
 	// https://www.lmlphp.com/user/4129/article/item/31675/
 

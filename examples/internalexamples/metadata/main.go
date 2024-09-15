@@ -10,6 +10,7 @@ import (
 )
 
 func main() {
+	// go run ./examples/internalexamples/metadata/main.go ./resources/big_buck_bunny.mp4
 
 	os.Setenv("Path", os.Getenv("Path")+";./lib")
 	ffcommon.SetAvutilPath("./lib/avutil-56.dll")
