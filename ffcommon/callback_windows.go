@@ -8,6 +8,9 @@ import (
 )
 
 func NewCallback(fn interface{}) uintptr {
+	if fn == nil {
+		return uintptr(0)
+	}
 	u := syscall.NewCallback(fn)
 	return u
 }
